@@ -1,4 +1,12 @@
-system
-======
+Description
+===========
 
-Development repository for Xhost Cookbook system
+Requirements
+============
+
+Attributes
+==========
+
+Usage
+=====
+
