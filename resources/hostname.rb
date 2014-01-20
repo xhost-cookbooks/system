@@ -1,3 +1,4 @@
+#
 # Cookbook Name:: system
 # Resource:: hostname
 #
