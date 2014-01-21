@@ -45,9 +45,11 @@ action :set do
     notifies :restart, "service[#{value_for_platform(w%(ubuntu debian) => { 'default' => 'cron' }, 'default' => 'cron')}]", :immediately
   end
 
-  ruby_block 'verify_linked_timezone' do
+  ruby_block 'verify linked timezone' do
     block do
-      Chef::Log.info("tz-info: #{::Time.now.strftime("%z %Z")}#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')}")
+      tz_info = "#{::Time.now.strftime("%z %Z")}"
+      tz_info << "#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')})"
+      Chef::Log.info("tz-info: #{tz_info}")
     end
   end
 
