@@ -22,7 +22,7 @@ upgrade_cmd = value_for_platform(
   %w(ubuntu debian) => {
     'default' => 'export DEBIAN_FRONTEND=noninteractive; apt-get -y upgrade'
   },
-  ['centos', 'redhat', 'scientific', 'fedora', 'amazon'] => {
+  %w(centos redhat scientific fedora amazon) => {
     'default' => 'yum -y update && yum -y upgrade'
   },
   'suse' => { 'default' => 'zypper --non-interactive update' },
