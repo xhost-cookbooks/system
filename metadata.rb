@@ -21,9 +21,12 @@ end
 depends 'apt'
 depends 'cron'
 
-attribute 'system/timezone', :display_name => 'Timezone',
+attribute 'system/timezone',
+  :display_name => 'Timezone',
   :description => 'The system timezone, which must be a valid zoneinfo/tz database entry.',
   :required => 'optional',
+  :default => 'UTC',
+  :recipes => ['system::timezone', 'system::default'],
   :choice => [
     'Africa/Casablanca',
     'America/Bogota',
@@ -92,10 +95,7 @@ attribute 'system/timezone', :display_name => 'Timezone',
     'US/Samoa',
     'GMT',
     'UTC',
-    'localtime'
-  ],
-  :default => 'UTC',
-  :recipes => ['system::timezone', 'system::default']
+    'localtime' ]
 
 attribute 'system/short_hostname',
   :display_name => 'Short Hostname',
