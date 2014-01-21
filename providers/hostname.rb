@@ -143,7 +143,7 @@ action :set do
   #node.save
 
   # Show the new host/node information (after ohai reload from provider)
-  ruby_block "show_host_info" do
+  ruby_block 'show_host_info' do
     block do
       # show new host values from system
       Chef::Log.info('== New host/node information ==')
