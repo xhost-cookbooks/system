@@ -16,6 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe "system::update_package_list"
-include_recipe "system::timezone"
-include_recipe "system::hostname"
+include_recipe 'system::update_package_list'
+include_recipe 'system::timezone'
+include_recipe 'system::hostname'
