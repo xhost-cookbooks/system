@@ -31,7 +31,7 @@ def local_ip
 end
 
 # get node IP
-node_ip = "#{local_ip}"
+node_ip = local_ip
 log("Node IP: #{node_ip}") { level :debug }
 
 # ensure the required short hostname is lower case
@@ -42,8 +42,8 @@ unless new_resource.domain_name.nil? || new_resource.domain_name == ''
   hostname = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
   hosts_list = "#{new_resource.short_hostname}.#{new_resource.domain_name} #{new_resource.short_hostname}"
 else
-  hostname = "#{new_resource.short_hostname}"
-  hosts_list = "#{new_resource.short_hostname}"
+  hostname = new_resource.short_hostname
+  hosts_list = new_resource.short_hostname
 end
 log("Setting hostname for '#{hostname}'.") { level :debug }
 
@@ -65,7 +65,7 @@ file "/etc/hostname" do
   owner "root"
   group "root"
   mode "0755"
-  content "#{new_resource.short_hostname}"
+  content new_resource.short_hostname
   action :create
 end
 
