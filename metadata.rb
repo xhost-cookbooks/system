@@ -7,6 +7,12 @@ license          'Apache 2.0'
 description      'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.0.1'
+recipe           'system::default', "Sets the system's hostname and timezone."
+recipe           'system::timezone', "Sets the system's' timezone."
+recipe           'system::hostname', "Sets the system's hostname."
+recipe           'system::upgrade_packages', "Upgrades the system's installed packages."
+recipe           'system::update_package_list', "Updates the system's list of packages in the package manager's cache."
+recipe           'system::install_packages', "Installs packages to the system with it's native package manager."
 
 %w{ ubuntu debian centos fedora redhat archlinux }.each do |os|
   supports os
@@ -14,15 +20,6 @@ end
 
 depends 'apt'
 depends 'cron'
-
-recipe 'system::default', "Sets the system's hostname and timezone."
-recipe 'system::timezone', "Sets the system's' timezone."
-recipe 'system::hostname', "Sets the system's hostname."
-recipe 'system::upgrade_packages', "Upgrades the system's installed packages."
-recipe 'system::update_package_list',
-  "Updates the system's list of packages in the package manager's cache."
-recipe 'system::install_packages',
-  "Installs packages to the system with it's native package manager."
 
 attribute 'system/timezone',
   :display_name => 'Timezone',
