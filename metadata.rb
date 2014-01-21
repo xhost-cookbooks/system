@@ -21,8 +21,7 @@ end
 depends 'apt'
 depends 'cron'
 
-attribute 'system/timezone',
-  :display_name => 'Timezone',
+attribute 'system/timezone', :display_name => 'Timezone',
   :description => 'The system timezone, which must be a valid zoneinfo/tz database entry.',
   :required => 'optional',
   :choice => [
