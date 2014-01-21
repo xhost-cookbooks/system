@@ -95,7 +95,7 @@ attribute 'system/timezone',
     'US/Samoa',
     'GMT',
     'UTC',
-    'localtime' ]
+    'localtime']
 
 attribute 'system/short_hostname',
   :display_name => 'Short Hostname',
