@@ -4,8 +4,7 @@ name             'system'
 maintainer       'Chris Fordham'
 maintainer_email 'chris@fordham-nagy.id.au'
 license          'Apache 2.0'
-description
-'Installs/Configures system elements such as the hostname and timezone.'
+description      'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.0.1'
 
