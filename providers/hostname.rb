@@ -116,7 +116,9 @@ action :set do
   end
 
   # rightlink commandline tools set tag with rs_tag
-  # the rs_tag command exits 127 or similar on occasion, though not from command line (not sure why); hopefully || true can be removed in the future
+  # the rs_tag command exits 127 or similar on occasion,
+  # though not from command line (not sure why);
+  # hopefully || true can be removed in the future
   script 'set node hostname tag' do
     interpreter 'bash'
     user 'root'
