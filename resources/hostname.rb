@@ -16,11 +16,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-attribute :short_hostname, :kind_of => String
-attribute :domain_name, :kind_of => String
-attribute :static_hosts, :kind_of => Hash
-
 actions :set
+default_action :set
+
+attribute :short_hostname,      :kind_of => String,      :default => nil
+attribute :domain_name,         :kind_of => String,      :default => nil
+attribute :static_hosts,        :kind_of => Hash,        :default => nil
 
 def initialize(*args)
   super
