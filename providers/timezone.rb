@@ -47,7 +47,7 @@ action :set do
 
   ruby_block 'verify linked timezone' do
     block do
-      tz_info = ::Time.now.strftime("%z %Z")
+      tz_info = ::Time.now.strftime('%z %Z')
       tz_info << "#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')})"
       Chef::Log.info("tz-info: #{tz_info}")
     end
