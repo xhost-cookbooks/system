@@ -16,4 +16,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe "apt" if platform_family?("debian")
+include_recipe 'apt' if platform_family?('debian')
