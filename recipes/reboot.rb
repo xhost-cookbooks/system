@@ -16,6 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-execute "reboot_system" do
-  command "(sleep 5 && reboot) > /dev/null 2>&1"
+execute 'reboot_system' do
+  command '(sleep 5 && reboot) > /dev/null 2>&1'
 end
