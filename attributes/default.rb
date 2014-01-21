@@ -16,11 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default["system"]["timezone"] = 'UTC'
-default["system"]["short_hostname"] = 'localhost'
-default["system"]["domain"] = 'localdomain'
-default["system"]["static_hosts"] = Hash.new
-default["system"]["upgrade_packages"] = true
+default['system']['timezone'] = 'UTC'
+default['system']['short_hostname'] = 'localhost'
+default['system']['domain'] = 'localdomain'
+default['system']['static_hosts'] = {}
+default['system']['upgrade_packages'] = true
 
-default["system"]["packages"]["install"] = []
-default["system"]["packages"]["install_compile_time"] = []
+default['system']['packages']['install'] = []
+default['system']['packages']['install_compile_time'] = []
