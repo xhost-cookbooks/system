@@ -42,7 +42,7 @@ action :set do
 
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{new_resource.name}"
-    notifies :restart, "service[#{value_for_platform( w%(ubuntu debian) => { 'default' => 'cron' }, 'default' => 'cron')}]", :immediately
+    notifies :restart, "service[#{value_for_platform(w%(ubuntu debian) => { 'default' => 'cron' }, 'default' => 'cron')}]", :immediately
   end
 
   ruby_block 'verify linked timezone' do
