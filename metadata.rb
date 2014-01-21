@@ -4,7 +4,8 @@ name             'system'
 maintainer       'Chris Fordham'
 maintainer_email 'chris@fordham-nagy.id.au'
 license          'Apache 2.0'
-description      'Installs/Configures system elements such as the hostname and timezone.'
+description
+'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.0.1'
 
@@ -19,12 +20,15 @@ recipe 'system::default', "Sets the system's hostname and timezone."
 recipe 'system::timezone', "Sets the system's' timezone."
 recipe 'system::hostname', "Sets the system's hostname."
 recipe 'system::upgrade_packages', "Upgrades the system's installed packages."
-recipe 'system::update_package_list', "Updates the system's list of packages in the package manager's cache."
-recipe 'system::install_packages', "Installs packages to the system with it's native package manager."
+recipe 'system::update_package_list',
+  "Updates the system's list of packages in the package manager's cache."
+recipe 'system::install_packages',
+  "Installs packages to the system with it's native package manager."
 
 attribute 'system/timezone',
   :display_name => 'Timezone',
-  :description => "Sets the system time to the timezone of the specified input, which must be a valid zoneinfo/tz database entry. If the input is 'unset' the timezone will use the 'localtime' that's defined in your RightScale account under Settings -> User -> Preferences tab.  You can find a list of valid examples from the timezone pulldown bar in the Preferences tab. The server will not be updated for daylight savings time.  Ex: US/Pacific, US/Eastern",
+  :description =>
+    "Sets the system time to the timezone of the specified input, which must be a valid zoneinfo/tz database entry. If the input is 'unset' the timezone will use the 'localtime' that's defined in your RightScale account under Settings -> User -> Preferences tab.  You can find a list of valid examples from the timezone pulldown bar in the Preferences tab. The server will not be updated for daylight savings time.  Ex: US/Pacific, US/Eastern",
   :required => 'optional',
   :choice => [
     'Africa/Casablanca',
