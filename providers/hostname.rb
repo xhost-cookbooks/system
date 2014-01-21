@@ -125,7 +125,8 @@ action :set do
     EOH
   end
 
-  # reload ohai hostname plugin for subsequent recipes in the run_list, or not (http://tickets.opscode.com/browse/OHAI-389?focusedCommentId=26255&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-26255)
+  # reload ohai hostname plugin for subsequent recipes in the run_list, or not
+  # (http://bit.ly/1bfjHH5)
   # ohai "reload_hostname_info_from_ohai" do
   #   plugin "hostname"
   # end
