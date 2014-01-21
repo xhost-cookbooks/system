@@ -16,13 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node['system']['packages']['install'].each { |package|
-  package package
-}
+node['system']['packages']['install'].each { |package| package package }
 
-node['system']['packages']['install_compile_time'].each { |package|
+node['system']['packages']['install_compile_time'].each do |package|
   p = package package do
     action :nothing
   end
   p.run_action(:install)
-}
+end
