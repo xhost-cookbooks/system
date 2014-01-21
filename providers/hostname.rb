@@ -88,7 +88,8 @@ action :set do
   end
 
   # Call domainname command
-  if node['platform'] != 'archlinux' and ( !new_resource.domain_name.nil? || new_resource.domain_name != "" )
+  if node['platform'] != 'archlinux' &&
+      (!new_resource.domain_name.nil? || new_resource.domain_name != "")
     log('Running domainname') { level :debug }
     bash 'set domainname' do
       code <<-EOH
