@@ -140,7 +140,7 @@ action :set do
   node.set['fqdn'] = `hostname -f`.strip
   node.set['hostname'] = `hostname -f`.strip
 
-  #node.save
+  # node.save
 
   # Show the new host/node information (after ohai reload from provider)
   ruby_block 'show_host_info' do
