@@ -26,7 +26,9 @@ upgrade_cmd = value_for_platform(
     'default' => 'yum -y update && yum -y upgrade'
   },
   'suse' => { 'default' => 'zypper --non-interactive update' },
-  'arch' => { 'default' => 'pacman --sync --refresh --sysupgrade --noprogressbar -q' },
+  'arch' => {
+    'default' => 'pacman --sync --refresh --sysupgrade --noprogressbar -q'
+  },
   'freebsd' => { 'default' => 'portupgrade -af' },
   'mac_os_x' => { 'default' => 'port sync' }
 )
