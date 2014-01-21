@@ -16,22 +16,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe "system::update_package_list"
+include_recipe 'system::update_package_list'
 
 upgrade_cmd = value_for_platform(
-  ["ubuntu","debian"] => {
-    "default" => "export DEBIAN_FRONTEND=noninteractive; apt-get -y upgrade"
+  ['ubuntu', 'debian'] => {
+    'default' => 'export DEBIAN_FRONTEND=noninteractive; apt-get -y upgrade'
   },
-  ["centos","redhat","scientific","fedora","amazon"] => {
-    "default" => "yum -y update && yum -y upgrade"
+  ['centos', 'redhat', 'scientific', 'fedora', 'amazon'] => {
+    'default' => 'yum -y update && yum -y upgrade'
   },
-  "suse" => { "default" => "zypper --non-interactive update" },
-  "arch" => { "default" => "pacman --sync --refresh --sysupgrade --noprogressbar -q" },
-  "freebsd" => { "default" => "portupgrade -af" },
-  "mac_os_x" => { "default" => "port sync" }
+  'suse' => { 'default' => 'zypper --non-interactive update' },
+  'arch' => { 'default' => 'pacman --sync --refresh --sysupgrade --noprogressbar -q' },
+  'freebsd' => { 'default' => 'portupgrade -af' },
+  'mac_os_x' => { 'default' => 'port sync' }
 )
 
-e = execute "upgrade system packages" do
+e = execute 'upgrade system packages' do
   command upgrade_cmd
   action :nothing
 end
