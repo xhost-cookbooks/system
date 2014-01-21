@@ -39,7 +39,7 @@ action :set do
   new_resource.short_hostname.downcase!
 
   # set hostname from short or long (when domain_name set)
-  unless new_resource.domain_name.nil? || new_resource.domain_name == ''
+  if new_resource.domain_name
     hostname = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
     hosts_list = "#{new_resource.short_hostname}.#{new_resource.domain_name} #{new_resource.short_hostname}"
   else
