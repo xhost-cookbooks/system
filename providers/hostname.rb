@@ -50,8 +50,8 @@ action :set do
   
   # Update /etc/hosts
   log('Configure /etc/hosts.') { level :debug }
-  template "/etc/hosts" do
-    source "hosts.erb"
+  template '/etc/hosts' do
+    source 'hosts.erb'
     variables(
       :node_ip => node_ip,
       :hosts_list => hosts_list,
@@ -62,10 +62,10 @@ action :set do
   
   # Update /etc/hostname
   log('Configure /etc/hostname') { level :debug }
-  file "/etc/hostname" do
-    owner "root"
-    group "root"
-    mode "0755"
+  file '/etc/hostname' do
+    owner 'root'
+    group 'root'
+    mode 0755
     content new_resource.short_hostname
     action :create
   end
@@ -73,14 +73,14 @@ action :set do
   # Call hostname command
   log('Setting hostname.') { level :debug }
   if platform?('centos', 'redhat')
-    bash "set_hostname" do
+    bash 'set hostname' do
       code <<-EOH
         sed -i "s/HOSTNAME=.*/HOSTNAME=#{hostname}/" /etc/sysconfig/network
         hostname #{hostname}
       EOH
     end
   else
-    bash "set_hostname" do
+    bash 'set hostname' do
       code <<-EOH
         hostname #{hostname}
       EOH
@@ -90,7 +90,7 @@ action :set do
   # Call domainname command
   if node['platform'] != 'archlinux' and ( !new_resource.domain_name.nil? || new_resource.domain_name != "" )
     log('Running domainname') { level :debug }
-    bash "set_domainname" do
+    bash 'set domainname' do
       code <<-EOH
       domainname #{new_resource.domain_name}
       EOH
@@ -100,16 +100,16 @@ action :set do
   # restart hostname services on appropriate platforms
   if platform?('ubuntu')
     log('Starting hostname service.') { level :debug }
-    service "hostname" do
-    service_name "hostname"
+    service 'hostname' do
+    service_name 'hostname'
     supports :restart => true, :status => true, :reload => true
     action :restart
     end
   end
   if platform?('debian')
     log('Starting hostname.sh service.') { level :debug }
-    service "hostname.sh" do
-    service_name "hostname.sh"
+    service 'hostname.sh' do
+    service_name 'hostname.sh'
     supports :restart => false, :status => true, :reload => false
     action :start
     end
@@ -117,9 +117,9 @@ action :set do
   
   # rightlink commandline tools set tag with rs_tag
   # the rs_tag command exits 127 or similar on occasion, though not from command line (not sure why); hopefully || true can be removed in the future
-  script "set_node_hostname_tag" do
-    interpreter "bash"
-    user "root"
+  script 'set node hostname tag' do
+    interpreter 'bash'
+    user 'root'
     code <<-EOH
   ( if type -P rs_tag &>/dev/null; then rs_tag --add 'node:hostname=#{hostname}'; fi ) || true
     EOH
@@ -142,7 +142,7 @@ action :set do
   ruby_block "show_host_info" do
     block do
       # show new host values from system
-      Chef::Log.info("== New host/node information ==")
+      Chef::Log.info('== New host/node information ==')
       Chef::Log.info("Hostname: #{`hostname`.strip == '' ? '<none>' : `hostname`.strip}")
       Chef::Log.info("Network node hostname: #{`uname -n`.strip == '' ? '<none>' : `uname -n`.strip}")
       Chef::Log.info("Alias names of host: #{`hostname -a`.strip == '' ? '<none>' : `hostname -a`.strip}")
