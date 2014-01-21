@@ -115,8 +115,7 @@ attribute 'system/upgrade_packages',
   :display_name => 'Upgrade Packages',
   :description => "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
   :required => 'optional',
-  :default => 'true',
-  :choice => ['true', 'false'],
+  :choice =>  %w('true', 'false'),
   :recipes => ['system::upgrade_packages']
 
 attribute 'system/packages/install',
@@ -127,7 +126,7 @@ attribute 'system/packages/install',
   :recipes => ['system::install_packages']
 
 attribute 'system/packages/install_compile_time',
-  :display_name => 'Install Packages Compile Phase',
+:display_name => 'Install Packages Compile Phase',
   :description => 'An array of system packages to install with the package resource in compile phase.',
   :required => 'optional',
   :type => 'array',
