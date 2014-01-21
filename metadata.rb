@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 name             'system'
 maintainer       'Chris Fordham'
 maintainer_email 'chris@fordham-nagy.id.au'
