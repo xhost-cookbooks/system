@@ -23,29 +23,29 @@ action :set do
   log("tz-info (before): #{Time.now.strftime("%z %Z")}")
 
   if %w(debian ubuntu').member? node['platform']
-    package "tzdata"
+    package 'tzdata'
 
-    bash "dpkg-reconfigure tzdata" do
-      user "root"
-      code "/usr/sbin/dpkg-reconfigure -f noninteractive tzdata"
+    bash 'dpkg-reconfigure tzdata' do
+      user 'root'
+      code '/usr/sbin/dpkg-reconfigure -f noninteractive tzdata'
       action :nothing
     end
 
-    template "/etc/timezone" do
-      source "timezone.conf.erb"
-      owner "root"
-      group "root"
+    template '/etc/timezone' do
+      source 'timezone.conf.erb'
+      owner 'root'
+      group 'root'
       mode 0644
-      notifies :run, "bash[dpkg-reconfigure tzdata]"
+      notifies :run, 'bash[dpkg-reconfigure tzdata]'
     end
   end
 
-  link "/etc/localtime" do
+  link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{new_resource.name}"
-    notifies :restart, "service[#{value_for_platform(["ubuntu","debian"] => { "default" => "cron" },"default" => "crond")}]", :immediately
+    notifies :restart, "service[#{value_for_platform(["ubuntu", "debian"] => { "default" => "cron" }, "default" => "crond")}]", :immediately
   end
 
-  ruby_block "verify_linked_timezone" do
+  ruby_block 'verify_linked_timezone' do
     block do
       Chef::Log.info("tz-info: #{::Time.now.strftime("%z %Z")}#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')}")
     end
