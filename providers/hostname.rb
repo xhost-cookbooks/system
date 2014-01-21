@@ -102,17 +102,17 @@ action :set do
   if platform?('ubuntu')
     log('Starting hostname service.') { level :debug }
     service 'hostname' do
-    service_name 'hostname'
-    supports :restart => true, :status => true, :reload => true
-    action :restart
+      service_name 'hostname'
+      supports :restart => true, :status => true, :reload => true
+      action :restart
     end
   end
   if platform?('debian')
     log('Starting hostname.sh service.') { level :debug }
     service 'hostname.sh' do
-    service_name 'hostname.sh'
-    supports :restart => false, :status => true, :reload => false
-    action :start
+      service_name 'hostname.sh'
+      supports :restart => false, :status => true, :reload => false
+      action :start
     end
   end
 
