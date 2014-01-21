@@ -19,7 +19,7 @@
 include_recipe 'system::update_package_list'
 
 upgrade_cmd = value_for_platform(
-  ['ubuntu', 'debian'] => {
+  %w(ubuntu debian) => {
     'default' => 'export DEBIAN_FRONTEND=noninteractive; apt-get -y upgrade'
   },
   ['centos', 'redhat', 'scientific', 'fedora', 'amazon'] => {
