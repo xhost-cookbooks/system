@@ -98,36 +98,36 @@ attribute 'system/timezone',
             'localtime']
 
 attribute 'system/short_hostname',
-  :display_name => 'Short Hostname',
-  :description => 'The short hostname that you would like this node to have, e.g. kryten',
-  :required => 'recommended',
-  :default => 'localhost',
-  :recipes => ['system::hostname', 'system::default']
+          :display_name => 'Short Hostname',
+          :description => 'The short hostname that you would like this node to have, e.g. kryten',
+          :required => 'recommended',
+          :default => 'localhost',
+          :recipes => ['system::hostname', 'system::default']
 
 attribute 'system/domain_name',
-  :display_name => 'Domain Name',
-  :description => 'The domain name that you would like this node to have, e.g. domain.suf. Note: Only set a valid domain name to satisfy the resolution of a FQDN; use ignore:ignore for no domain name.',
-  :required => 'recommended',
-  :default => 'localdomain',
-  :recipes => ['system::hostname', 'system::default']
+          :display_name => 'Domain Name',
+          :description => 'The domain name that you would like this node to have, e.g. domain.suf. Note: Only set a valid domain name to satisfy the resolution of a FQDN; use ignore:ignore for no domain name.',
+          :required => 'recommended',
+          :default => 'localdomain',
+          :recipes => ['system::hostname', 'system::default']
 
 attribute 'system/upgrade_packages',
-  :display_name => 'Upgrade Packages',
-  :description => "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
-  :required => 'optional',
-  :choice =>  %w('true', 'false'),
-  :recipes => ['system::upgrade_packages']
+          :display_name => 'Upgrade Packages',
+          :description => "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
+          :required => 'optional',
+          :choice =>  %w('true', 'false'),
+          :recipes => ['system::upgrade_packages']
 
 attribute 'system/packages/install',
-  :display_name => 'Install Packages',
-  :description => 'An array of system packages to install with the package resource in execute phase.',
-  :required => 'optional',
-  :type => 'array',
-  :recipes => ['system::install_packages']
+          :display_name => 'Install Packages',
+          :description => 'An array of system packages to install with the package resource in execute phase.',
+          :required => 'optional',
+          :type => 'array',
+          :recipes => ['system::install_packages']
 
 attribute 'system/packages/install_compile_time',
-:display_name => 'Install Packages Compile Phase',
-  :description => 'An array of system packages to install with the package resource in compile phase.',
-  :required => 'optional',
-  :type => 'array',
-  :recipes => ['system::install_packages']
+          :display_name => 'Install Packages Compile Phase',
+          :description => 'An array of system packages to install with the package resource in compile phase.',
+          :required => 'optional',
+          :type => 'array',
+          :recipes => ['system::install_packages']
