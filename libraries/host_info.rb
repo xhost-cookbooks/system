@@ -36,12 +36,12 @@ module HostInfo
   def self.domain_name
     Mixlib::ShellOut.new('hostname -d').run_command.stdout.strip
   end
-  
+
   def self.fqdn
     Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip
   end
-  
-  def self.host_ip 
+
+  def self.host_ip
     Mixlib::ShellOut.new('hostname -i').run_command.stdout.strip
   end
 end
