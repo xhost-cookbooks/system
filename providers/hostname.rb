@@ -87,14 +87,10 @@ action :set do
     end
   end
 
-  # Call domainname command
-  if system('type -P domainname >/dev/null')
-    log('Running domainname') { level :debug }
-    bash 'set domainname' do
-      code <<-EOH
-      domainname #{new_resource.domain_name}
-      EOH
-    end
+  # run domainname command if available
+  execute 'run domainname' do
+    command "domainname #{new_resource.domain_name}"
+    only_if "bash -c 'type -P domainname'"
   end
 
   # restart hostname services on appropriate platforms
@@ -133,25 +129,32 @@ action :set do
   # end
 
   # manually update node & automatic attributes (probably won't do anything heh)
-  node.automatic_attrs['hostname'] = `hostname -f`.strip
-  node.automatic_attrs['fqdn'] = `hostname -f`.strip
-  node.set['fqdn'] = `hostname -f`.strip
-  node.set['hostname'] = `hostname -f`.strip
+  fqdn = Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip
+  node.automatic_attrs['hostname'] = fqdn
+  node.automatic_attrs['fqdn'] = fqdn
+  node.set['fqdn'] = fqdn
+  node.set['hostname'] = fqdn
 
   # node.save
 
-  # Show the new host/node information (after ohai reload from provider)
-  ruby_block 'show_host_info' do
+  # Show the new host/node information
+  ruby_block 'show host info' do
     block do
-      # show new host values from system
+      hostname = Mixlib::ShellOut.new('hostname').run_command.stdout.strip
+      network_node = Mixlib::ShellOut.new('uname -n').run_command.stdout.strip
+      host_aliases = Mixlib::ShellOut.new('hostname -a').run_command.stdout.strip
+      short_name = Mixlib::ShellOut.new('hostname -s').run_command.stdout.strip
+      domain_name = Mixlib::ShellOut.new('hostname -d').run_command.stdout.strip
+      fqdn = Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip
+      host_ip = Mixlib::ShellOut.new('hostname -i').run_command.stdout.strip
       Chef::Log.info('== New host/node information ==')
-      Chef::Log.info("Hostname: #{`hostname`.strip == '' ? '<none>' : `hostname`.strip}")
-      Chef::Log.info("Network node hostname: #{`uname -n`.strip == '' ? '<none>' : `uname -n`.strip}")
-      Chef::Log.info("Alias names of host: #{`hostname -a`.strip == '' ? '<none>' : `hostname -a`.strip}")
-      Chef::Log.info("Short host name (cut from first dot of hostname): #{`hostname -s`.strip == '' ? '<none>' : `hostname -s`.strip}")
-      Chef::Log.info("Domain of hostname: #{`hostname -d`.strip == '' ? '<none>' : `hostname -d`.strip}")
-      Chef::Log.info("FQDN of host: #{`hostname -f`.strip == '' ? '<none>' : `hostname -f`.strip}")
-      Chef::Log.info("IP addresses for the hostname: #{`hostname -i`.strip == '' ? '<none>' : `hostname -i`.strip}")
+      Chef::Log.info("Hostname: #{hostname == '' ? '<none>' : hostname}")
+      Chef::Log.info("Network node hostname: #{network_node == '' ? '<none>' : network_node}")
+      Chef::Log.info("Alias names of host: #{host_aliases == '' ? '<none>' : host_aliases}")
+      Chef::Log.info("Short host name (cut from first dot of hostname): #{short_name == '' ? '<none>' : short_name.strip}")
+      Chef::Log.info("Domain of hostname: #{domain_name == '' ? '<none>' : domain_name}")
+      Chef::Log.info("FQDN of host: #{fqdn == '' ? '<none>' : fqdn}")
+      Chef::Log.info("IP addresses for the hostname: #{host_ip == '' ? '<none>' : host_ip}")
       Chef::Log.info("Current Chef FQDN loaded from Ohai: #{node['fqdn']}")
     end
   end
