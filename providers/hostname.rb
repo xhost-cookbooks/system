@@ -16,6 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+class Chef::Recipe
+  include HostInfo
+end
+
 action :set do
 
   require 'socket'
@@ -140,21 +144,14 @@ action :set do
   # Show the new host/node information
   ruby_block 'show host info' do
     block do
-      hostname = Mixlib::ShellOut.new('hostname').run_command.stdout.strip
-      network_node = Mixlib::ShellOut.new('uname -n').run_command.stdout.strip
-      host_aliases = Mixlib::ShellOut.new('hostname -a').run_command.stdout.strip
-      short_name = Mixlib::ShellOut.new('hostname -s').run_command.stdout.strip
-      domain_name = Mixlib::ShellOut.new('hostname -d').run_command.stdout.strip
-      fqdn = Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip
-      host_ip = Mixlib::ShellOut.new('hostname -i').run_command.stdout.strip
       Chef::Log.info('== New host/node information ==')
-      Chef::Log.info("Hostname: #{hostname == '' ? '<none>' : hostname}")
-      Chef::Log.info("Network node hostname: #{network_node == '' ? '<none>' : network_node}")
-      Chef::Log.info("Alias names of host: #{host_aliases == '' ? '<none>' : host_aliases}")
-      Chef::Log.info("Short host name (cut from first dot of hostname): #{short_name == '' ? '<none>' : short_name.strip}")
-      Chef::Log.info("Domain of hostname: #{domain_name == '' ? '<none>' : domain_name}")
-      Chef::Log.info("FQDN of host: #{fqdn == '' ? '<none>' : fqdn}")
-      Chef::Log.info("IP addresses for the hostname: #{host_ip == '' ? '<none>' : host_ip}")
+      Chef::Log.info("Hostname: #{HostInfo.hostname == '' ? '<none>' : HostInfo.hostname}")
+      Chef::Log.info("Network node hostname: #{HostInfo.network_node == '' ? '<none>' : HostInfo.network_node}")
+      Chef::Log.info("Alias names of host: #{HostInfo.host_aliases == '' ? '<none>' : HostInfo.host_aliases}")
+      Chef::Log.info("Short host name (cut from first dot of hostname): #{HostInfo.short_name == '' ? '<none>' : HostInfo.short_name}")
+      Chef::Log.info("Domain of hostname: #{HostInfo.domain_name == '' ? '<none>' : HostInfo.domain_name}")
+      Chef::Log.info("FQDN of host: #{HostInfo.fqdn == '' ? '<none>' : HostInfo.fqdn}")
+      Chef::Log.info("IP addresses for the hostname: #{HostInfo.host_ip == '' ? '<none>' : HostInfo.host_ip}")
       Chef::Log.info("Current Chef FQDN loaded from Ohai: #{node['fqdn']}")
     end
   end
