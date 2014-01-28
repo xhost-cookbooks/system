@@ -115,7 +115,7 @@ attribute 'system/upgrade_packages',
           :display_name => 'Upgrade Packages',
           :description => "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
           :required => 'optional',
-          :choice =>  %w('true', 'false'),
+          :choice =>  %w(true false),
           :recipes => ['system::upgrade_packages']
 
 attribute 'system/packages/install',
