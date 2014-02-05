@@ -16,32 +16,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This module provides basic methods to shell-out and
+# return stripped output of system commands related
+# to its hostname information
 module HostInfo
+  def self.shell_command(cmd)
+    Mixlib::ShellOut.new(cmd).run_command.stdout.strip
+  end
+
   def self.hostname
-    Mixlib::ShellOut.new('hostname').run_command.stdout.strip
+    shell_command('hostname')
   end
 
   def self.network_node
-    Mixlib::ShellOut.new('uname -n').run_command.stdout.strip
+    shell_command('uname -n')
   end
 
   def self.host_aliases
-    Mixlib::ShellOut.new('hostname -a').run_command.stdout.strip
+    shell_command('hostname -a')
   end
 
   def self.short_name
-    Mixlib::ShellOut.new('hostname -s').run_command.stdout.strip
+    shell_command('hostname -s')
   end
 
   def self.domain_name
-    Mixlib::ShellOut.new('hostname -d').run_command.stdout.strip
+    shell_command('hostname -d')
   end
 
   def self.fqdn
-    Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip
+    shell_command('hostname -f')
   end
 
   def self.host_ip
-    Mixlib::ShellOut.new('hostname -i').run_command.stdout.strip
+    shell_command('hostname -i')
   end
 end
