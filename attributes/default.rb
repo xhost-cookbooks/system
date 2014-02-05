@@ -25,4 +25,7 @@ default['system']['upgrade_packages'] = true
 default['system']['packages']['install'] = []
 default['system']['packages']['install_compile_time'] = []
 
+default['system']['packages']['uninstall'] = []
+default['system']['packages']['uninstall_compile_time'] = []
+
 default['system']['cron_service_name'] = 'cron'
