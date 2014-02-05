@@ -17,15 +17,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node['system']['packages']['uninstall'].each { |package|
+node['system']['packages']['uninstall'].each do |package|
   package package do
     action :remove
   end
-}
+end
 
-node['system']['packages']['uninstall_compile_time'].each { |package|
+node['system']['packages']['uninstall_compile_time'].each do |package|
   p = package package do
     action :remove
   end
   p.run_action(:install)
-}
+end
