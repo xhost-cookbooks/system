@@ -1,3 +1,4 @@
+# Encoding: utf-8
 # encoding: UTF-8
 #
 # Cookbook Name:: system
