@@ -1,13 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf',  '~> 2.0'
-gem 'chefspec',   '~> 3.0'
-gem 'foodcritic', '~> 3.0'
-gem 'rubocop'
-
-group :integration do
-  gem 'test-kitchen', '~> 1.0'
-  gem 'kitchen-vagrant', '~> 0.11'
-  gem 'kitchen-digitalocean'
-  gem 'kitchen-ec2'
-end
+gem 'berkshelf'
+gem 'strainer', '~> 3.3.0'
+gem 'chef', '~> 11.8'
+gem 'rubocop', '~> 0.18.0'
+gem 'foodcritic', '~> 3.0.0'
+gem 'chefspec', '~> 3.2'
+gem 'serverspec', '~> 0.14.2'
+gem 'test-kitchen'
+gem 'kitchen-vagrant'
