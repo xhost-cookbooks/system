@@ -16,7 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-attribute :timezone, :kind_of => String, :default => 'UTC'
+attribute :timezone,
+          kind_of: String,
+          default: 'UTC'
 
 actions :set
 
