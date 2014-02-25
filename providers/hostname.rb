@@ -36,7 +36,7 @@ action :set do
 
   hostsfile_entry GetIP.local do
     hostname fqdn
-    aliases [ new_resource.short_hostname ]
+    aliases [new_resource.short_hostname]
     unique true
   end
 
