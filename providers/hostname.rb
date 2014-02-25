@@ -19,75 +19,80 @@
 # include the HostInfo library
 class Chef::Recipe
   include HostInfo
+  include GetIP
 end
 
 action :set do
 
-  require 'socket'
-
-  def local_ip
-    # turn off reverse DNS resolution temporarily
-    orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
-    UDPSocket.open do |s|
-      s.connect '64.233.187.99', 1
-      s.addr.last
-    end
-    ensure
-      Socket.do_not_reverse_lookup = orig
-  end
-
-  # get node IP
-  node_ip = local_ip
-  log("Node IP: #{node_ip}") { level :debug }
-
   # ensure the required short hostname is lower case
   new_resource.short_hostname.downcase!
 
-  # set hostname from short or long (when domain_name set)
+  # fqdn hostname from short or long (depending if domain_name is set)
   if new_resource.domain_name
-    hostname = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
-    hosts_list = "#{new_resource.short_hostname}.#{new_resource.domain_name} #{new_resource.short_hostname}"
+    fqdn = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
   else
-    hostname = new_resource.short_hostname
-    hosts_list = new_resource.short_hostname
-  end
-  log("Setting hostname for '#{hostname}'.") { level :debug }
-
-  # Update /etc/hosts
-  log('Configure /etc/hosts.') { level :debug }
-  template '/etc/hosts' do
-    source 'hosts.erb'
-    variables(
-      :node_ip => node_ip,
-      :hosts_list => hosts_list,
-      :static_hosts => new_resource.static_hosts
-      )
-    mode 0744
+    fqdn = new_resource.short_hostname
   end
 
-  # Update /etc/hostname
-  log('Configure /etc/hostname') { level :debug }
+  hostsfile_entry GetIP.local do
+    hostname fqdn
+    aliases %w(new_resource.short_hostname)
+    unique true
+  end
+
+  # Restart the hostname[.sh] service on debian-based distros
+  if platform_family?('debian')
+    case node['platform']
+    when 'debian'
+      service_name = 'hostname.sh'
+      service_supports = {
+        restart: false,
+        status: true,
+        reload: false
+      }
+      service_action 'start'
+      service_provider = Chef::Provider::Service::Init::Debian
+    when 'ubuntu'
+      service_name = 'hostname'
+      service_supports = {
+        restart: true,
+        status: true,
+        reload: true
+      }
+      service_action = 'restart'
+      service_provider = Chef::Provider::Service::Upstart
+    end
+
+    service 'hostname' do
+      service_name service_name
+      supports service_supports
+      action service_action.to_sym
+      provider service_provider
+    end
+  end
+
   file '/etc/hostname' do
     owner 'root'
     group 'root'
     mode 0755
-    content new_resource.short_hostname
+    content fqdn
     action :create
+    notifies service_action.to_sym, resources("service[#{service_name}]") if platform_family?('debian')
   end
 
   # Call hostname command
-  log('Setting hostname.') { level :debug }
-  if platform?('centos', 'redhat')
+  if platform_family?('redhat')
+    # let's not manage the entire file because its shared (TODO: upgrade to chef-edit)
     bash 'set hostname' do
       code <<-EOH
-        sed -i "s/HOSTNAME=.*/HOSTNAME=#{hostname}/" /etc/sysconfig/network
-        hostname #{hostname}
+        sed -i "s/HOSTNAME=.*/HOSTNAME=#{fqdn}/" /etc/sysconfig/network
+        hostname #{fqdn}
       EOH
     end
   else
     bash 'set hostname' do
       code <<-EOH
-        hostname #{hostname}
+        hostname #{fqdn}
       EOH
     end
   end
@@ -98,49 +103,11 @@ action :set do
     only_if "bash -c 'type -P domainname'"
   end
 
-  # restart hostname services on appropriate platforms
-  if platform?('ubuntu')
-    log('Starting hostname service.') { level :debug }
-    service 'hostname' do
-      service_name 'hostname'
-      supports :restart => true, :status => true, :reload => true
-      action :restart
-    end
+  # rightscale support: rightlink CLI tools, rs_tag
+  execute 'set rightscale server hostname tag' do
+    command "rs_tag --add 'node:hostname=#{fqdn}"
+    only_if "bash -c 'type -P rs_tag'"
   end
-  if platform?('debian')
-    log('Starting hostname.sh service.') { level :debug }
-    service 'hostname.sh' do
-      service_name 'hostname.sh'
-      supports :restart => false, :status => true, :reload => false
-      action :start
-    end
-  end
-
-  # rightlink command line tools set tag with rs_tag
-  script 'set node hostname tag' do
-    interpreter 'bash'
-    user 'root'
-    code <<-EOH
-      if type -P rs_tag &>/dev/null; then
-        rs_tag --add 'node:hostname=#{hostname}'
-      fi
-    EOH
-  end
-
-  # reload ohai hostname plugin for subsequent recipes in the run_list, or not
-  # (http://bit.ly/1bfjHH5)
-  # ohai "reload_hostname_info_from_ohai" do
-  #   plugin "hostname"
-  # end
-
-  # manually update node & automatic attributes (probably won't do anything heh)
-  fqdn = Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip
-  node.automatic_attrs['hostname'] = fqdn
-  node.automatic_attrs['fqdn'] = fqdn
-  node.set['fqdn'] = fqdn
-  node.set['hostname'] = fqdn
-
-  # node.save
 
   # Show the new host/node information
   ruby_block 'show host info' do
