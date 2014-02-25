@@ -1,19 +1,19 @@
 # Encoding: utf-8
-# encoding: UTF-8
 
 name             'system'
-maintainer       'Chris Fordham'
-maintainer_email 'chris@fordham-nagy.id.au'
+maintainer       'Xhost Australia'
+maintainer_email 'cookbooks@xhost.com.au'
 license          'Apache 2.0'
 description      'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.1.0'
-recipe           'system::default', "Sets the system's hostname and timezone."
-recipe           'system::timezone', "Sets the system's' timezone."
-recipe           'system::hostname', "Sets the system's hostname."
-recipe           'system::upgrade_packages', "Upgrades the system's installed packages."
+
+recipe           'system::default',             "Sets the system's hostname and timezone."
+recipe           'system::timezone',            "Sets the system's' timezone."
+recipe           'system::hostname',            "Sets the system's hostname."
+recipe           'system::upgrade_packages',    "Upgrades the system's installed packages."
 recipe           'system::update_package_list', "Updates the system's list of packages in the package manager's cache."
-recipe           'system::install_packages', "Installs packages to the system with it's native package manager."
+recipe           'system::install_packages',    "Installs packages to the system with it's native package manager."
 
 %w{ ubuntu debian centos fedora redhat archlinux }.each do |os|
   supports os
@@ -21,14 +21,15 @@ end
 
 depends 'apt'
 depends 'cron'
+depends 'hostsfile'
 
 attribute 'system/timezone',
-          :display_name => 'Timezone',
-          :description => 'The system timezone, which must be a valid zoneinfo/tz database entry.',
-          :required => 'optional',
-          :default => 'UTC',
-          :recipes => ['system::timezone', 'system::default'],
-          :choice => [
+          display_name: 'Timezone',
+          description: 'The system timezone, which must be a valid zoneinfo/tz database entry.',
+          required: 'optional',
+          default: 'UTC',
+          recipes: ['system::timezone', 'system::default'],
+          choice: [
             'Africa/Casablanca',
             'America/Bogota',
             'America/Buenos_Aires',
@@ -99,36 +100,36 @@ attribute 'system/timezone',
             'localtime']
 
 attribute 'system/short_hostname',
-          :display_name => 'Short Hostname',
-          :description => 'The short hostname that you would like this node to have, e.g. kryten',
-          :required => 'recommended',
-          :default => 'localhost',
-          :recipes => ['system::hostname', 'system::default']
+          display_name: 'Short Hostname',
+          description: 'The short hostname that you would like this node to have, e.g. kryten',
+          required: 'recommended',
+          default: 'localhost',
+          recipes: ['system::hostname', 'system::default']
 
 attribute 'system/domain_name',
-          :display_name => 'Domain Name',
-          :description => 'The domain name that you would like this node to have, e.g. domain.suf. Note: Only set a valid domain name to satisfy the resolution of a FQDN; use ignore:ignore for no domain name.',
-          :required => 'recommended',
-          :default => 'localdomain',
-          :recipes => ['system::hostname', 'system::default']
+          display_name: 'Domain Name',
+          description: 'The domain name that you would like this node to have, e.g. domain.suf. Note: Only set a valid domain name to satisfy the resolution of a FQDN; use ignore:ignore for no domain name.',
+          required: 'recommended',
+          default: 'localdomain',
+          recipes: ['system::hostname', 'system::default']
 
 attribute 'system/upgrade_packages',
-          :display_name => 'Upgrade Packages',
-          :description => "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
-          :required => 'optional',
-          :choice =>  %w(true false),
-          :recipes => ['system::upgrade_packages']
+          display_name: 'Upgrade Packages',
+          description: "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
+          required: 'optional',
+          choice: %w(true false),
+          recipes: ['system::upgrade_packages']
 
 attribute 'system/packages/install',
-          :display_name => 'Install Packages',
-          :description => 'An array of system packages to install with the package resource in execute phase.',
-          :required => 'optional',
-          :type => 'array',
-          :recipes => ['system::install_packages']
+          display_name: 'Install Packages',
+          description: 'An array of system packages to install with the package resource in execute phase.',
+          required: 'optional',
+          type: 'array',
+          recipes: ['system::install_packages']
 
 attribute 'system/packages/install_compile_time',
-          :display_name => 'Install Packages Compile Phase',
-          :description => 'An array of system packages to install with the package resource in compile phase.',
-          :required => 'optional',
-          :type => 'array',
-          :recipes => ['system::install_packages']
+          display_name: 'Install Packages Compile Phase',
+          description: 'An array of system packages to install with the package resource in compile phase.',
+          required: 'optional',
+          type: 'array',
+          recipes: ['system::install_packages']
