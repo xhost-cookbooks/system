@@ -27,12 +27,7 @@ action :set do
   # ensure the required short hostname is lower case
   new_resource.short_hostname.downcase!
 
-  # fqdn hostname from short or long (depending if domain_name is set)
-  if new_resource.domain_name
-    fqdn = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
-  else
-    fqdn = new_resource.short_hostname
-  end
+  fqdn = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
 
   hostsfile_entry GetIP.local do
     hostname fqdn
@@ -66,9 +61,29 @@ action :set do
     service 'hostname' do
       service_name service_name
       supports service_supports
-      action service_action.to_sym
       provider service_provider
+      action :nothing
     end
+  end
+
+  # let's not manage the entire file because its shared (TODO: upgrade to chef-edit)
+  execute 'update network sysconfig' do
+    command "sed -i 's/HOSTNAME=.*/HOSTNAME=#{fqdn}/' /etc/sysconfig/network"
+    only_if { platform_family?('redhat') }
+    action :nothing
+  end
+  
+  execute 'run hostname' do
+    command "hostname #{fqdn}"
+    not_if { platform_family?('debian') }
+    action :nothing
+  end
+
+  # run domainname command if available
+  execute 'run domainname' do
+    command "domainname #{new_resource.domain_name}"
+    only_if "bash -c 'type -P domainname'"
+    action :nothing
   end
 
   file '/etc/hostname' do
@@ -78,29 +93,9 @@ action :set do
     content fqdn
     action :create
     notifies service_action.to_sym, resources("service[#{service_name}]") if platform_family?('debian')
-  end
-
-  # Call hostname command
-  if platform_family?('redhat')
-    # let's not manage the entire file because its shared (TODO: upgrade to chef-edit)
-    bash 'set hostname' do
-      code <<-EOH
-        sed -i "s/HOSTNAME=.*/HOSTNAME=#{fqdn}/" /etc/sysconfig/network
-        hostname #{fqdn}
-      EOH
-    end
-  else
-    bash 'set hostname' do
-      code <<-EOH
-        hostname #{fqdn}
-      EOH
-    end
-  end
-
-  # run domainname command if available
-  execute 'run domainname' do
-    command "domainname #{new_resource.domain_name}"
-    only_if "bash -c 'type -P domainname'"
+    notifies :run, 'execute[update network sysconfig]', :immediately
+    notifies :run, 'execute[run domainname]', :immediately
+    notifies :run, 'execute[run hostname]', :immediately
   end
 
   # rightscale support: rightlink CLI tools, rs_tag
