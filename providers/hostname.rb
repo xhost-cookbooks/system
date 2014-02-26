@@ -72,7 +72,7 @@ action :set do
     only_if { platform_family?('redhat') }
     action :nothing
   end
-  
+
   execute 'run hostname' do
     command "hostname #{fqdn}"
     not_if { platform_family?('debian') }
