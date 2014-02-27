@@ -117,7 +117,7 @@ action :set do
 
   # rightscale support: rightlink CLI tools, rs_tag
   execute 'set rightscale server hostname tag' do
-    command "rs_tag --add 'node:hostname=#{fqdn}"
+    command "rs_tag --add 'node:hostname=#{fqdn}'"
     only_if "bash -c 'type -P rs_tag'"
   end
 
