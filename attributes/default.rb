@@ -17,7 +17,7 @@
 # limitations under the License.
 
 default['system']['timezone'] = 'UTC'
-default['system']['short_hostname'] = 'localhost'
+default['system']['short_hostname'] = node['hostname']
 default['system']['domain_name'] = 'localdomain'
 default['system']['static_hosts'] = {}
 default['system']['upgrade_packages'] = true
