@@ -29,10 +29,14 @@ action :set do
 
   fqdn = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
 
-  hostsfile_entry GetIP.local do
-    hostname fqdn
-    aliases [new_resource.short_hostname]
-    unique true
+  template '/etc/hosts' do
+    source 'hosts.erb'
+    variables(
+      :node_ip => GetIP.local,
+      :hosts_list => "#{fqdn} #{new_resource.short_hostname}",
+      :static_hosts => new_resource.static_hosts
+      )
+    mode 0744
   end
 
   # Restart the hostname[.sh] service on debian-based distros

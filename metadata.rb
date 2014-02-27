@@ -21,7 +21,6 @@ end
 
 depends 'apt'
 depends 'cron'
-depends 'hostsfile'
 
 attribute 'system/timezone',
           :display_name => 'Timezone',
