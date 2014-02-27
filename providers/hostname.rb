@@ -41,18 +41,18 @@ action :set do
     when 'debian'
       service_name = 'hostname.sh'
       service_supports = {
-        restart: false,
-        status: true,
-        reload: false
+        :restart => false,
+        :status => true,
+        :reload => false
       }
       service_action 'start'
       service_provider = Chef::Provider::Service::Init::Debian
     when 'ubuntu'
       service_name = 'hostname'
       service_supports = {
-        restart: true,
-        status: true,
-        reload: true
+        :restart => true,
+        :status => true,
+        :reload => true
       }
       service_action = 'restart'
       service_provider = Chef::Provider::Service::Upstart

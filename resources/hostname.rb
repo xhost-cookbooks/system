@@ -20,16 +20,16 @@ actions :set
 default_action :set
 
 attribute :short_hostname,
-          kind_of: String,
-          default: nil
+          :kind_of => String,
+          :default => nil
 
 attribute :domain_name,
-          kind_of: String,
-          default: nil
+          :kind_of => String,
+          :default => nil
 
 attribute :static_hosts,
-          kind_of: Hash,
-          default: nil
+          :kind_of => Hash,
+          :default => nil
 
 def initialize(*args)
   super
