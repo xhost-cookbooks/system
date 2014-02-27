@@ -19,6 +19,7 @@ Requirements
 ### Cookbooks
 - apt
 - cron
+- hostsfile
 
 Attributes
 ----------
