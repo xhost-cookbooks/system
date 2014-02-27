@@ -24,7 +24,7 @@ Attributes
 See `attributes/default.rb` for default values.
 
 - `node['system']['timezone']` - the system timezone to set, default `UTC`
-- `node['system']['short_hostname']` - the short hostname to set on the node, default `localhost`
+- `node['system']['short_hostname']` - the short hostname to set on the node, default is `node['hostname']`
 - `node['system']['domain_name']` - the domain name to set on the node, default `localdomain`
 - `node['system']['static_hosts']` - an array of static hostnames to add to /etc/hosts
 - `node['system']['upgrade_packages']` - whether to upgrade the system's packages, default `true`
