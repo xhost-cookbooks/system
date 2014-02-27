@@ -86,24 +86,6 @@ action :set do
     action :nothing
   end
 
-  file '/etc/hostname' do
-    owner 'root'
-    group 'root'
-    mode 0755
-    content fqdn
-    action :create
-    notifies service_action.to_sym, resources("service[#{service_name}]") if platform_family?('debian')
-    notifies :run, 'execute[update network sysconfig]', :immediately
-    notifies :run, 'execute[run domainname]', :immediately
-    notifies :run, 'execute[run hostname]', :immediately
-  end
-
-  # rightscale support: rightlink CLI tools, rs_tag
-  execute 'set rightscale server hostname tag' do
-    command "rs_tag --add 'node:hostname=#{fqdn}"
-    only_if "bash -c 'type -P rs_tag'"
-  end
-
   # Show the new host/node information
   ruby_block 'show host info' do
     block do
@@ -117,6 +99,26 @@ action :set do
       Chef::Log.info("IP addresses for the hostname: #{HostInfo.host_ip == '' ? '<none>' : HostInfo.host_ip}")
       Chef::Log.info("Current Chef FQDN loaded from Ohai: #{node['fqdn']}")
     end
+    action :nothing
+  end
+
+  file '/etc/hostname' do
+    owner 'root'
+    group 'root'
+    mode 0755
+    content fqdn
+    action :create
+    notifies service_action.to_sym, resources("service[#{service_name}]") if platform_family?('debian')
+    notifies :run, 'execute[update network sysconfig]', :immediately
+    notifies :run, 'execute[run domainname]', :immediately
+    notifies :run, 'execute[run hostname]', :immediately
+    notifies :create, 'ruby_block[show host info]', :delayed
+  end
+
+  # rightscale support: rightlink CLI tools, rs_tag
+  execute 'set rightscale server hostname tag' do
+    command "rs_tag --add 'node:hostname=#{fqdn}"
+    only_if "bash -c 'type -P rs_tag'"
   end
 
   new_resource.updated_by_last_action(true)
