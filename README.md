@@ -9,10 +9,12 @@ This cookbook is designed to provide a set of recipes to manage core system prop
 Requirements
 ------------
 - Chef >= 10
+- Ruby 1.9
 
 ### Platforms Supported
 - Debian, Ubuntu
 - CentOS, RHEL, Fedora
+- Arch Linux
 
 ### Cookbooks
 - apt
