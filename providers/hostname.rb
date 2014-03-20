@@ -45,7 +45,7 @@ action :set do
         status: true,
         reload: false
       }
-      service_action 'start'
+      service_action = 'start'
       service_provider = Chef::Provider::Service::Init::Debian
     when 'ubuntu'
       service_name = 'hostname'
