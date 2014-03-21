@@ -35,7 +35,7 @@ action :set do
     unique true
   end
 
-  # Restart the hostname[.sh] service on debian-based distros
+  # (re)start the hostname[.sh] service on debian-based distros
   if platform_family?('debian')
     case node['platform']
     when 'debian'
@@ -108,7 +108,7 @@ action :set do
     mode 0755
     content fqdn
     action :create
-    notifies service_action.to_sym, resources("service[#{service_name}]") if platform_family?('debian')
+    notifies service_action.to_sym, resources("service[hostname]") if platform_family?('debian')
     notifies :run, 'execute[update network sysconfig]', :immediately
     notifies :run, 'execute[run domainname]', :immediately
     notifies :run, 'execute[run hostname]', :immediately
