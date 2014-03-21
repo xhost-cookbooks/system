@@ -59,7 +59,6 @@ action :set do
         status: false,
         reload: false
       }
-      service_action = 'start'
       service_provider = Chef::Provider::Service::Init::Debian
     when 'ubuntu'
       service_name = 'hostname'
@@ -69,7 +68,6 @@ action :set do
         status: false,
         reload: true
       }
-      service_action = 'restart'
       service_provider = Chef::Provider::Service::Upstart
     end
 
@@ -122,7 +120,8 @@ action :set do
     mode 0755
     content fqdn
     action :create
-    notifies service_action.to_sym, resources("service[#{service_name}]"), :immediately if platform_family?('debian')
+    notifies :start, resources("service[#{service_name}]"), :immediately if platform?('debian')
+    notifies :restart, resources("service[#{service_name}]"), :immediately if platform?('ubuntu')
     notifies :run, 'execute[update network sysconfig]', :immediately
     notifies :run, 'execute[run domainname]', :immediately
     notifies :run, 'execute[run hostname]', :immediately
