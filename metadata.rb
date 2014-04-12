@@ -6,7 +6,7 @@ maintainer_email 'cookbooks@xhost.com.au'
 license          'Apache 2.0'
 description      'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.3.1'
+version          '0.3.2'
 
 recipe           'system::default',             "Sets the system's hostname and timezone."
 recipe           'system::timezone',            "Sets the system's' timezone."
