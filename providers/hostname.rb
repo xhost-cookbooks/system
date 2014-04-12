@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# include the HostInfo library
+# include the HostInfo and GetIP libraries
 class Chef::Recipe
   include HostInfo
   include GetIP
@@ -35,31 +35,43 @@ action :set do
     unique true
   end
 
-  # Restart the hostname[.sh] service on debian-based distros
+  # http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution
+  hostsfile_entry '127.0.1.1' do
+    hostname fqdn
+    aliases [new_resource.short_hostname]
+    unique true
+    only_if { platform_family?('debian') }
+    not_if { GetIP.local }
+  end
+
+  # https://tickets.opscode.com/browse/OHAI-389
+  node.automatic_attrs['fqdn'] = fqdn
+  node.automatic_attrs['hostname'] = new_resource.short_hostname
+
+  # (re)start the hostname[.sh] service on debian-based distros
   if platform_family?('debian')
     case node['platform']
     when 'debian'
       service_name = 'hostname.sh'
       service_supports = {
+        start: true,
         restart: false,
-        status: true,
+        status: false,
         reload: false
       }
-      service_action 'start'
       service_provider = Chef::Provider::Service::Init::Debian
     when 'ubuntu'
       service_name = 'hostname'
       service_supports = {
+        start: true,
         restart: true,
-        status: true,
+        status: false,
         reload: true
       }
-      service_action = 'restart'
       service_provider = Chef::Provider::Service::Upstart
     end
 
-    service 'hostname' do
-      service_name service_name
+    service service_name do
       supports service_supports
       provider service_provider
       action :nothing
@@ -96,8 +108,8 @@ action :set do
       Chef::Log.info("Short host name (cut from first dot of hostname): #{HostInfo.short_name == '' ? '<none>' : HostInfo.short_name}")
       Chef::Log.info("Domain of hostname: #{HostInfo.domain_name == '' ? '<none>' : HostInfo.domain_name}")
       Chef::Log.info("FQDN of host: #{HostInfo.fqdn == '' ? '<none>' : HostInfo.fqdn}")
-      Chef::Log.info("IP addresses for the hostname: #{HostInfo.host_ip == '' ? '<none>' : HostInfo.host_ip}")
-      Chef::Log.info("Current Chef FQDN loaded from Ohai: #{node['fqdn']}")
+      Chef::Log.info("IP address(es) for the hostname: #{HostInfo.host_ip == '' ? '<none>' : HostInfo.host_ip}")
+      Chef::Log.info("Current FQDN in node object: #{node['fqdn']}")
     end
     action :nothing
   end
@@ -108,7 +120,8 @@ action :set do
     mode 0755
     content fqdn
     action :create
-    notifies service_action.to_sym, resources("service[#{service_name}]") if platform_family?('debian')
+    notifies :start, resources("service[#{service_name}]"), :immediately if platform?('debian')
+    notifies :restart, resources("service[#{service_name}]"), :immediately if platform?('ubuntu')
     notifies :run, 'execute[update network sysconfig]', :immediately
     notifies :run, 'execute[run domainname]', :immediately
     notifies :run, 'execute[run hostname]', :immediately
