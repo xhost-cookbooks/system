@@ -32,3 +32,7 @@ This file is used to list changes made in each version of the system cookbook.
 - Address FC037: Invalid notification action
 - Add chefignore
 - Add TESTING.md
+
+0.3.3
+-----
+- Revision only to address https://github.com/xhost-cookbooks/system/issues/6
