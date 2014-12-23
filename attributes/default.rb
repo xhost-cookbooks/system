@@ -28,4 +28,7 @@ default['system']['packages']['install_compile_time'] = []
 default['system']['packages']['uninstall'] = []
 default['system']['packages']['uninstall_compile_time'] = []
 
-default['system']['cron_service_name'] = 'cron'
+cron_service_name = 'cron'
+cron_service_name = 'crond' if platform_family?('rhel', 'fedora')
+cron_service_name = 'vixie-cron' if platform_family?('gentoo')
+default['system']['cron_service_name'] = cron_service_name
