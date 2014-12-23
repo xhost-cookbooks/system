@@ -18,8 +18,6 @@
 
 action :set do
 
-  include_recipe 'cron::default'
-
   # TODO: Add checking if zone file exists in the zoneinfo
 
   log("tz-info (before): #{Time.now.strftime("%z %Z")}")
