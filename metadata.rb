@@ -8,7 +8,7 @@ description      'Installs/Configures system elements such as the hostname and t
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.3.3'
 
-recipe           'system::default',             "Sets the system's hostname and timezone."
+recipe           'system::default',             "Sets the system's hostname and timezone, updates the system's installed packages."
 recipe           'system::timezone',            "Sets the system's' timezone."
 recipe           'system::hostname',            "Sets the system's hostname."
 recipe           'system::upgrade_packages',    "Upgrades the system's installed packages."
