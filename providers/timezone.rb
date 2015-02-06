@@ -17,12 +17,11 @@
 # limitations under the License.
 
 action :set do
-
   service node['system']['cron_service_name']
 
   # TODO: Add checking if zone file exists in the zoneinfo
 
-  log("tz-info (before): #{Time.now.strftime("%z %Z")}")
+  log("tz-info (before): #{Time.now.strftime('%z %Z')}")
 
   if %w(debian ubuntu').member? node['platform']
     package 'tzdata'
@@ -56,5 +55,4 @@ action :set do
   end
 
   new_resource.updated_by_last_action(true)
-
 end

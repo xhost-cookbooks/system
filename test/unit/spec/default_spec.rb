@@ -10,6 +10,5 @@ describe 'system::default' do
     it 'writes some chefspec code' do
       pending 'todo'
     end
-
   end
 end
