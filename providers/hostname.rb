@@ -16,14 +16,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# include the HostInfo and GetIP libraries
-class Chef::Recipe
-  include HostInfo
-  include GetIP
+# represents Chef
+class Chef
+  # include the HostInfo and GetIP libraries
+  class Recipe
+    include HostInfo
+    include GetIP
+  end
 end
 
 action :set do
-
   # ensure the required short hostname is lower case
   new_resource.short_hostname.downcase!
 
@@ -59,7 +61,7 @@ action :set do
         status: false,
         reload: false
       }
-      service_provider = Chef::Provider::Service::Init::Debian
+      service_provider = ::Chef::Provider::Service::Init::Debian
     when 'ubuntu'
       service_name = 'hostname'
       service_supports = {
@@ -68,7 +70,7 @@ action :set do
         status: false,
         reload: true
       }
-      service_provider = Chef::Provider::Service::Upstart
+      service_provider = ::Chef::Provider::Service::Upstart
     end
 
     service service_name do
@@ -101,15 +103,15 @@ action :set do
   # Show the new host/node information
   ruby_block 'show host info' do
     block do
-      Chef::Log.info('== New host/node information ==')
-      Chef::Log.info("Hostname: #{HostInfo.hostname == '' ? '<none>' : HostInfo.hostname}")
-      Chef::Log.info("Network node hostname: #{HostInfo.network_node == '' ? '<none>' : HostInfo.network_node}")
-      Chef::Log.info("Alias names of host: #{HostInfo.host_aliases == '' ? '<none>' : HostInfo.host_aliases}")
-      Chef::Log.info("Short host name (cut from first dot of hostname): #{HostInfo.short_name == '' ? '<none>' : HostInfo.short_name}")
-      Chef::Log.info("Domain of hostname: #{HostInfo.domain_name == '' ? '<none>' : HostInfo.domain_name}")
-      Chef::Log.info("FQDN of host: #{HostInfo.fqdn == '' ? '<none>' : HostInfo.fqdn}")
-      Chef::Log.info("IP address(es) for the hostname: #{HostInfo.host_ip == '' ? '<none>' : HostInfo.host_ip}")
-      Chef::Log.info("Current FQDN in node object: #{node['fqdn']}")
+      ::Chef::Log.info('== New host/node information ==')
+      ::Chef::Log.info("Hostname: #{HostInfo.hostname == '' ? '<none>' : HostInfo.hostname}")
+      ::Chef::Log.info("Network node hostname: #{HostInfo.network_node == '' ? '<none>' : HostInfo.network_node}")
+      ::Chef::Log.info("Alias names of host: #{HostInfo.host_aliases == '' ? '<none>' : HostInfo.host_aliases}")
+      ::Chef::Log.info("Short host name (cut from first dot of hostname): #{HostInfo.short_name == '' ? '<none>' : HostInfo.short_name}")
+      ::Chef::Log.info("Domain of hostname: #{HostInfo.domain_name == '' ? '<none>' : HostInfo.domain_name}")
+      ::Chef::Log.info("FQDN of host: #{HostInfo.fqdn == '' ? '<none>' : HostInfo.fqdn}")
+      ::Chef::Log.info("IP address(es) for the hostname: #{HostInfo.host_ip == '' ? '<none>' : HostInfo.host_ip}")
+      ::Chef::Log.info("Current FQDN in node object: #{node['fqdn']}")
     end
     action :nothing
   end
@@ -128,6 +130,15 @@ action :set do
     notifies :create, 'ruby_block[show host info]', :delayed
   end
 
+  # covers cases where a dhcp client has manually
+  # set the hostname (such as with the hostname command)
+  # and /etc/hostname has not changed
+  # this can be the the case with ec2 ebs start
+  execute "ensure hostname sync'd" do
+    command "hostname #{fqdn}"
+    not_if { fqdn ==  Mixlib::ShellOut.new('hostname -f').run_command.stdout }
+  end
+
   # rightscale support: rightlink CLI tools, rs_tag
   execute 'set rightscale server hostname tag' do
     command "rs_tag --add 'node:hostname=#{fqdn}'"
@@ -135,5 +146,4 @@ action :set do
   end
 
   new_resource.updated_by_last_action(true)
-
 end # close action :set
