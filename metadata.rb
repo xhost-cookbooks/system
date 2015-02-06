@@ -15,9 +15,7 @@ recipe           'system::upgrade_packages',    "Upgrades the system's installed
 recipe           'system::update_package_list', "Updates the system's list of packages in the package manager's cache."
 recipe           'system::install_packages',    "Installs packages to the system with it's native package manager."
 
-%w{ ubuntu debian centos fedora redhat archlinux }.each do |os|
-  supports os
-end
+%w(ubuntu debian centos fedora redhat archlinux).each { |os| supports os }
 
 depends 'apt'
 depends 'cron'
