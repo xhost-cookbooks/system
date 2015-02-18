@@ -36,3 +36,7 @@ This file is used to list changes made in each version of the system cookbook.
 0.3.3
 -----
 - Revision only to address https://github.com/xhost-cookbooks/system/issues/6
+
+0.3.4
+-----
+- Revision only to address https://github.com/xhost-cookbooks/system/issues/8

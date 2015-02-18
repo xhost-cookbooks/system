@@ -23,7 +23,7 @@ action :set do
 
   log("tz-info (before): #{Time.now.strftime('%z %Z')}")
 
-  if %w(debian ubuntu').member? node['platform']
+  if %w(debian ubuntu).member? node['platform']
     package 'tzdata'
 
     bash 'dpkg-reconfigure tzdata' do
