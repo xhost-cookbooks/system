@@ -31,24 +31,33 @@ action :set do
 
   fqdn = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
 
-  hostsfile_entry GetIP.local do
-    hostname fqdn
-    aliases [new_resource.short_hostname]
-    unique true
-  end
-
-  # http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution
-  hostsfile_entry '127.0.1.1' do
-    hostname fqdn
-    aliases [new_resource.short_hostname]
-    unique true
-    only_if { platform_family?('debian') }
-    not_if { GetIP.local }
-  end
-
   # https://tickets.opscode.com/browse/OHAI-389
+  # http://lists.opscode.com/sympa/arc/chef/2014-10/msg00092.html
   node.automatic_attrs['fqdn'] = fqdn
   node.automatic_attrs['hostname'] = new_resource.short_hostname
+
+  # http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution
+  if node['system']['permanent_ip']
+    # remove 127.0.0.1 from /etc/hosts when using permanent IP
+    hostsfile_entry '127.0.1.1' do
+      action :remove
+    end
+    hostsfile_entry GetIP.local do
+      hostname lazy { fqdn }
+      aliases [new_resource.short_hostname]
+    end
+  else
+    hostsfile_entry GetIP.local do
+      hostname lazy { fqdn }
+      aliases [new_resource.short_hostname]
+      action :remove
+    end
+    hostsfile_entry '127.0.1.1' do
+      hostname lazy { fqdn }
+      aliases [new_resource.short_hostname]
+      only_if { platform_family?('debian') }
+    end
+  end
 
   # (re)start the hostname[.sh] service on debian-based distros
   if platform_family?('debian')
@@ -87,11 +96,12 @@ action :set do
     action :nothing
   end
 
+  # we want to physically set the hostname in the compile phase
+  # as early as possible, just in case (although its not actually needed)
   execute 'run hostname' do
     command "hostname #{fqdn}"
-    not_if { platform_family?('debian') }
     action :nothing
-  end
+  end.run_action(:run)
 
   # run domainname command if available
   execute 'run domainname' do
