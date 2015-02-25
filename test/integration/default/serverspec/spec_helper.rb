@@ -5,6 +5,6 @@ set :backend, :exec
 
 RSpec.configure do |c|
   c.before :all do
-    c.path = '/sbin:/usr/bin'
+    c.path = '/bin:/sbin:/usr/bin'
   end
 end
