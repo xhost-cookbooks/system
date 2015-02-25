@@ -33,6 +33,7 @@ See `attributes/default.rb` for default values.
 - `node['system']['upgrade_packages']` - whether to upgrade the system's packages, default `true`
 - `node['system']['packages']['install']` - an array of packages to install
 - `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase
+- `node['system']['permanent_ip']` - whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution)
 
 The following attributes should never need to be user set:
 
@@ -45,6 +46,31 @@ Usage
 
 - default
 - hostname
+
+When using resources that reference `node['fqdn']` in variables or attribute values, note that you will
+need to lazy load to get the new hostname that is being set.
+
+Use with variables:
+```
+template '/tmp/foobar.txt' do
+  source 'use_fqdn_in_variable.erb'
+  variables lazy {
+    {
+      fqdn: node['fqdn'],
+      foo: bar
+    }
+  }
+end
+```
+
+Use with a resource attribute:
+```
+log 'lazy_log_fqdn' do
+  message lazy { node['fqdn'] }
+  level :debug
+end
+```
+
 - install_packages
 - reboot
 - timezone

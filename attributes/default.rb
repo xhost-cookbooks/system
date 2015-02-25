@@ -21,7 +21,7 @@ default['system']['short_hostname'] = node['hostname']
 default['system']['domain_name'] = 'localdomain'
 default['system']['static_hosts'] = {}
 default['system']['upgrade_packages'] = true
-
+default['system']['permanent_ip'] = false
 default['system']['packages']['install'] = []
 default['system']['packages']['install_compile_time'] = []
 

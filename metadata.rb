@@ -131,3 +131,10 @@ attribute 'system/packages/install_compile_time',
           required: 'optional',
           type: 'array',
           recipes: ['system::install_packages']
+
+attribute 'system/permanent_ip',
+          display_name: 'Permanent IP Address',
+          description: 'Whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution).',
+          required: 'optional',
+          type: 'boolean',
+          recipes: ['system::hostname', 'system::default']
