@@ -3,12 +3,17 @@
 require_relative 'spec_helper'
 
 describe 'system::default' do
-  before { stub_resources }
-  describe 'ubuntu' do
-    let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
 
-    it 'writes some chefspec code' do
-      pending 'todo'
-    end
+  it 'includes the `update_package_list` recipe' do
+    expect(chef_run).to include_recipe('system::update_package_list')
+  end
+
+  it 'includes the `timezone` recipe' do
+    expect(chef_run).to include_recipe('system::timezone')
+  end
+
+  it 'includes the `hostname` recipe' do
+    expect(chef_run).to include_recipe('system::hostname')
   end
 end
