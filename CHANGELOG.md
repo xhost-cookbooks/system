@@ -55,3 +55,14 @@ This file is used to list changes made in each version of the system cookbook.
 0.4.1
 -----
 - Revision only to address https://github.com/xhost-cookbooks/system/issues/10
+
+0.5.0
+-----
+- Add a hostsfile entry for 127.0.0.1 against localhost.localdomain when not using permanent_ip
+- Include the FQDN in the hostfile entry for for 127.0.0.1 when not on Debian
+- Add resource for the network service in RHEL platform family (restart it on hostname change)
+- Use Chef::Util::FileEdit instead of sed to update /etc/sysconfig/network
+- permanent_ip is now true by default
+- Add support for hostnamectl (mostly for EL 7)
+- Fix missing trailing line return for /etc/hostname
+- Test Debian and CentOS with test-kitchen
