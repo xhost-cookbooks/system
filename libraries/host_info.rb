@@ -51,4 +51,8 @@ module HostInfo
   def self.host_ip
     shell_command('hostname -i')
   end
+
+  def self.hostnamectl
+    shell_command('hostnamectl')
+  end
 end
