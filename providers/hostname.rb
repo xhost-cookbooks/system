@@ -42,6 +42,11 @@ action :set do
     hostsfile_entry '127.0.1.1' do
       action :remove
     end
+    hostsfile_entry '127.0.0.1' do
+      hostname 'localhost.localdomain'
+      aliases ['localhost']
+      unique true
+    end
     hostsfile_entry GetIP.local do
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
@@ -56,6 +61,11 @@ action :set do
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       only_if { platform_family?('debian') }
+    end
+    hostsfile_entry '127.0.0.1' do
+      hostname lazy { fqdn }
+      aliases [new_resource.short_hostname, 'localhost.localdomain', 'localhost']
+      not_if { platform_family?('debian') }
     end
   end
 
@@ -89,11 +99,10 @@ action :set do
     end
   end
 
-  # let's not manage the entire file because its shared (TODO: upgrade to chef-edit)
-  execute 'update network sysconfig' do
-    command "sed -i 's/HOSTNAME=.*/HOSTNAME=#{fqdn}/' /etc/sysconfig/network"
-    only_if { platform_family?('redhat') }
-    action :nothing
+  # http://www.rackspace.com/knowledge_center/article/centos-hostname-change
+  service 'network' do
+    only_if { platform_family?('rhel') }
+    only_if { node['platform_version'] < '7.0' }
   end
 
   # we want to physically set the hostname in the compile phase
@@ -102,6 +111,36 @@ action :set do
     command "hostname #{fqdn}"
     action :nothing
   end.run_action(:run)
+
+  # let's not manage the entire file because its shared
+  ruby_block 'update network sysconfig' do
+    block do
+      fe = ::Chef::Util::FileEdit.new('/etc/sysconfig/network')
+      fe.search_file_replace_line(/HOSTNAME\=/, "HOSTNAME=#{fqdn}")
+      fe.write_file
+    end
+    only_if { platform_family?('rhel') }
+    only_if { node['platform_version'] < '7.0' }
+    not_if { ::File.readlines('/etc/sysconfig/network').grep("HOSTNAME=#{fqdn}").any? }
+    notifies :restart, 'service[network]', :delayed
+  end
+
+  ruby_block 'show hostnamectl' do
+    block do
+      ::Chef::Log.info('== hostnamectl ==')
+      ::Chef::Log.info("#{HostInfo.hostnamectl}")
+    end
+    action :nothing
+    only_if "bash -c 'type -P hostnamectl'"
+  end
+
+  # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec_Configuring_Host_Names_Using_hostnamectl.html
+  # hostnamectl is used by other distributions too
+  execute 'run hostnamectl' do
+    command "hostnamectl set-hostname #{fqdn}"
+    only_if "bash -c 'type -P hostnamectl'"
+    notifies :create, 'ruby_block[show hostnamectl]', :delayed
+  end
 
   # run domainname command if available
   execute 'run domainname' do
@@ -130,11 +169,11 @@ action :set do
     owner 'root'
     group 'root'
     mode 0755
-    content fqdn
+    content "#{fqdn}\n"
     action :create
     notifies :start, resources("service[#{service_name}]"), :immediately if platform?('debian')
     notifies :restart, resources("service[#{service_name}]"), :immediately if platform?('ubuntu')
-    notifies :run, 'execute[update network sysconfig]', :immediately
+    notifies :create, 'ruby_block[update network sysconfig]', :immediately
     notifies :run, 'execute[run domainname]', :immediately
     notifies :run, 'execute[run hostname]', :immediately
     notifies :create, 'ruby_block[show host info]', :delayed
