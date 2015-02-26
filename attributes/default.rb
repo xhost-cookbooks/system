@@ -32,3 +32,7 @@ cron_service_name = 'cron'
 cron_service_name = 'crond' if platform_family?('rhel', 'fedora')
 cron_service_name = 'vixie-cron' if platform_family?('gentoo')
 default['system']['cron_service_name'] = cron_service_name
+
+# RightScale doesn't support boolean attributes in metadata
+node.override['system']['permanent_ip'] = false if node['system']['permanent_ip'] == 'false'
+node.override['system']['permanent_ip'] = true if node['system']['permanent_ip'] == 'true'

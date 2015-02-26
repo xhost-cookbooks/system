@@ -51,3 +51,7 @@ This file is used to list changes made in each version of the system cookbook.
 - New attribute, permanent_ip to affect usage of 127.0.1.1 on debian
 - Fix setting hosts in /etc/hosts by using lazy loading of fqdn
 - Set fqdn in compile phase, to be sure
+
+0.4.1
+-----
+- Revision only to address https://github.com/xhost-cookbooks/system/issues/10

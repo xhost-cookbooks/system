@@ -6,7 +6,7 @@ maintainer_email 'cookbooks@xhost.com.au'
 license          'Apache 2.0'
 description      'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.3.4'
+version          '0.4.1'
 
 recipe           'system::default',             "Sets the system's hostname and timezone, updates the system's installed packages."
 recipe           'system::timezone',            "Sets the system's' timezone."
@@ -136,5 +136,5 @@ attribute 'system/permanent_ip',
           display_name: 'Permanent IP Address',
           description: 'Whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution).',
           required: 'optional',
-          type: 'boolean',
+          choice: %w(true false),
           recipes: ['system::hostname', 'system::default']
