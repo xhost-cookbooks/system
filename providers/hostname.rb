@@ -128,7 +128,7 @@ action :set do
   ruby_block 'show hostnamectl' do
     block do
       ::Chef::Log.info('== hostnamectl ==')
-      ::Chef::Log.info("#{HostInfo.hostnamectl}")
+      ::Chef::Log.info(HostInfo.hostnamectl)
     end
     action :nothing
     only_if "bash -c 'type -P hostnamectl'"
