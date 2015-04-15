@@ -32,17 +32,16 @@ action :set do
       action :nothing
     end
 
-    template '/etc/timezone' do
-      source 'timezone.conf.erb'
+    file '/etc/timezone' do
       owner 'root'
       group 'root'
-      mode 0644
+      content "#{new_resource.timezone}\n"
       notifies :run, 'bash[dpkg-reconfigure tzdata]'
     end
   end
 
   link '/etc/localtime' do
-    to "/usr/share/zoneinfo/#{new_resource.name}"
+    to "/usr/share/zoneinfo/#{new_resource.timezone}"
     notifies :restart, "service[#{node['system']['cron_service_name']}]", :immediately
   end
 
