@@ -22,7 +22,7 @@ action :set do
 
   fail "#{zone_file} is not a valid timezone!" unless ::File.file?("/usr/share/zoneinfo/#{zone_file}")
 
-  log ("tz-info (before set): #{Time.now.strftime('%z %Z')}") do
+  log "tz-info (before set): #{Time.now.strftime('%z %Z')}" do
     level :debug
   end
 
