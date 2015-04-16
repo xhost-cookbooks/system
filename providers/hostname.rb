@@ -185,7 +185,7 @@ action :set do
   # this can be the the case with ec2 ebs start
   execute "ensure hostname sync'd" do
     command "hostname #{fqdn}"
-    not_if { fqdn ==  Mixlib::ShellOut.new('hostname -f').run_command.stdout }
+    not_if { fqdn == Mixlib::ShellOut.new('hostname -f').run_command.stdout }
   end
 
   # rightscale support: rightlink CLI tools, rs_tag
