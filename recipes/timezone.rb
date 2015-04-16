@@ -17,7 +17,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ensure we have cron configured and available as a resource to notify restart
-include_recipe 'cron::default'
-
 system_timezone node['system']['timezone']

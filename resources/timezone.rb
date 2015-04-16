@@ -18,7 +18,6 @@
 
 attribute :timezone,
           kind_of: String,
-          default: 'Etc/UTC',
           name_attribute: true
 
 actions :set

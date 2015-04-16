@@ -17,11 +17,14 @@
 # limitations under the License.
 
 action :set do
-  service node['system']['cron_service_name']
+  # support user specifying a space instead of underscore in zone file path
+  zone_file = new_resource.timezone.sub(' ', '_')
 
-  # TODO: Add checking if zone file exists in the zoneinfo
+  fail "#{zone_file} is not a valid timezone!" unless ::File.file?("/usr/share/zoneinfo/#{zone_file}")
 
-  log("tz-info (before): #{Time.now.strftime('%z %Z')}")
+  log ("tz-info (before set): #{Time.now.strftime('%z %Z')}") do
+    level :debug
+  end
 
   if %w(debian ubuntu).member? node['platform']
     package 'tzdata'
@@ -35,13 +38,13 @@ action :set do
     file '/etc/timezone' do
       owner 'root'
       group 'root'
-      content "#{new_resource.timezone}\n"
+      content "#{zone_file}\n"
       notifies :run, 'bash[dpkg-reconfigure tzdata]'
     end
   end
 
   link '/etc/localtime' do
-    to "/usr/share/zoneinfo/#{new_resource.timezone}"
+    to "/usr/share/zoneinfo/#{zone_file}"
     notifies :restart, "service[#{node['system']['cron_service_name']}]", :immediately
   end
 
@@ -49,7 +52,7 @@ action :set do
     block do
       tz_info = ::Time.now.strftime('%z %Z')
       tz_info << "#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')})"
-      Chef::Log.info("tz-info: #{tz_info}")
+      ::Chef::Log.debug("tz-info (after set): #{tz_info}")
     end
   end
 
