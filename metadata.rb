@@ -1,4 +1,4 @@
-# Encoding: utf-8
+# encoding: UTF-8
 
 name             'system'
 maintainer       'Xhost Australia'
@@ -99,7 +99,7 @@ attribute 'system/timezone',
 
 attribute 'system/short_hostname',
           display_name: 'Short Hostname',
-          description: 'The short hostname that you would like this node to have, e.g. kryten',
+          description: 'The short hostname that you would like this node to have, e.g. kryten.',
           required: 'recommended',
           default: 'localhost',
           recipes: ['system::hostname', 'system::default']
@@ -109,6 +109,19 @@ attribute 'system/domain_name',
           description: 'The domain name that you would like this node to have, e.g. domain.suf. Note: Only set a valid domain name to satisfy the resolution of a FQDN; use ignore:ignore for no domain name.',
           required: 'recommended',
           default: 'localdomain',
+          recipes: ['system::hostname', 'system::default']
+
+attribute 'system/netbios_name',
+          display_name: 'NetBIOS Name',
+          description: 'The NetBIOS name to set on the node, default is the value of node/short_hostname upper-cased (OS X only).',
+          required: 'optional',
+          recipes: ['system::hostname', 'system::default']
+
+attribute 'system/workgroup',
+          display_name: 'NetBIOS Workgroup',
+          description: "The NetBIOS workgroup name to set on the node, default is 'WORKGROUP' (OS X only).",
+          required: 'optional',
+          default: 'WORKGROUP',
           recipes: ['system::hostname', 'system::default']
 
 attribute 'system/upgrade_packages',
