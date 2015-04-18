@@ -17,10 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if node['platform'] == 'mac_os_x'
-  log 'Setting hostname on OS X not supported, skipping' && return
-end
-
 system_hostname node['system']['short_hostname'] do
   short_hostname node['system']['short_hostname']
   domain_name node['system']['domain_name']
