@@ -1,4 +1,4 @@
-# Encoding: utf-8
+# encoding: UTF-8
 
 namespace :prepare do
   desc 'Install ChefDK'
