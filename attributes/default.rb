@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: system
 # Attributes:: system
@@ -19,6 +20,8 @@
 default['system']['timezone'] = 'Etc/UTC'
 default['system']['short_hostname'] = node['hostname']
 default['system']['domain_name'] = 'localdomain'
+default['system']['netbios_name'] = node['system']['short_hostname'].upcase
+default['system']['workgroup'] = 'WORKGROUP'
 default['system']['static_hosts'] = {}
 default['system']['upgrade_packages'] = true
 default['system']['permanent_ip'] = true
