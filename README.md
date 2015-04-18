@@ -15,6 +15,7 @@ Requirements
 - Debian, Ubuntu
 - CentOS, RHEL, Fedora
 - Arch Linux
+- Mac OS X
 
 ### Cookbooks
 - apt
@@ -29,6 +30,8 @@ See `attributes/default.rb` for default values.
 - `node['system']['timezone']` - the system timezone to set, default `UTC`
 - `node['system']['short_hostname']` - the short hostname to set on the node, default is `node['hostname']`
 - `node['system']['domain_name']` - the domain name to set on the node, default `localdomain`
+- `node['system']['netbios_name']` - the NetBIOS name to set on the node, default is `node['system']['short_hostname']` upper-cased (OS X only)
+- `node['system']['workgroup']` - the NetBIOS workgroup name to set on the node, default is `WORKGROUP` (OS X only)
 - `node['system']['static_hosts']` - an array of static hostnames to add to /etc/hosts
 - `node['system']['upgrade_packages']` - whether to upgrade the system's packages, default `true`
 - `node['system']['packages']['install']` - an array of packages to install
