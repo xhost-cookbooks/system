@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: system
 # Provider:: hostname
@@ -36,6 +37,38 @@ action :set do
   node.automatic_attrs['fqdn'] = fqdn
   node.automatic_attrs['hostname'] = new_resource.short_hostname
 
+  if platform_family?('mac_os_x')
+    execute 'set configd parameter: ComputerName' do
+      command "scutil --set ComputerName #{new_resource.short_hostname}"
+      not_if { Mixlib::ShellOut.new('scutil --get ComputerName').run_command.stdout.strip == new_resource.short_hostname }
+      notifies :create, 'ruby_block[show host info]', :delayed
+    end
+
+    execute 'set configd parameter: LocalHostName' do
+      command "scutil --set LocalHostName #{new_resource.short_hostname}"
+      not_if { Mixlib::ShellOut.new('scutil --get LocalHostName').run_command.stdout.strip == new_resource.short_hostname }
+      notifies :create, 'ruby_block[show host info]', :delayed
+    end
+
+    execute 'set configd parameter: HostName' do
+      command "scutil --set HostName #{fqdn}"
+      not_if { Mixlib::ShellOut.new('scutil --get HostName').run_command.stdout.strip == fqdn }
+      notifies :create, 'ruby_block[show host info]', :delayed
+    end
+
+    execute 'set configd parameter: NetBIOSName' do
+      command "defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName #{node['system']['netbios_name']}"
+      not_if { Mixlib::ShellOut.new('defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName').run_command.stdout.strip == node['system']['netbios_name'] }
+      notifies :create, 'ruby_block[show host info]', :delayed
+    end
+
+    execute 'set configd parameter: Workgroup' do
+      command "defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server Workgroup #{node['system']['workgroup']}"
+      not_if { Mixlib::ShellOut.new('defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server Workgroup').run_command.stdout.strip == node['system']['workgroup'] }
+      notifies :create, 'ruby_block[show host info]', :delayed
+    end
+  end
+
   # http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution
   if node['system']['permanent_ip']
     # remove 127.0.0.1 from /etc/hosts when using permanent IP
@@ -67,6 +100,17 @@ action :set do
       aliases [new_resource.short_hostname, 'localhost.localdomain', 'localhost']
       not_if { platform_family?('debian') }
     end
+  end
+
+  # add in/ensure this default host for mac_os_x
+  hostsfile_entry '255.255.255.255' do
+    hostname 'broadcasthost'
+    only_if { platform_family?('mac_os_x') }
+  end
+
+  # ipv6 for localhost
+  hostsfile_entry '::1' do
+    hostname 'localhost'
   end
 
   # (re)start the hostname[.sh] service on debian-based distros
@@ -110,6 +154,7 @@ action :set do
   execute 'run hostname' do
     command "hostname #{fqdn}"
     action :nothing
+    not_if { Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip == fqdn }
   end.run_action(:run)
 
   # let's not manage the entire file because its shared
@@ -161,6 +206,7 @@ action :set do
       ::Chef::Log.info("FQDN of host: #{HostInfo.fqdn == '' ? '<none>' : HostInfo.fqdn}")
       ::Chef::Log.info("IP address(es) for the hostname: #{HostInfo.host_ip == '' ? '<none>' : HostInfo.host_ip}")
       ::Chef::Log.info("Current FQDN in node object: #{node['fqdn']}")
+      ::Chef::Log.info("Apple SMB Server: #{HostInfo.apple_smb_server}") if node['platform'] == 'mac_os_x'
     end
     action :nothing
   end
@@ -177,6 +223,7 @@ action :set do
     notifies :run, 'execute[run domainname]', :immediately
     notifies :run, 'execute[run hostname]', :immediately
     notifies :create, 'ruby_block[show host info]', :delayed
+    not_if { node['platform'] == 'mac_os_x' }
   end
 
   # covers cases where a dhcp client has manually
@@ -185,7 +232,7 @@ action :set do
   # this can be the the case with ec2 ebs start
   execute "ensure hostname sync'd" do
     command "hostname #{fqdn}"
-    not_if { fqdn == Mixlib::ShellOut.new('hostname -f').run_command.stdout }
+    not_if { Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip == fqdn }
   end
 
   # rightscale support: rightlink CLI tools, rs_tag
