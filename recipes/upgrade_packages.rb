@@ -31,7 +31,7 @@ upgrade_cmd = value_for_platform(
     'default' => 'pacman --sync --refresh --sysupgrade --noprogressbar -q'
   },
   'freebsd' => { 'default' => 'portupgrade -af' },
-  'mac_os_x' => { 'default' => 'port sync' }
+  'mac_os_x' => { 'default' => 'port upgrade installed' }
 )
 
 e = execute 'upgrade system packages' do

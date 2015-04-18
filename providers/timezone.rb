@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: system
 # Provider:: timezone
@@ -15,6 +16,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# SYSTEMSETUP(8) could be used on mac_os_x, however from oberservation
+# linking /etc/localtime in the same manner as linux is adequate
 
 action :set do
   # support user specifying a space instead of underscore in zone file path
@@ -45,7 +49,8 @@ action :set do
 
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
-    notifies :restart, "service[#{node['system']['cron_service_name']}]", :immediately
+    notifies :restart, "service[#{node['system']['cron_service_name']}]", :immediately unless node['platform'] == 'mac_os_x'
+    notifies :create, 'ruby_block[verify linked timezone]', :delayed
   end
 
   ruby_block 'verify linked timezone' do
@@ -54,6 +59,8 @@ action :set do
       tz_info << "#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')})"
       ::Chef::Log.debug("tz-info (after set): #{tz_info}")
     end
+    action :nothing
+    only_if { ::File.symlink?('/etc/localtime') }
   end
 
   new_resource.updated_by_last_action(true)

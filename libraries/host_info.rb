@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: system
 # Library:: host_info
@@ -54,5 +55,9 @@ module HostInfo
 
   def self.hostnamectl
     shell_command('hostnamectl')
+  end
+
+  def self.apple_smb_server
+    shell_command('defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server')
   end
 end

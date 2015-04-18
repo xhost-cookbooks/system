@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: system
 # Resource:: timezone
@@ -25,5 +26,5 @@ actions :set
 def initialize(*args)
   super
   @action = :set
-  @run_context.include_recipe 'cron'
+  @run_context.include_recipe 'cron' unless node['platform'] == 'mac_os_x'
 end
