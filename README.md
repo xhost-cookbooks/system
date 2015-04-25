@@ -91,8 +91,6 @@ Updates the local package manager's package list.
 ####`system::upgrade_packages`
 Upgrades all installed packages of the local package manager.
 
-See `metadata.rb` for more information.
-
 License and Authors
 -------------------
 - Author: Chris Fordham (<chris@fordham-nagy.id.au>)
