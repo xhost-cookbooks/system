@@ -19,5 +19,7 @@ platforms:
 
 suites:
   - name: default
-    run_list: recipe[system::default]
-    attributes: { 'system': { 'short_hostname': 'test', 'domain_name': 'kitchen' } }
+    run_list:
+     - recipe[system::default]
+     - recipe[system::timezone]
+    attributes: { 'system': { 'short_hostname': 'test', 'domain_name': 'kitchen', 'timezone':'Australia/Sydney' } }
