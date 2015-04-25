@@ -14,6 +14,8 @@ recipe           'system::hostname',            "Sets the system's hostname."
 recipe           'system::upgrade_packages',    "Upgrades the system's installed packages."
 recipe           'system::update_package_list', "Updates the system's list of packages in the package manager's cache."
 recipe           'system::install_packages',    "Installs packages to the system with it's native package manager."
+recipe           'system::reboot',              'Attempts to gracefully reboot the operating system.'
+recipe           'system::shutdown',            'Attempts to gracefully shutdown the operating system.'
 
 %w(ubuntu debian centos fedora redhat archlinux).each { |os| supports os }
 
