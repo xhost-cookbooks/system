@@ -47,10 +47,10 @@ Usage
 
 ###Recipes
 
-####`system::default`
+#####`system::default`
 Includes `system::update_package_list`, `system::timezone` and `system::hostname` recipes only.
 
-####`system::hostname`
+#####`system::hostname`
 When using resources that reference `node['fqdn']` in variables or attribute values, note that you will
 need to lazy load to get the new hostname that is being set.
 
@@ -75,27 +75,27 @@ log 'lazy_log_fqdn' do
 end
 ```
 
-####`system::install_packages`
+#####`system::install_packages`
 Installs a list of system packages as specified in the `node['system']['packages']['install']` attribute.
 Will also install packages provided at compile time from within `node['system']['packages']['install_compile_time']`.
 
-####`system::uninstall_packages`
+#####`system::uninstall_packages`
 Uninstalls a list of system packages as specified in the `node['system']['packages']['uninstall']` attribute.
 Will also uninstall packages provided at compile time from within `node['system']['packages']['uninstall_compile_time']`.
 
-####`system::reboot`
+#####`system::reboot`
 Attempts to gracefully reboot the operating system.
 
-####`system::shutdown`
+#####`system::shutdown`
 Attempts to gracefully shutdown the operating system.
 
-####`system::timezone`
+#####`system::timezone`
 Sets the timezone of the system.
 
-####`system::update_package_list`
+#####`system::update_package_list`
 Updates the local package manager's package list.
 
-####`system::upgrade_packages`
+#####`system::upgrade_packages`
 Upgrades all installed packages of the local package manager.
 
 License and Authors
