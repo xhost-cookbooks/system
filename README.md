@@ -4,11 +4,11 @@ system Cookbook
 [![Build Status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)
 [![Code Climate](https://codeclimate.com/github/xhost-cookbooks/system.png)](https://codeclimate.com/github/xhost-cookbooks/system)
 
-This cookbook is designed to provide a set of recipes to manage core system properties.
+This cookbook is designed to provide a set of recipes to manage core system properties as well as some ad-hoc operational tasks.
 
 Requirements
 ------------
-- Chef >= 10
+- Chef >= 11
 - Ruby 1.9
 
 ### Platforms Supported
@@ -27,7 +27,7 @@ Attributes
 
 See `attributes/default.rb` for default values.
 
-- `node['system']['timezone']` - the system timezone to set, default `UTC`
+- `node['system']['timezone']` - the system timezone to set, default `Etc/UTC`
 - `node['system']['short_hostname']` - the short hostname to set on the node, default is `node['hostname']`
 - `node['system']['domain_name']` - the domain name to set on the node, default `localdomain`
 - `node['system']['netbios_name']` - the NetBIOS name to set on the node, default is `node['system']['short_hostname']` upper-cased (OS X only)
@@ -47,9 +47,10 @@ Usage
 
 ###Recipes
 
-- default
-- hostname
+####`system::default`
+Includes `system::update_package_list`, `system::timezone` and `system::hostname` recipes only.
 
+####`system::hostname`
 When using resources that reference `node['fqdn']` in variables or attribute values, note that you will
 need to lazy load to get the new hostname that is being set.
 
@@ -74,11 +75,21 @@ log 'lazy_log_fqdn' do
 end
 ```
 
-- install_packages
-- reboot
-- timezone
-- update_package_list
-- upgrade_packages
+####`system::install_packages`
+Installs a list of system packages as specified in the `node['system']['packages']['install']` attribute.
+Will also install packages provided at compile time from within `node['system']['packages']['install_compile_time']`.
+
+####`system::reboot`
+Attempts to gracefully reboot the operating system.
+
+####`system::timezone`
+Sets the timezone of the system.
+
+####`system::update_package_list`
+Updates the local package manager's package list.
+
+####`system::upgrade_packages`
+Upgrades all installed packages of the local package manager.
 
 See `metadata.rb` for more information.
 
