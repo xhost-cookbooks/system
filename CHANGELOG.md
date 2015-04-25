@@ -66,3 +66,15 @@ This file is used to list changes made in each version of the system cookbook.
 - Add support for hostnamectl (mostly for EL 7)
 - Fix missing trailing line return for /etc/hostname
 - Test Debian and CentOS with test-kitchen
+
+0.6.0
+-----
+- Mac OS X support (including NetBIOS and Workgroup names)!
+- Pull request #11 (default timezone is now 'Etc/UTC')
+- Fail when an invalid timezone is provided
+- Support providing a zone with a space instead of underscore (for the humans)
+- Make before and after tz-info log resources debug log level
+- update_package_list recipe will now sync MacPorts tree
+- upgrade_packages recipe will now upgrade installed ports for MacPorts
+- Improved test suite including use of chef_zero with test-kitchen, more platforms/versions
+- Add a good handful of Serverspec tests
