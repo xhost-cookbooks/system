@@ -79,6 +79,10 @@ end
 Installs a list of system packages as specified in the `node['system']['packages']['install']` attribute.
 Will also install packages provided at compile time from within `node['system']['packages']['install_compile_time']`.
 
+####`system::uninstall_packages`
+Uninstalls a list of system packages as specified in the `node['system']['packages']['uninstall']` attribute.
+Will also uninstall packages provided at compile time from within `node['system']['packages']['uninstall_compile_time']`.
+
 ####`system::reboot`
 Attempts to gracefully reboot the operating system.
 
