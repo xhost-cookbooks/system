@@ -86,6 +86,9 @@ Will also uninstall packages provided at compile time from within `node['system'
 ####`system::reboot`
 Attempts to gracefully reboot the operating system.
 
+####`system::shutdown`
+Attempts to gracefully shutdown the operating system.
+
 ####`system::timezone`
 Sets the timezone of the system.
 
