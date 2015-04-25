@@ -22,7 +22,7 @@ include_recipe 'apt' if platform_family?('debian')
 # sync the MacPorts tree if older than 1 week
 execute 'sync macports tree' do
   command 'port -d sync'
-  only_if "bash -c 'type -P port'"
   only_if { platform_family?('mac_os_x') }
+  only_if "bash -c 'type -P port'"
   only_if { (Time.now - File.mtime('/opt/local/var/macports/pingtimes')) >= 604_800 }
 end
