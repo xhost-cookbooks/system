@@ -38,34 +38,28 @@ action :set do
   node.automatic_attrs['hostname'] = new_resource.short_hostname
 
   if platform_family?('mac_os_x')
-    execute 'set configd parameter: ComputerName' do
-      command "scutil --set ComputerName #{new_resource.short_hostname}"
-      not_if { Mixlib::ShellOut.new('scutil --get ComputerName').run_command.stdout.strip == new_resource.short_hostname }
-      notifies :create, 'ruby_block[show host info]', :delayed
-    end
-
-    execute 'set configd parameter: LocalHostName' do
-      command "scutil --set LocalHostName #{new_resource.short_hostname}"
-      not_if { Mixlib::ShellOut.new('scutil --get LocalHostName').run_command.stdout.strip == new_resource.short_hostname }
-      notifies :create, 'ruby_block[show host info]', :delayed
-    end
-
     execute 'set configd parameter: HostName' do
       command "scutil --set HostName #{fqdn}"
       not_if { Mixlib::ShellOut.new('scutil --get HostName').run_command.stdout.strip == fqdn }
       notifies :create, 'ruby_block[show host info]', :delayed
     end
 
-    execute 'set configd parameter: NetBIOSName' do
-      command "defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName #{node['system']['netbios_name']}"
-      not_if { Mixlib::ShellOut.new('defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName').run_command.stdout.strip == node['system']['netbios_name'] }
-      notifies :create, 'ruby_block[show host info]', :delayed
+    shorthost_params = %w(ComputerName LocalHostName)
+    shorthost_params.each do |param|
+      execute "set configd parameter: #{param}" do
+        command "scutil --set #{param} #{new_resource.short_hostname}"
+        not_if { Mixlib::ShellOut.new("scutil --get #{param}").run_command.stdout.strip == new_resource.short_hostname }
+        notifies :create, 'ruby_block[show host info]', :delayed
+      end
     end
 
-    execute 'set configd parameter: Workgroup' do
-      command "defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server Workgroup #{node['system']['workgroup']}"
-      not_if { Mixlib::ShellOut.new('defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server Workgroup').run_command.stdout.strip == node['system']['workgroup'] }
-      notifies :create, 'ruby_block[show host info]', :delayed
+    smb_params = %w(NetBIOSName Workgroup)
+    smb_params.each do |param|
+      execute "set configd parameter: #{param}" do
+        command "defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server #{param} #{node['system']['netbios_name']}"
+        not_if { Mixlib::ShellOut.new("defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server #{param}").run_command.stdout.strip == node['system']['netbios_name'] }
+        notifies :create, 'ruby_block[show host info]', :delayed
+      end
     end
   end
 
