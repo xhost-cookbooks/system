@@ -83,3 +83,9 @@ This file is used to list changes made in each version of the system cookbook.
 -----
 - Ensure the crond service is available for restarting in timezone provider
 - Add mac_os_x to supports in metadata
+
+0.6.2
+-----
+- Fix cron daemon usage for arch linux (uses cronie which is not yet supported in the cron cookbook yet)
+- Fix cron_service_name for arch linux (cronie) in default attributes
+- Fix supports for arch linux in metadata.rb
