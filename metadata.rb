@@ -17,7 +17,7 @@ recipe           'system::install_packages',    "Installs packages to the system
 recipe           'system::reboot',              'Attempts to gracefully reboot the operating system.'
 recipe           'system::shutdown',            'Attempts to gracefully shutdown the operating system.'
 
-%w(ubuntu debian centos fedora redhat archlinux).each { |os| supports os }
+%w(ubuntu debian centos fedora redhat archlinux mac_os_x).each { |os| supports os }
 
 depends 'apt'
 depends 'cron'
