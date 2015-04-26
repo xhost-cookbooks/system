@@ -78,3 +78,8 @@ This file is used to list changes made in each version of the system cookbook.
 - upgrade_packages recipe will now upgrade installed ports for MacPorts
 - Improved test suite including use of chef_zero with test-kitchen, more platforms/versions
 - Add a good handful of Serverspec tests
+
+0.6.1
+-----
+- Ensure the crond service is available for restarting in timezone provider
+- Add mac_os_x to supports in metadata
