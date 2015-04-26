@@ -47,6 +47,8 @@ action :set do
     end
   end
 
+  service node['system']['cron_service_name']
+
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
     notifies :restart, "service[#{node['system']['cron_service_name']}]", :immediately unless node['platform'] == 'mac_os_x'
