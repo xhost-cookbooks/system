@@ -47,6 +47,10 @@ action :set do
     end
   end
 
+  # this can be removed once arch linux support is in the cron cookbook
+  # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
+  package 'cronie' if node['platform'] == 'arch'
+
   service node['system']['cron_service_name']
 
   link '/etc/localtime' do

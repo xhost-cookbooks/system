@@ -26,5 +26,8 @@ actions :set
 def initialize(*args)
   super
   @action = :set
-  @run_context.include_recipe 'cron' unless node['platform'] == 'mac_os_x'
+
+  # arch can be removed once arch linux support is in the cron cookbook
+  # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
+  @run_context.include_recipe 'cron' unless node['platform'] == 'arch' || node['platform'] == 'mac_os_x'
 end
