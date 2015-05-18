@@ -89,3 +89,8 @@ This file is used to list changes made in each version of the system cookbook.
 - Fix cron daemon usage for arch linux (uses cronie which is not yet supported in the cron cookbook yet)
 - Fix cron_service_name for arch linux (cronie) in default attributes
 - Fix supports for arch linux in metadata.rb
+
+0.6.3
+-----
+- Use regex with readlines grep when checking for hostname in /etc/sysconfig/network on EL-based distros (fix for issue #14)
+- Help bad images/systems that have a null hostname (fix for issue #15)
