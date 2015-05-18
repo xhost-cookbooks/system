@@ -160,7 +160,7 @@ action :set do
     end
     only_if { platform_family?('rhel') }
     only_if { node['platform_version'] < '7.0' }
-    not_if { ::File.readlines('/etc/sysconfig/network').grep("HOSTNAME=#{fqdn}").any? }
+    not_if { ::File.readlines('/etc/sysconfig/network').grep(/HOSTNAME=#{fqdn}/).any? }
     notifies :restart, 'service[network]', :delayed
   end
 
