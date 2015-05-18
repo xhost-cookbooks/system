@@ -18,7 +18,14 @@
 # limitations under the License.
 
 default['system']['timezone'] = 'Etc/UTC'
-default['system']['short_hostname'] = node['hostname']
+
+# just in case the node/image fails to have a proper hostname
+if node['hostname']
+  default['system']['short_hostname'] = node['hostname']
+else
+  default['system']['short_hostname'] = 'localhost'
+end
+
 default['system']['domain_name'] = 'localdomain'
 default['system']['netbios_name'] = node['system']['short_hostname'].upcase
 default['system']['workgroup'] = 'WORKGROUP'
