@@ -6,7 +6,7 @@ cache: bundler
 rvm:
   - 2.2.2
   - 2.1.6
-  - 2.0.0-p645
+  - 2.0.0-p481
 
 bundler_args: --without development test kitchen_common kitchen_vagrant kitchen_cloud guard integration integration_cloud
 
