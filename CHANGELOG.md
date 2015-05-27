@@ -94,3 +94,11 @@ This file is used to list changes made in each version of the system cookbook.
 -----
 - Use regex with readlines grep when checking for hostname in /etc/sysconfig/network on EL-based distros (fix for issue #14)
 - Help bad images/systems that have a null hostname (fix for issue #15)
+
+0.6.4
+-----
+- Fix for issue #17 removing unique hostfile entry for 127.0.0.1
+- Fix render of static_hosts via node attributes
+- Add hostfile entries for ipv6 hosts
+- Let the cron cookbook manage the cron resources entirely
+- Various test elements added/improved
