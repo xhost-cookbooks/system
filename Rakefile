@@ -57,7 +57,7 @@ end
 
 namespace :travis do
   desc 'Run tests on Travis CI'
-  task ci: do
+  task :ci do
     sh %(bundle exec rubocop)
     sh %(bundle exec foodcritic .)
   end
