@@ -3,7 +3,7 @@
 # Cookbook Name:: system
 # Provider:: hostname
 #
-# Copyright 2012-2014, Chris Fordham
+# Copyright 2012-2015, Chris Fordham
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -72,7 +72,6 @@ action :set do
     hostsfile_entry '127.0.0.1' do
       hostname 'localhost.localdomain'
       aliases ['localhost']
-      unique true
     end
     hostsfile_entry GetIP.local do
       hostname lazy { fqdn }
@@ -102,9 +101,38 @@ action :set do
     only_if { platform_family?('mac_os_x') }
   end
 
-  # ipv6 for localhost
-  hostsfile_entry '::1' do
-    hostname 'localhost'
+  # the following are desirable for IPv6 capable hosts
+  ipv6_hosts = [
+    { ip: '::1', name: 'localhost6.localdomain6',
+      aliases: %w(localhost6 ip6-localhost ip6-loopback) },
+    { ip: 'fe00::0', name: 'ip6-localnet' },
+    { ip: 'ff00::0', name: 'ip6-mcastprefix' },
+    { ip: 'ff02::1', name: 'ip6-allnodes' },
+    { ip: 'ff02::2', name: 'ip6-allrouters' }
+  ]
+
+  # we'll keep ipv6 stock for os x
+  if platform_family?('mac_os_x')
+    ipv6_hosts.select { |h| h[:ip] == '::1' }[0][:name] = 'localhost'
+    ipv6_hosts.select { |h| h[:ip] == '::1' }[0][:aliases] = nil
+    ipv6_hosts = [ipv6_hosts.slice(1 - 1)]
+  end
+
+  # add the ipv6 hosts to /etc/hosts
+  ipv6_hosts.each do |host|
+    hostsfile_entry host[:ip] do
+      hostname host[:name]
+      aliases host[:aliases] if host[:aliases]
+      priority 5
+    end
+  end
+
+  # additional static hosts provided by attribute (if any)
+  node['system']['static_hosts'].each do |ip, host|
+    hostsfile_entry ip do
+      hostname host
+      priority 6
+    end
   end
 
   # (re)start the hostname[.sh] service on debian-based distros
@@ -178,6 +206,7 @@ action :set do
   execute 'run hostnamectl' do
     command "hostnamectl set-hostname #{fqdn}"
     only_if "bash -c 'type -P hostnamectl'"
+    not_if { Mixlib::ShellOut.new('hostname -f').run_command.stdout.strip == fqdn }
     notifies :create, 'ruby_block[show hostnamectl]', :delayed
   end
 
