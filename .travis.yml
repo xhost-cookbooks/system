@@ -8,14 +8,10 @@ rvm:
   - 2.1.6
   - 2.0.0-p645
 
-bundler_args: --without development integration
+bundler_args: --without development test kitchen_common kitchen_vagrant kitchen_cloud guard integration integration_cloud
 
 before_install:
   - "echo 'gem: --no-document' > ~/.gemrc"
 
-before_script:
-  - bundle exec berks install
-
 script:
-  - bundle exec foodcritic -f any .
-  - bundle exec rubocop
+  - bundle exec rake travis:ci
