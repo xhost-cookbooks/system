@@ -20,6 +20,7 @@ group :lint do
     watch(%r{resources\/.+\.rb$})
     watch(%r{test/.+})
     watch('metadata.rb')
+    watch('Rakefile')
   end
 end
 
