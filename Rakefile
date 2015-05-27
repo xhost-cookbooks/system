@@ -55,6 +55,11 @@ namespace :unit do
   end
 end
 
+namespace :travis do
+  desc 'Run tests on Travis'
+  task ci: %w(style)
+end
+
 desc 'Run all unit tests'
 task unit: ['unit:chefspec']
 task spec: ['unit']
