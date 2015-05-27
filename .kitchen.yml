@@ -24,4 +24,11 @@ suites:
     run_list:
      - recipe[system::default]
      - recipe[system::timezone]
-    attributes: { 'system': { 'short_hostname': 'test', 'domain_name': 'kitchen', 'timezone':'Australia/Sydney' } }
+    attributes:
+      system:
+        short_hostname: test
+        domain_name: kitchen
+        timezone: Australia/Sydney
+        static_hosts:
+          95.211.29.66: supermarket.io
+          184.106.28.82: chef.io
