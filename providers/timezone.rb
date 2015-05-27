@@ -51,11 +51,9 @@ action :set do
   # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
   package 'cronie' if node['platform'] == 'arch'
 
-  service node['system']['cron_service_name']
-
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
-    notifies :restart, "service[#{node['system']['cron_service_name']}]", :immediately unless node['platform'] == 'mac_os_x'
+    notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x'
     notifies :create, 'ruby_block[verify linked timezone]', :delayed
   end
 
