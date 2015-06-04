@@ -2,13 +2,13 @@ Encoding:
   Enabled: false
 
 LineLength:
-  Max: 300
+  Max: 200
 
 IfUnlessModifier:
   Enabled: false
 
 MethodLength:
-  Max: 11
+  Max: 15
 
 TrivialAccessors:
   ExactNameMatch: true
