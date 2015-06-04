@@ -108,7 +108,8 @@ attribute 'system/short_hostname',
 
 attribute 'system/domain_name',
           display_name: 'Domain Name',
-          description: 'The domain name that you would like this node to have, e.g. domain.suf. Note: Only set a valid domain name to satisfy the resolution of a FQDN; use ignore:ignore for no domain name.',
+          description: 'The domain name that you would like this node to have, e.g. domain.suf. Note: Only set a valid domain name '\
+                       'to satisfy the resolution of a FQDN; use ignore:ignore for no domain name.',
           required: 'recommended',
           default: 'localdomain',
           recipes: ['system::hostname', 'system::default']
