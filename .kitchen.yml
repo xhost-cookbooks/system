@@ -24,6 +24,8 @@ suites:
     run_list:
      - recipe[system::default]
      - recipe[system::timezone]
+     - recipe[system::install_packages]
+     - recipe[system::uninstall_packages]
     attributes:
       system:
         short_hostname: test
@@ -32,3 +34,13 @@ suites:
         static_hosts:
           95.211.29.66: supermarket.io
           184.106.28.82: chef.io
+        packages:
+          install:
+           - "curl"
+           - "wget"
+          install_compile_time:
+           - "make"
+          uninstall:
+           - "eject"
+          uninstall_compile_time:
+           - "gcc"

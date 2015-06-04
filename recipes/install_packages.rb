@@ -3,7 +3,7 @@
 # Cookbook Name:: system
 # Recipe:: install_packages
 #
-# Copyright 2012, Chris Fordham
+# Copyright 2012-2015, Chris Fordham
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node['system']['packages']['install'].each { |package| package package }
+system_packages node['system']['packages']['install'].join(',') do
+  packages node['system']['packages']['install']
+end
 
-node['system']['packages']['install_compile_time'].each do |package|
-  p = package package do
-    action :nothing
-  end
-  p.run_action(:install)
+system_packages node['system']['packages']['install_compile_time'].join(',') do
+  packages node['system']['packages']['install_compile_time']
+  phase :compile
 end

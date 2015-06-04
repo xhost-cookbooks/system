@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #
 # Cookbook Name:: system
-# Recipe:: uninstall_packages
+# Resource:: packages
 #
 # Copyright 2012-2015, Chris Fordham
 #
@@ -17,13 +17,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-system_packages node['system']['packages']['uninstall'].join(',') do
-  packages node['system']['packages']['uninstall']
-  action :uninstall
-end
+actions [:install, :uninstall]
+default_action :install
 
-system_packages node['system']['packages']['uninstall_compile_time'].join(',') do
-  packages node['system']['packages']['uninstall_compile_time']
-  action :uninstall
-  phase :compile
+attribute :packages,
+          kind_of: Array,
+          default: []
+
+attribute :phase,
+          kind_of: [String, Symbol],
+          default: :converge
+
+def initialize(*args)
+  super
+  @action = :install
 end

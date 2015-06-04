@@ -6,6 +6,8 @@ system Cookbook
 
 This cookbook is designed to provide a set of recipes to manage core system properties as well as some ad-hoc operational tasks.
 
+Get it from your (local) supermarket, https://supermarket.chef.io/cookbooks/system.
+
 Requirements
 ------------
 - Chef >= 11
@@ -34,8 +36,8 @@ See `attributes/default.rb` for default values.
 - `node['system']['workgroup']` - the NetBIOS workgroup name to set on the node, default is `WORKGROUP` (OS X only)
 - `node['system']['static_hosts']` - an array of static hostnames to add to /etc/hosts
 - `node['system']['upgrade_packages']` - whether to upgrade the system's packages, default `true`
-- `node['system']['packages']['install']` - an array of packages to install
-- `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase
+- `node['system']['packages']['install']` - an array of packages to install (also supports remote package URLs)
+- `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase (also supports remote package URLs)
 - `node['system']['permanent_ip']` - whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution)
 
 The following attributes should never need to be user set:
@@ -97,6 +99,16 @@ Updates the local package manager's package list.
 
 #####`system::upgrade_packages`
 Upgrades all installed packages of the local package manager.
+
+###LWRPs
+
+The cookbook currently provides 3 Lightweight Resource Providers that can be used in your own recipes
+by depending on this cookbook. Recipes are provided interfacing each of these for convenience but
+you may find them useful in your own cookbook usage.
+
+- `system_hostname`
+- `system_timezone`
+- `system_packages`
 
 License and Authors
 -------------------
