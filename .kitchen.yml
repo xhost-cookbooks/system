@@ -41,6 +41,4 @@ suites:
           install_compile_time:
            - "make"
           uninstall:
-           - "eject"
-          uninstall_compile_time:
            - "gcc"
