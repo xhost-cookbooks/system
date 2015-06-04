@@ -18,7 +18,7 @@ group :lint do
     watch(%r{providers\/.+\.rb$})
     watch(%r{recipes\/.+\.rb$})
     watch(%r{resources\/.+\.rb$})
-    watch(%r{test/.+})
+    watch(%r{test\/.+\.rb$})
     watch('metadata.rb')
     watch('Rakefile')
   end
