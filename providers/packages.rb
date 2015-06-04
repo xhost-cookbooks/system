@@ -43,14 +43,14 @@ action :install do
       # install the package in compile time or normally
       if new_resource.phase == 'compile'
         p = package pkg_file.split('.').first do
-          source "/tmp/#{pkg_file}"
+          source "#{::Chef::Config[:file_cache_path]}/#{pkg_file}"
           provider URLPackage.provider(pkg_file)
           action :nothing
         end
         p.run_action(:install)
       else
         package pkg_file.split('.').first do
-          source "/tmp/#{pkg_file}"
+          source "#{::Chef::Config[:file_cache_path]}/#{pkg_file}"
           provider URLPackage.provider(pkg_file)
         end
       end
