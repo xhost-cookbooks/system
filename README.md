@@ -120,11 +120,11 @@ you may find them useful in your own cookbook usage.
 
 ####`system_hostname`
 
-|      Attribute     |    Description                                |    Example       |  Default  |
-|--------------------|-----------------------------------------------|------------------|-----------|
-|  short_hostname    | The short hostname for the system             |  starbug         |  nil      |
-|  domain_name       | The domain name for the system                |  reddwarf.space  |  nil      |
-|  static_hosts      | An array of static hosts to add to /etc/hosts | [{ '95.211.29.66' => 'supermarket.io' }, { '184.106.28.82' => 'chef.io' }] |  nil          |
+|  Attribute         | Description                                   |  Example           |  Default  |
+|--------------------|-----------------------------------------------|--------------------|-----------|
+|  short_hostname    | The short hostname for the system             |  `starbug`         |  nil      |
+|  domain_name       | The domain name for the system                |  `reddwarf.space`  |  nil      |
+|  static_hosts      | An array of static hosts to add to /etc/hosts |  `[{ '95.211.29.66' => 'supermarket.io' }, { '184.106.28.82' => 'chef.io' }]` |  nil          |
 
 Example:
 
