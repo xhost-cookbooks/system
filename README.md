@@ -14,7 +14,7 @@ Build Status
 |           |    Travis CI    |
 |-----------|-----------------|
 | **Master** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
-| **Latest Release ([0.7.0](https://github.com/xhost-cookbooks/system/releases/tag/v0.7.0)** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.7.0)](https://travis-ci.org/xhost-cookbooks/system/builds/65745148) ) |
+| **Latest Release ([0.7.0](https://github.com/xhost-cookbooks/system/releases/tag/v0.7.0))** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.7.0)](https://travis-ci.org/xhost-cookbooks/system/builds/65745148)|
 
 This cookbook is designed to provide a set of recipes and LWRPs for managing the core properties of a host's system.
 
