@@ -59,9 +59,6 @@ See `attributes/default.rb` for default values.
 - `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase (also supports remote package URLs)
 - `node['system']['permanent_ip']` - whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution)
 
-The following attributes should never need to be user set:
-
-- `node['system']['cron_service_name']`
 
 Usage
 -----
