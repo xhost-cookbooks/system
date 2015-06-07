@@ -2,7 +2,7 @@ system Cookbook
 ===============
 
 [![Join the chat at https://gitter.im/xhost-cookbooks/system](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xhost-cookbooks/system?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+[![Cookbook Version](https://img.shields.io/badge/cookbook-v0.7.0-blue.svg)](https://supermarket.chef.io/cookbooks/system)
 [![Code Climate](https://codeclimate.com/github/xhost-cookbooks/system.png)](https://codeclimate.com/github/xhost-cookbooks/system)
 
 Build Status
@@ -13,9 +13,9 @@ Build Status
 | **Master** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
 | **Latest Release [0.6.4](https://github.com/xhost-cookbooks/system/releases/tag/v0.6.4)** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.6.4)](https://travis-ci.org/xhost-cookbooks/system/builds/64242112)|
 
-This cookbook is designed to provide a set of recipes to manage core system properties as well as some ad-hoc operational tasks.
+This cookbook is designed to provide a set of recipes and LWRPs to manage core system properties as well as some ad-hoc operational tasks.
 
-Get it from your (local) supermarket, https://supermarket.chef.io/cookbooks/system.
+Get it from your (local) [supermarket](https://supermarket.chef.io/cookbooks/system)!
 
 Requirements
 ------------
