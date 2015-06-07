@@ -62,7 +62,7 @@ Usage
 ###Recipes
 
 #####`system::default`
-Includes `system::update_package_list`, `system::timezone` and `system::hostname` recipes only.
+Includes the `system::update_package_list`, `system::timezone` and `system::hostname` recipes only (note that if applicable the system's package manage's package list will be update, but installed packages won't be upgraded).
 
 #####`system::hostname`
 When using resources that reference `node['fqdn']` in variables or attribute values, note that you will
@@ -124,7 +124,7 @@ you may find them useful in your own cookbook usage.
 |--------------------|-----------------------------------------------|--------------------|-----------|
 |  short_hostname    | The short hostname for the system             |  `starbug`         |  nil      |
 |  domain_name       | The domain name for the system                |  `reddwarf.space`  |  nil      |
-|  static_hosts      | An array of static hosts to add to /etc/hosts |  `[{ '95.211.29.66' => 'supermarket.io' }, { '184.106.28.82' => 'chef.io' }]` |  nil          |
+|  static_hosts      | An array of static hosts to add to /etc/hosts |  `[{ '95.211.29.66' => 'supermarket.io' }, { '184.106.28.82' => 'chef.io' }]` |  nil      |
 
 Example:
 
@@ -136,8 +136,34 @@ system_hostname 'starbug.reddwarf.space' do
 end
 ```
 
-- `system_timezone`
-- `system_packages`
+####`system_timezone`
+
+|  Attribute         | Description                                   |  Example             |  Default  |
+|--------------------|-----------------------------------------------|----------------------|-----------|
+|  timezone          | The timezone to set the system to             |  `Australia/Sydney`  | `Etc/UTC` |
+
+Example:
+
+```
+system_timezone 'Australia/Sydney'
+```
+
+####`system_packages`
+
+|  Attribute         | Description                                   |  Example          |  Default    |
+|--------------------|-----------------------------------------------|-------------------|-------------|
+|  packages          | The timezone to set the system to             |  `%w(wget curl)`  | `[]`        |
+|  phase             | The Chef phase to download the packages in    |  `:compile  `     | `:converge` |
+
+Example:
+
+```
+system_packages %w(wget curl).join(',') do
+  packages %w(wget curl)
+  phase :compile
+end
+```
+
 
 License and Authors
 -------------------
