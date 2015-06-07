@@ -23,7 +23,7 @@ Get it from your (local) [supermarket](https://supermarket.chef.io/cookbooks/sys
 Requirements
 ------------
 - Chef >= 11
-- Ruby 1.9
+- Ruby >= 1.9
 
 ### Platforms Supported
 - Debian, Ubuntu
