@@ -102,3 +102,9 @@ This file is used to list changes made in each version of the system cookbook.
 - Add hostfile entries for ipv6 hosts
 - Let the cron cookbook manage the cron resources entirely
 - Various test elements added/improved
+
+0.7.0
+-----
+- New system_packages LWRP
+- Support for installing remote packages by URL using the system_packages LWRP
+- timezone provider now defaults to Etc/UTC timezone
