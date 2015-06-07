@@ -43,7 +43,7 @@ action :set do
   end
 
   # piece together the fqdn
-  fqdn = "#{new_resource.short_hostname}.#{new_resource.domain_name}".downcase
+  fqdn = "#{short_hostname}.#{domain_name}".downcase
   ::Chef::Log.debug "FQDN determined to be: #{fqdn}"
 
   # https://tickets.opscode.com/browse/OHAI-389
