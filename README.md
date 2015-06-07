@@ -14,11 +14,18 @@ Build Status
 |           |    Travis CI    |
 |-----------|-----------------|
 | **Master** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
-| **Latest Release [0.6.4](https://github.com/xhost-cookbooks/system/releases/tag/v0.6.4)** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.6.4)](https://travis-ci.org/xhost-cookbooks/system/builds/64242112)|
+| **Latest Release [0.7.0](https://github.com/xhost-cookbooks/system/releases/tag/v0.7.0)** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.7.0)](https://travis-ci.org/xhost-cookbooks/branches)|
 
-This cookbook is designed to provide a set of recipes and LWRPs to manage core system properties as well as some ad-hoc operational tasks.
+This cookbook is designed to provide a set of recipes and LWRPs for managing the core properties of a host's system.
 
-Get it from your (local) [supermarket](https://supermarket.chef.io/cookbooks/system)!
+Currently the main features (from a high level) include:
+- setting the hostname
+- setting the timezone
+- managing packages (install, uninstall & upgrade)
+
+Ad-hoc style operational tasks such as reboot and shutdown are also implemented by recipes.
+
+Get it now from your (local) [supermarket](https://supermarket.chef.io/cookbooks/system)!
 
 Requirements
 ------------
