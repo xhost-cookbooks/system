@@ -27,10 +27,24 @@ class Chef
 end
 
 action :set do
-  # ensure the required short hostname is lower case
+  # first, ensure lower case for each piece
   new_resource.short_hostname.downcase!
+  new_resource.domain_name.downcase!
 
-  fqdn = "#{new_resource.short_hostname}.#{new_resource.domain_name}"
+  # logically build the fqdn depending on how the user specified
+  short_hostname = new_resource.hostname.split('.').first
+  short_hostname = new_resource.short_hostname if new_resource.short_hostname
+  if new_resource.domain_name
+    domain_name = new_resource.domain_name
+  else
+    if new_resource.hostname.split('.').count > 2
+      domain_name = new_resource.hostname.split('.').last
+    end
+  end
+
+  # piece together the fqdn
+  fqdn = "#{new_resource.short_hostname}.#{new_resource.domain_name}".downcase
+  ::Chef::Log.debug "FQDN determined to be: #{fqdn}"
 
   # https://tickets.opscode.com/browse/OHAI-389
   # http://lists.opscode.com/sympa/arc/chef/2014-10/msg00092.html

@@ -135,15 +135,29 @@ you may find them useful in your own cookbook usage.
 |  domain_name       | The domain name for the system                |  `reddwarf.space`  |  nil      |
 |  static_hosts      | An array of static hosts to add to /etc/hosts |  `[{ '95.211.29.66' => 'supermarket.io' }, { '184.106.28.82' => 'chef.io' }]` |  nil      |
 
-Example:
+#####Examples
 
+Set the hostname providing the desired FQDN:
 ```
-system_hostname 'starbug.reddwarf.space' do
+system_hostname 'starbug.reddwarf.space'
+```
+
+This will still set the hostname, falling back to the default of `localhost.localdomain`:
+```
+system_hostname
+```
+
+Providing the short hostname as the resource name and explicitly defining the domain name
+(alas this is a bit verbose), as well as some static hosts:
+```
+system_hostname 'starbug' do
   short_hostname starbug
   domain_name reddwarf.space
   static_hosts [{'95.211.29.66' => 'supermarket.io'}, {'184.106.28.82' => 'chef.io'}]
 end
 ```
+The `system::hostname` recipe implements it this way as `short_hostname` and `domain_name`
+are the exposed cookbook attributes.
 
 ####`system_timezone`
 
