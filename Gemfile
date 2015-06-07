@@ -40,7 +40,10 @@ group :kitchen_cloud do
 end
 
 group :guard do
-  gem 'guard', '= 2.8.2'
+  gem 'guard'
+  # use below for gems like guard-foodcritic which
+  # don't yet support guard 3 :(
+  # gem 'guard', '= 2.8.2'
   gem 'guard-foodcritic'
   gem 'guard-kitchen'
   gem 'guard-rspec'
