@@ -69,7 +69,9 @@ Usage
 ###Recipes
 
 #####`system::default`
-Includes the `system::update_package_list`, `system::timezone` and `system::hostname` recipes only (note that if applicable the system's package manage's package list will be update, but installed packages won't be upgraded).
+Includes the `system::update_package_list`, `system::timezone` and `system::hostname` recipes only.
+
+NOTE: if applicable, the system's package manager's package list will be updated, but installed packages won't be upgraded. To upgrade system packages include the `system::upgrade_packages` recipe in your run_list or role.
 
 #####`system::hostname`
 When using resources that reference `node['fqdn']` in variables or attribute values, note that you will
