@@ -165,7 +165,7 @@ are the exposed cookbook attributes.
 |--------------------|-----------------------------------------------|----------------------|-----------|
 |  timezone          | The timezone to set the system to             |  `Australia/Sydney`  | `Etc/UTC` |
 
-Example:
+#####Example
 
 ```
 system_timezone 'Australia/Sydney'
@@ -178,7 +178,7 @@ system_timezone 'Australia/Sydney'
 |  packages          | The timezone to set the system to             |  `%w(wget curl)`  | `[]`        |
 |  phase             | The Chef phase to download the packages in    |  `:compile  `     | `:converge` |
 
-Example:
+#####Example
 
 ```
 system_packages %w(wget curl).join(',') do
