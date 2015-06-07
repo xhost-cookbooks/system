@@ -3,6 +3,7 @@ system Cookbook
 
 [![Join the chat at https://gitter.im/xhost-cookbooks/system](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xhost-cookbooks/system?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Cookbook Version](https://img.shields.io/badge/cookbook-v0.7.0-blue.svg)](https://supermarket.chef.io/cookbooks/system)
+[![Dependency Status](https://gemnasium.com/xhost-cookbooks/system.svg)](https://gemnasium.com/xhost-cookbooks/system)
 [![Code Climate](https://codeclimate.com/github/xhost-cookbooks/system.png)](https://codeclimate.com/github/xhost-cookbooks/system)
 
 Build Status
