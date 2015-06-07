@@ -8,8 +8,8 @@ Build Status
 
 |           |    Travis CI    |
 |-----------|-----------------|
-| **Master** |![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
-| **Latest Release [0.6.4](https://github.com/xhost-cookbooks/system/releases/tag/v0.6.4)** |![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.6.4)](https://travis-ci.org/xhost-cookbooks/system/builds/64242112)|
+| **Master** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
+| **Latest Release [0.6.4](https://github.com/xhost-cookbooks/system/releases/tag/v0.6.4)** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.6.4)](https://travis-ci.org/xhost-cookbooks/system/builds/64242112)|
 
 This cookbook is designed to provide a set of recipes to manage core system properties as well as some ad-hoc operational tasks.
 
