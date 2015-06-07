@@ -5,6 +5,8 @@ system Cookbook
 [![Cookbook Version](https://img.shields.io/badge/cookbook-v0.7.0-blue.svg)](https://supermarket.chef.io/cookbooks/system)
 [![Dependency Status](https://gemnasium.com/xhost-cookbooks/system.svg)](https://gemnasium.com/xhost-cookbooks/system)
 [![Code Climate](https://codeclimate.com/github/xhost-cookbooks/system.png)](https://codeclimate.com/github/xhost-cookbooks/system)
+[![Test Coverage](https://codeclimate.com/github/xhost-cookbooks/system/badges/coverage.svg)](https://codeclimate.com/github/xhost-cookbooks/system)
+[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Build Status
 ------------
