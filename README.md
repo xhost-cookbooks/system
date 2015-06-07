@@ -118,7 +118,24 @@ The cookbook currently provides 3 Lightweight Resource Providers that can be use
 by depending on this cookbook. Recipes are provided interfacing each of these for convenience but
 you may find them useful in your own cookbook usage.
 
-- `system_hostname`
+####`system_hostname`
+
+|      Attribute     |    Description                                |    Example       |  Default  |
+|--------------------|-----------------------------------------------|------------------|-----------|
+|  short_hostname    | The short hostname for the system             |  starbug         |  nil      |
+|  domain_name       | The domain name for the system                |  reddwarf.space  |  nil      |
+|  static_hosts      | An array of static hosts to add to /etc/hosts | [{ '95.211.29.66' => 'supermarket.io' }, { '184.106.28.82' => 'chef.io' }] |  nil          |
+
+Example:
+
+```
+system_hostname 'starbug.reddwarf.space' do
+  short_hostname starbug
+  domain_name reddwarf.space
+  static_hosts [{'95.211.29.66' => 'supermarket.io'}, {'184.106.28.82' => 'chef.io'}]
+end
+```
+
 - `system_timezone`
 - `system_packages`
 
