@@ -15,3 +15,7 @@ before_install:
 
 script:
   - bundle exec rake travis:ci
+
+addons:
+  code_climate:
+    repo_token: 0e64fbe73466885a7735e677b9cbea81278e18d75ee9946db614d6118c70fa35
