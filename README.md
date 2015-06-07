@@ -16,6 +16,9 @@ Build Status
 | **Master** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
 | **Latest Release** ([**0.7.0**](https://github.com/xhost-cookbooks/system/releases/tag/v0.7.0)) |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.7.0)](https://travis-ci.org/xhost-cookbooks/system/builds/65745148)|
 
+Overview
+--------
+
 This cookbook is designed to provide a set of recipes and LWRPs for managing the core properties of a host's system.
 
 Currently the main features (from a high level) include:
@@ -26,6 +29,7 @@ Currently the main features (from a high level) include:
 Ad-hoc style operational tasks such as reboot and shutdown are also implemented by recipes.
 
 Get it now from your (local) [supermarket](https://supermarket.chef.io/cookbooks/system)!
+
 
 Requirements
 ------------
@@ -42,6 +46,7 @@ Requirements
 - apt
 - cron
 - hostsfile
+
 
 Attributes
 ----------
