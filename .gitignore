@@ -1,5 +1,4 @@
 .vagrant
-Berksfile.lock
 *~
 *#
 .#*
@@ -10,7 +9,6 @@ Berksfile.lock
 /vendor/
 
 # Bundler
-Gemfile.lock
 bin/*
 .bundle/*
 
