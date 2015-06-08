@@ -37,8 +37,8 @@ action :set do
   if new_resource.domain_name
     domain_name = new_resource.domain_name
   else
-    if new_resource.hostname.split('.').count > 2
-      domain_name = new_resource.hostname.split('.').last
+    if new_resource.hostname.split('.').count >= 2
+      domain_name = new_resource.hostname.split('.')[1..-1].join('.')
     end
   end
 
