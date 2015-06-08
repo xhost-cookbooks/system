@@ -1,0 +1,25 @@
+# /etc/profile
+
+# Set default path
+PATH="<%= "#{@profile[:path].join ':'}:" unless @profile[:path].empty? %>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH
+
+# The default umask is now handled by pam_umask.
+# See pam_umask(8) and /etc/login.defs.
+#umask 022
+
+# Load profiles from /etc/profile.d
+if test -d /etc/profile.d/; then
+  for profile in /etc/profile.d/*.sh; do
+    test -r "$profile" && . "$profile"
+  done
+  unset profile
+fi
+
+# Source global bash config, other shells do it themselves
+if test "$PS1" && test "$BASH" && test -r /etc/bash.bashrc; then
+  . /etc/bash.bashrc
+fi
+
+<%= @profile[:append_scripts].join "\n" %>
+
