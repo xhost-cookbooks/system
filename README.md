@@ -23,6 +23,7 @@ This cookbook is designed to provide a set of recipes and LWRPs for managing the
 
 Currently the main features (from a high level) include:
 - setting the hostname
+- setting the NetBIOS name and workgroup (OS X only)
 - setting the timezone
 - managing packages (install, uninstall & upgrade)
 
@@ -142,11 +143,6 @@ you may find them useful in your own cookbook usage.
 Set the hostname providing the desired FQDN:
 ```
 system_hostname 'starbug.reddwarf.space'
-```
-
-This will still set the hostname, falling back to the default of `localhost.localdomain`:
-```
-system_hostname
 ```
 
 Providing the short hostname as the resource name and explicitly defining the domain name
