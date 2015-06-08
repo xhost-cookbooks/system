@@ -22,7 +22,6 @@ default_action :set
 
 attribute :hostname,
           kind_of: String,
-          default: 'localhost.localdomain',
           name_attribute: true
 
 attribute :short_hostname,
