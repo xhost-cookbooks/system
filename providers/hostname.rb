@@ -28,8 +28,8 @@ end
 
 action :set do
   # first, ensure lower case for each piece
-  new_resource.short_hostname.downcase!
-  new_resource.domain_name.downcase!
+  new_resource.short_hostname.downcase! if new_resource.short_hostname
+  new_resource.domain_name.downcase! if new_resource.domain_name
 
   # logically build the fqdn depending on how the user specified
   short_hostname = new_resource.hostname.split('.').first
