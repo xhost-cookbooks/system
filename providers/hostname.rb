@@ -39,6 +39,9 @@ action :set do
   else
     if new_resource.hostname.split('.').count >= 2
       domain_name = new_resource.hostname.split('.')[1..-1].join('.')
+    else
+      # fallback domain name to 'localdomain' to complete a valid FQDN
+      domain_name = node['system']['domain_name']
     end
   end
 
