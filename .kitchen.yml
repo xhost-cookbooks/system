@@ -1,6 +1,8 @@
 ---
 driver:
   name: vagrant
+  ssh:
+    shell: '"/bin/sh"'
 
 driver_config:
   require_chef_omnibus: latest
@@ -18,6 +20,8 @@ platforms:
   - name: centos-5.11
   - name: fedora-21
   - name: fedora-20
+  - name: freebsd-9.3
+  - name: freebsd-10.1
 
 suites:
   - name: default
@@ -39,6 +43,6 @@ suites:
            - "curl"
            - "wget"
           install_compile_time:
-           - "make"
+           - "sudo"
           uninstall:
            - "gcc"
