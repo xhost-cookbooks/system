@@ -54,6 +54,17 @@ action :set do
   node.automatic_attrs['fqdn'] = fqdn
   node.automatic_attrs['hostname'] = new_resource.short_hostname
 
+  # FreeBSD
+  ruby_block 'update hostname in /etc/rc.conf' do
+    block do
+      fe = ::Chef::Util::FileEdit.new('/etc/rc.conf')
+      fe.search_file_replace_line(/hostname\=/, "hostname=#{fqdn}")
+      fe.write_file
+    end
+    only_if { platform?('freebsd') }
+    not_if { ::File.readlines('/etc/rc.conf').grep(/hostname=#{fqdn}/).any? }
+  end
+
   if platform_family?('mac_os_x')
     execute 'set configd parameter: HostName' do
       command "scutil --set HostName #{fqdn}"
@@ -64,17 +75,20 @@ action :set do
     shorthost_params = %w(ComputerName LocalHostName)
     shorthost_params.each do |param|
       execute "set configd parameter: #{param}" do
-        command "scutil --set #{param} #{new_resource.short_hostname}"
-        not_if { Mixlib::ShellOut.new("scutil --get #{param}").run_command.stdout.strip == new_resource.short_hostname }
+        command "scutil --set #{param} #{short_hostname}"
+        not_if { Mixlib::ShellOut.new("scutil --get #{param}").run_command.stdout.strip == short_hostname }
         notifies :create, 'ruby_block[show host info]', :delayed
       end
     end
 
-    smb_params = %w(NetBIOSName Workgroup)
-    smb_params.each do |param|
+    # https://discussions.apple.com/thread/2457573
+    smb_params = { 'NetBIOSName' => new_resource.netbios_name,
+                   'Workgroup'   => new_resource.workgroup }
+    default = '/Library/Preferences/SystemConfiguration/com.apple.smb.server'
+    smb_params.each do |param, value|
       execute "set configd parameter: #{param}" do
-        command "defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server #{param} #{node['system']['netbios_name']}"
-        not_if { Mixlib::ShellOut.new("defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server #{param}").run_command.stdout.strip == node['system']['netbios_name'] }
+        command "defaults write #{default} #{param} #{value}"
+        not_if { Mixlib::ShellOut.new("defaults read #{default} #{param}").run_command.stdout.strip == value }
         notifies :create, 'ruby_block[show host info]', :delayed
       end
     end
@@ -144,8 +158,8 @@ action :set do
     end
   end
 
-  # additional static hosts provided by attribute (if any)
-  node['system']['static_hosts'].each do |ip, host|
+  # additional static hosts
+  new_resource.static_hosts.each do |ip, host|
     hostsfile_entry ip do
       hostname host
       priority 6
@@ -263,7 +277,8 @@ action :set do
     notifies :run, 'execute[run domainname]', :immediately
     notifies :run, 'execute[run hostname]', :immediately
     notifies :create, 'ruby_block[show host info]', :delayed
-    not_if { node['platform'] == 'mac_os_x' }
+    not_if { platform?('mac_os_x') }
+    not_if { platform?('freebsd') }
   end
 
   # covers cases where a dhcp client has manually
