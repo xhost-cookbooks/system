@@ -154,3 +154,10 @@ attribute 'system/permanent_ip',
           required: 'optional',
           choice: %w(true false),
           recipes: ['system::hostname', 'system::default']
+
+attribute 'system/static_hosts',
+          display_name: 'Static Hosts',
+          desription: 'A hash of static hosts to add to /etc/hosts.',
+          required: 'optional',
+          type: 'hash',
+          recipes: ['system::hostname', 'system::default']
