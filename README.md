@@ -22,9 +22,10 @@ Overview
 This cookbook is designed to provide a set of recipes and LWRPs for managing the core properties of a host's system.
 
 Currently the main features (from a high level) include:
-- setting the hostname
-- setting the NetBIOS name and workgroup (OS X only)
+- setting the hostname/domain name
+- setting the default NetBIOS name and Workgroup (OS X only)
 - setting the timezone
+- configuring the system-wide profile (/etc/profile)
 - managing packages (install, uninstall & upgrade)
 
 Ad-hoc style operational tasks such as reboot and shutdown are also implemented by recipes.
@@ -41,6 +42,7 @@ Requirements
 - Debian, Ubuntu
 - CentOS, RHEL, Fedora
 - Arch Linux
+- FreeBSD
 - Mac OS X
 
 ### Cookbooks
@@ -59,7 +61,7 @@ See `attributes/default.rb` for default values.
 - `node['system']['domain_name']` - the domain name to set on the node, default `localdomain`
 - `node['system']['netbios_name']` - the NetBIOS name to set on the node, default is `node['system']['short_hostname']` upper-cased (OS X only)
 - `node['system']['workgroup']` - the NetBIOS workgroup name to set on the node, default is `WORKGROUP` (OS X only)
-- `node['system']['static_hosts']` - an array of static hostnames to add to /etc/hosts
+- `node['system']['static_hosts']` - a hash of static hosts to add to /etc/hosts
 - `node['system']['upgrade_packages']` - whether to upgrade the system's packages, default `true`
 - `node['system']['packages']['install']` - an array of packages to install (also supports remote package URLs)
 - `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase (also supports remote package URLs)
@@ -149,9 +151,10 @@ Providing the short hostname as the resource name and explicitly defining the do
 (alas this is a bit verbose), as well as some static hosts:
 ```
 system_hostname 'starbug' do
-  short_hostname starbug
-  domain_name reddwarf.space
-  static_hosts [{'95.211.29.66' => 'supermarket.io'}, {'184.106.28.82' => 'chef.io'}]
+  short_hostname 'starbug'
+  domain_name 'reddwarf.space'
+  static_hosts(({ '95.211.29.66' => 'supermarket.io',
+                  '184.106.28.82' => 'chef.io' }))
 end
 ```
 The `system::hostname` recipe implements it this way as `short_hostname` and `domain_name`
