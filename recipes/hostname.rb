@@ -3,7 +3,7 @@
 # Cookbook Name:: system
 # Recipe:: hostname
 #
-# Copyright 2012, Chris Fordham
+# Copyright 2012-2015, Chris Fordham
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@
 
 system_hostname node['system']['short_hostname'] do
   short_hostname node['system']['short_hostname']
-  domain_name node['system']['domain_name']
-  static_hosts node['system']['static_hosts']
+  domain_name    node['system']['domain_name']
+  static_hosts   node['system']['static_hosts']
+  netbios_name   node['system']['netbios_name']
+  workgroup      node['system']['workgroup']
 end
