@@ -36,6 +36,14 @@ attribute :static_hosts,
           kind_of: Hash,
           default: nil
 
+attribute :netbios_name,
+          kind_of: String,
+          default: nil
+
+attribute :workgroup,
+          kind_of: String,
+          default: nil
+
 def initialize(*args)
   super
   @action = :set
