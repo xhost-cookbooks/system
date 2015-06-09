@@ -49,7 +49,10 @@ action :set do
 
   # this can be removed once arch linux support is in the cron cookbook
   # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
-  package 'cronie' if node['platform'] == 'arch'
+  package 'cronie' if platform?('arch')
+
+  # this can be removed once the cron cookbook supports freebsd
+  service 'cron' if platform?('freebsd')
 
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
