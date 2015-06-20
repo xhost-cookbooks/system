@@ -50,8 +50,12 @@ action :set do
   # this can be removed once arch linux support is in the cron cookbook
   # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
   package 'cronie' if platform?('arch')
+  service 'cron' do
+    service_name 'cronie'
+    only_if { platform?('arch') }
+  end
 
-  # this can be removed once the cron cookbook supports freebsd
+  # this can be removed once freebsd support is in the cron cookbook
   service 'cron' if platform?('freebsd')
 
   link '/etc/localtime' do
