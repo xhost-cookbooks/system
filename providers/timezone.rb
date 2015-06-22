@@ -24,10 +24,22 @@ action :set do
   # support user specifying a space instead of underscore in zone file path
   zone_file = new_resource.timezone.sub(' ', '_')
 
+  # the zone file needs to exist in the system share to succeed
   fail "#{zone_file} is not a valid timezone!" unless ::File.file?("/usr/share/zoneinfo/#{zone_file}")
+
+  # initially assume a zone change
+  zone_change = true
+
+  # when already a symlink to the zone_file, no need to reconfigure timezone
+  if ::File.symlink?('/etc/localtime')
+     if ::File.readlink('/etc/localtime').include? zone_file
+       zone_change = false
+     end
+  end
 
   log "tz-info (before set): #{Time.now.strftime('%z %Z')}" do
     level :debug
+    only_if { zone_change }
   end
 
   if %w(debian ubuntu).member? node['platform']
@@ -49,10 +61,12 @@ action :set do
 
   # this can be removed once arch linux support is in the cron cookbook
   # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
-  package 'cronie' if platform?('arch')
-  service 'cron' do
-    service_name 'cronie'
-    only_if { platform?('arch') }
+  if platform?('arch')
+    package 'cronie'
+
+    service 'cron' do
+      service_name 'cronie'
+    end
   end
 
   # this can be removed once freebsd support is in the cron cookbook
@@ -61,10 +75,10 @@ action :set do
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
     notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x'
-    notifies :create, 'ruby_block[verify linked timezone]', :delayed
+    notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
   end
 
-  ruby_block 'verify linked timezone' do
+  ruby_block 'verify newly-linked timezone' do
     block do
       tz_info = ::Time.now.strftime('%z %Z')
       tz_info << "#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')})"
@@ -72,7 +86,8 @@ action :set do
     end
     action :nothing
     only_if { ::File.symlink?('/etc/localtime') }
+    only_if { zone_change }
   end
 
-  new_resource.updated_by_last_action(true)
+  new_resource.updated_by_last_action(true) if zone_change
 end
