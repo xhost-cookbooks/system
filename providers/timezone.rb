@@ -32,9 +32,9 @@ action :set do
 
   # when already a symlink to the zone_file, no need to reconfigure timezone
   if ::File.symlink?('/etc/localtime')
-     if ::File.readlink('/etc/localtime').include? zone_file
-       zone_change = false
-     end
+    if ::File.readlink('/etc/localtime').include? zone_file
+      zone_change = false
+    end
   end
 
   log "tz-info (before set): #{Time.now.strftime('%z %Z')}" do
