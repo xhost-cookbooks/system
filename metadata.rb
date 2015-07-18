@@ -6,7 +6,7 @@ maintainer_email 'cookbooks@xhost.com.au'
 license          'Apache 2.0'
 description      'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.7.0'
+version          '0.7.1'
 
 recipe           'system::default',             "Sets the system's hostname and timezone, updates the system's installed packages."
 recipe           'system::timezone',            "Sets the system's' timezone."
@@ -133,6 +133,14 @@ attribute 'system/upgrade_packages',
           required: 'optional',
           choice: %w(true false),
           recipes: ['system::upgrade_packages']
+
+attribute 'system/enable_cron',
+          display_name: 'Enable cron recipe',
+          description: "Whether or not the system::timezone recipe will include the cron recipe.",
+          required: 'optional',
+          choice: %w(true false),
+          default: true,
+          recipes: ['system::timezone']
 
 attribute 'system/packages/install',
           display_name: 'Install Packages',

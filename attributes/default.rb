@@ -32,6 +32,7 @@ default['system']['workgroup'] = 'WORKGROUP'
 default['system']['static_hosts'] = {}
 default['system']['upgrade_packages'] = true
 default['system']['permanent_ip'] = true
+default['system']['enable_cron'] = true
 default['system']['packages']['install'] = []
 default['system']['packages']['install_compile_time'] = []
 
