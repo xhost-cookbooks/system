@@ -136,7 +136,7 @@ attribute 'system/upgrade_packages',
 
 attribute 'system/enable_cron',
           display_name: 'Enable cron recipe',
-          description: "Whether or not the system::timezone recipe will include the cron recipe.",
+          description: 'Whether or not the system::timezone recipe will include the cron recipe.',
           required: 'optional',
           choice: %w(true false),
           default: true,
