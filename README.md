@@ -66,7 +66,7 @@ See `attributes/default.rb` for default values.
 - `node['system']['packages']['install']` - an array of packages to install (also supports remote package URLs)
 - `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase (also supports remote package URLs)
 - `node['system']['permanent_ip']` - whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution)
-- `node['system']['profile']` - system-wide profile to apply (usually for `/etc/profile`); typically add your arbitrary shell scripts to `node['system']['profile']['append_scripts']` and these will be appended to the system profile
+- `node['system']['profile']` - system-wide profile to apply (usually for `/etc/profile`); typically add your arbitrary shell scripts to `node['system']['profile']['append_scripts']` and these will be appended to the system profile; add extra `PATH`s to `node['system']['profile']['path']`
 
 
 Usage
