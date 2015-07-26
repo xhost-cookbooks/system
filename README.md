@@ -25,7 +25,7 @@ Currently the main features (from a high level) include:
 - setting the hostname/domain name
 - setting the default NetBIOS name and Workgroup (OS X only)
 - setting the timezone
-- configuring the system-wide profile (/etc/profile)
+- configuring the system-wide profile (`/etc/profile`)
 - managing packages (install, uninstall & upgrade)
 
 Ad-hoc style operational tasks such as reboot and shutdown are also implemented by recipes.
@@ -66,6 +66,7 @@ See `attributes/default.rb` for default values.
 - `node['system']['packages']['install']` - an array of packages to install (also supports remote package URLs)
 - `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase (also supports remote package URLs)
 - `node['system']['permanent_ip']` - whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution)
+- `node['system']['profile']` - system-wide profile to apply (usually for `/etc/profile`); typically add your arbitrary shell scripts to `node['system']['profile']['append_scripts']` and these will be appended to the system profile
 
 
 Usage
@@ -102,6 +103,9 @@ log 'lazy_log_fqdn' do
   level :debug
 end
 ```
+
+#####`system::profile`
+Manages `/etc/profile` with optional shell scripts to append from `node['system']['profile']['append_scripts']`.
 
 #####`system::install_packages`
 Installs a list of system packages as specified in the `node['system']['packages']['install']` attribute.
@@ -185,6 +189,24 @@ system_timezone 'Australia/Sydney'
 system_packages %w(wget curl).join(',') do
   packages %w(wget curl)
   phase :compile
+end
+```
+
+####`system_profile`
+
+|  Attribute         | Description                                           |  Example               |  Default        |
+|--------------------|-------------------------------------------------------|------------------------|-----------------|
+|  filename          | The system profile file to manage                     |  `/etc/profile`        |  `/etc/profile` |
+|  template          | The cookbook erb template for the profile file        |  `custom_profile.erb`  |  `profile.erb`  |
+|  path              | An environment search path to prepend to the default  |  `/opt/local/bin`      |  `[]`           |
+|  append_scripts    | Arbitrary scripts to append to the profile            |  `['export FOO=bar']`  |  `nil`          |
+
+#####Example
+
+```
+system_profile '/etc/profile' do
+  path ['/opt/local/bin', '/opt/foo/bin']
+  append_scripts ['export FOO=bar']
 end
 ```
 
