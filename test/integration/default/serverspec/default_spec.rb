@@ -89,3 +89,7 @@ end
 describe service(cron_service_name) do
   it { should be_running }
 end
+
+describe file('/etc/profile') do
+  its(:content) { should contain 'export CHEF_IS_AWESOME=1' }
+end
