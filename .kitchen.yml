@@ -31,6 +31,7 @@ suites:
      - recipe[system::timezone]
      - recipe[system::install_packages]
      - recipe[system::uninstall_packages]
+     - recipe[system::profile]
     attributes:
       system:
         short_hostname: test
@@ -47,3 +48,7 @@ suites:
            - "sudo"
           uninstall:
            - "gcc"
+        profile:
+          append_scripts:
+           - "export CHEF_IS_AWESOME=1"
+           - "echo helloworld > /dev/null"
