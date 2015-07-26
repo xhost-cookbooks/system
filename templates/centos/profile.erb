@@ -17,9 +17,9 @@ pathmunge () {
             ;;
         *)
             if [ "$2" = "after" ] ; then
-                PATH=$PATH:$1
+                PATH=<%= "#{@profile[:path].join ':'}:" unless @profile[:path].empty? %>$PATH:$1
             else
-                PATH=$1:$PATH
+                PATH=<%= "#{@profile[:path].join ':'}:" unless @profile[:path].empty? %>$1:$PATH
             fi
     esac
 }

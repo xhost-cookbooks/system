@@ -7,7 +7,7 @@
 umask 022
 
 # Set our default path
-PATH="/usr/local/sbin:/usr/local/bin:/usr/bin"
+PATH="<%= "#{@profile[:path].join ':'}:" unless @profile[:path].empty? %>/usr/local/sbin:/usr/local/bin:/usr/bin"
 export PATH
 
 # Load profiles from /etc/profile.d

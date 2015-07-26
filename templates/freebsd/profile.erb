@@ -21,4 +21,6 @@ $ cat /etc/profile
 # Allow terminal messages
 # mesg y
 
+PATH=<%= "#{@profile[:path].join ':'}:" unless @profile[:path].empty? %>
+
 <%= @profile[:append_scripts].join "\n" %>
