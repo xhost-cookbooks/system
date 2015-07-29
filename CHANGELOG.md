@@ -108,3 +108,12 @@ This file is used to list changes made in each version of the system cookbook.
 - New system_packages LWRP
 - Support for installing remote packages by URL using the system_packages LWRP
 - timezone provider now defaults to Etc/UTC timezone
+
+0.8.0
+-----
+- Initial FreeBSD support
+- Manage /etc/profile by recipe or system_profile LWRP
+- system::hostname recipe parameterizes available provider attributes
+- Support for using the name_attribute of the hostname resource for fqdn
+- Fix for issue #22 (timezone set idempotency)
+- Various minor fixes
