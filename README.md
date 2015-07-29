@@ -105,7 +105,8 @@ end
 ```
 
 #####`system::profile`
-Manages `/etc/profile` with optional shell scripts to append from `node['system']['profile']['append_scripts']`.
+Manages `/etc/profile` with optional shell scripts to append from `node['system']['profile']['append_scripts']`,
+add extra `PATH`s to `node['system']['profile']['path']`.
 
 #####`system::install_packages`
 Installs a list of system packages as specified in the `node['system']['packages']['install']` attribute.
