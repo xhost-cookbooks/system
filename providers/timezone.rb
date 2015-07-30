@@ -61,7 +61,7 @@ action :set do
 
   # this can be removed once arch linux support is in the cron cookbook
   # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
-  if platform?('arch')
+  if platform?('arch') && node['system']['enable_cron']
     package 'cronie'
 
     service 'cron' do

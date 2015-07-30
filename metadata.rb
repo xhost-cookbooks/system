@@ -134,6 +134,14 @@ attribute 'system/upgrade_packages',
           choice: %w(true false),
           recipes: ['system::upgrade_packages']
 
+attribute 'system/enable_cron',
+          display_name: 'Enable cron recipe',
+          description: 'Whether or not the system::timezone recipe will include the cron recipe.',
+          required: 'optional',
+          choice: %w(true false),
+          default: true,
+          recipes: ['system::timezone']
+
 attribute 'system/packages/install',
           display_name: 'Install Packages',
           description: 'An array of system packages to install with the package resource in execute phase.',
