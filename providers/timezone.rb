@@ -70,11 +70,11 @@ action :set do
   end
 
   # this can be removed once freebsd support is in the cron cookbook
-  service 'cron' if platform?('freebsd')
+  service 'cron' if platform?('freebsd') && node['system']['enable_cron']
 
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
-    notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x'
+    notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x' && !node['system']['enable_cron']
     notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
   end
 
