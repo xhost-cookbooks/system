@@ -39,8 +39,10 @@ default['system']['packages']['install_compile_time'] = []
 default['system']['packages']['uninstall'] = []
 default['system']['packages']['uninstall_compile_time'] = []
 
-default['system']['environment']['extra'] = []
-default['system']['profile'] = []
+default['system']['environment']['extra'] = {}
+default['system']['profile']['path'] = []
+default['system']['profile']['path_append'] = true
+default['system']['profile']['append_scripts'] = []
 
 # RightScale doesn't support boolean attributes in metadata
 node.override['system']['permanent_ip'] = false if node['system']['permanent_ip'] == 'false'
