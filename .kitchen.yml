@@ -62,3 +62,4 @@ suites:
           path_append: true
           path:
             - "/opt/local/bin"
+            - "/opt/local/food/bin"
