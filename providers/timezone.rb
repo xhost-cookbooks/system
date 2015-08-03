@@ -61,7 +61,7 @@ action :set do
 
   # this can be removed once arch linux support is in the cron cookbook
   # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
-  if platform?('arch')
+  if platform?('arch') && node['system']['enable_cron']
     package 'cronie'
 
     service 'cron' do
@@ -70,11 +70,11 @@ action :set do
   end
 
   # this can be removed once freebsd support is in the cron cookbook
-  service 'cron' if platform?('freebsd')
+  service 'cron' if platform?('freebsd') && node['system']['enable_cron']
 
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
-    notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x'
+    notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x' && !node['system']['enable_cron']
     notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
   end
 
