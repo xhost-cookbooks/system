@@ -78,7 +78,7 @@ done
 unset i
 unset -f pathmunge
 
-<% unless @path_append %>
+<% unless @profile[:path_append] %>
 <%   if @profile[:path] %>
 PATH=<%= "#{@profile[:path].join ':'}:" unless @profile[:path].empty? %>
 <%   end %>

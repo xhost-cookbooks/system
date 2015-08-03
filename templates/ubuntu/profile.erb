@@ -17,7 +17,7 @@ if [ -f /etc/sysprofile ]; then
 fi
 
 <% if @profile[:path] %>
-<%   if @path_append %>
+<%   if @profile[:path_append] %>
 PATH=$PATH:<%= "#{@profile[:path].join ':'}" %>
 <%   else %>
 PATH=<%= "#{@profile[:path].join ':'}"  %>
