@@ -21,8 +21,8 @@ platforms:
   - name: centos-6.6
   - name: fedora-21
   - name: fedora-20
-  - name: freebsd-9.3
   - name: freebsd-10.1
+  - name: freebsd-9.3
 
 suites:
   - name: default
