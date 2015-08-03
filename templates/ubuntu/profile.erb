@@ -16,6 +16,12 @@ if [ -f /etc/sysprofile ]; then
   fi
 fi
 
-PATH=<%= "#{@profile[:path].join ':'}:" unless @profile[:path].empty? %>
+<% if @profile[:path] %>
+<%   if @path_append %>
+PATH=$PATH:<%= "#{@profile[:path].join ':'}" %>
+<%   else %>
+PATH=<%= "#{@profile[:path].join ':'}"  %>
+<%   end %>
+<% end %>
 
 <%= @profile[:append_scripts].join "\n" %>

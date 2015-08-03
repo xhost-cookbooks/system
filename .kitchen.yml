@@ -32,10 +32,15 @@ suites:
      - recipe[system::install_packages]
      - recipe[system::uninstall_packages]
      - recipe[system::profile]
+     - recipe[system::environment]
     attributes:
       system:
         short_hostname: test
         domain_name: kitchen
+        environment:
+          extra:
+           DINNER: Pizza
+           DESERT: Ice cream
         timezone: Australia/Sydney
         static_hosts:
           95.211.29.66: supermarket.io
@@ -52,3 +57,6 @@ suites:
           append_scripts:
            - "export CHEF_IS_AWESOME=1"
            - "echo helloworld > /dev/null"
+          path_append: true
+          path:
+            - "/opt/local/bin"
