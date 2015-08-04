@@ -3,13 +3,17 @@
 require_relative 'spec_helper'
 
 # /etc/hostname
-describe file('/etc/hostname') do
-  it { should be_file }
-  it { should be_owned_by 'root' }
+
+# no /etc/hostname used on bsd systems
+unless os[:family] == ('freebsd' || 'darwin')
+  describe file('/etc/hostname') do
+    it { should be_file }
+    it { should be_owned_by 'root' }
+  end
 end
 
 # /etc/timezone (debian family only)
-if (os[:family] == 'debian') || (os[:family] == 'ubuntu')
+if os[:family] == ('debian' || 'ubuntu')
   describe file('/etc/timezone') do
     it { should be_file }
     it { should be_owned_by 'root' }
@@ -25,14 +29,17 @@ describe file('/etc/localtime') do
   it { should be_owned_by 'root' }
 end
 
-describe host('localhost') do
-  it { should be_resolvable.by('localhost') }
-  it { should be_reachable }
-end
+# serverspec ping doesn't seem to work in freebsd
+unless os[:family] == ('freebsd' || 'darwin')
+  describe host('localhost') do
+    it { should be_resolvable.by('localhost') }
+    it { should be_reachable }
+  end
 
-describe host('test.kitchen') do
-  it { should be_resolvable.by('hosts') }
-  it { should be_reachable }
+  describe host('test.kitchen') do
+    it { should be_resolvable.by('hosts') }
+    it { should be_reachable }
+  end
 end
 
 # it's a little early to be able to expect most
@@ -97,6 +104,6 @@ describe file('/etc/profile') do
 end
 
 describe file('/etc/environment') do
-  its(:content) { should contain "DINNER=Pizza" }
-  its(:content) { should contain "DESERT=Ice cream" }
+  its(:content) { should contain 'DINNER=Pizza' }
+  its(:content) { should contain 'DESERT=Ice cream' }
 end
