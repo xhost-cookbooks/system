@@ -136,7 +136,7 @@ attribute 'system/upgrade_packages',
 
 attribute 'system/manage_hostsfile',
           display_name: 'Manage Hostsfile',
-          description: "Whether or not to manage /etc/hostsfile (in any way).",
+          description: 'Whether or not to manage /etc/hostsfile (in any way).',
           required: 'optional',
           choice: %w(true false),
           recipes: ['system::hostname', 'system::default']
