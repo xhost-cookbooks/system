@@ -36,6 +36,10 @@ attribute :static_hosts,
           kind_of: Hash,
           default: nil
 
+attribute :manage_hostsfile,
+          kind_of: [TrueClass, FalseClass],
+          default: true
+
 attribute :netbios_name,
           kind_of: String,
           default: nil

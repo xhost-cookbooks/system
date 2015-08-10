@@ -30,6 +30,7 @@ default['system']['domain_name'] = 'localdomain'
 default['system']['netbios_name'] = node['system']['short_hostname'].upcase
 default['system']['workgroup'] = 'WORKGROUP'
 default['system']['static_hosts'] = {}
+default['system']['manage_hostsfile'] = true
 default['system']['upgrade_packages'] = true
 default['system']['permanent_ip'] = true
 default['system']['enable_cron'] = true

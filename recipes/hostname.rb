@@ -18,9 +18,10 @@
 # limitations under the License.
 
 system_hostname node['system']['short_hostname'] do
-  short_hostname node['system']['short_hostname']
-  domain_name    node['system']['domain_name']
-  static_hosts   node['system']['static_hosts']
-  netbios_name   node['system']['netbios_name']
-  workgroup      node['system']['workgroup']
+  short_hostname    node['system']['short_hostname']
+  domain_name       node['system']['domain_name']
+  static_hosts      node['system']['static_hosts']
+  netbios_name      node['system']['netbios_name']
+  workgroup         node['system']['workgroup']
+  manage_hostsfile  node['system']['manage_hostsfile']
 end

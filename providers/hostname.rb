@@ -99,30 +99,36 @@ action :set do
     # remove 127.0.0.1 from /etc/hosts when using permanent IP
     hostsfile_entry '127.0.1.1' do
       action :remove
+      only_if { new_resource.manage_hostsfile }
     end
     hostsfile_entry '127.0.0.1' do
       hostname 'localhost.localdomain'
       aliases ['localhost']
+      only_if { new_resource.manage_hostsfile }
     end
     hostsfile_entry GetIP.local do
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
+      only_if { new_resource.manage_hostsfile }
     end
   else
     hostsfile_entry GetIP.local do
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       action :remove
+      only_if { new_resource.manage_hostsfile }
     end
     hostsfile_entry '127.0.1.1' do
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       only_if { platform_family?('debian') }
+      only_if { new_resource.manage_hostsfile }
     end
     hostsfile_entry '127.0.0.1' do
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname, 'localhost.localdomain', 'localhost']
       not_if { platform_family?('debian') }
+      only_if { new_resource.manage_hostsfile }
     end
   end
 
@@ -130,6 +136,7 @@ action :set do
   hostsfile_entry '255.255.255.255' do
     hostname 'broadcasthost'
     only_if { platform_family?('mac_os_x') }
+    only_if { new_resource.manage_hostsfile }
   end
 
   # the following are desirable for IPv6 capable hosts
@@ -155,6 +162,7 @@ action :set do
       hostname host[:name]
       aliases host[:aliases] if host[:aliases]
       priority 5
+      only_if { new_resource.manage_hostsfile }
     end
   end
 
@@ -163,6 +171,7 @@ action :set do
     hostsfile_entry ip do
       hostname host
       priority 6
+      only_if { new_resource.manage_hostsfile }
     end
   end
 
