@@ -20,7 +20,7 @@ fi
 <%   if @profile[:path_append] %>
 PATH=$PATH:<%= @profile[:path].join ':' %>
 <%   else %>
-PATH=<%= @profile[:path].join ':'}  %>
+PATH=<%= @profile[:path].join ':'  %>
 <%   end %>
 <% end %>
 
