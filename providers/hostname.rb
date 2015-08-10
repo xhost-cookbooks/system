@@ -97,34 +97,40 @@ action :set do
   # http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution
   if node['system']['permanent_ip']
     # remove 127.0.0.1 from /etc/hosts when using permanent IP
-    hostsfile_entry '127.0.1.1' do
+    hostsfile_entry "127.0.1.1_#{new_resource.name}" do
+      ip_address '127.0.1.1'
       action :remove
       only_if { new_resource.manage_hostsfile }
     end
-    hostsfile_entry '127.0.0.1' do
+    hostsfile_entry "127.0.0.1_#{new_resource.name}" do
+      ip_address '127.0.0.1'
       hostname 'localhost.localdomain'
       aliases ['localhost']
       only_if { new_resource.manage_hostsfile }
     end
-    hostsfile_entry GetIP.local do
+    hostsfile_entry "#{GetIP.local}_#{new_resource.name}" do
+      ip_address GetIP.local
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       only_if { new_resource.manage_hostsfile }
     end
   else
-    hostsfile_entry GetIP.local do
+    hostsfile_entry "#{GetIP.local}_#{new_resource.name}" do
+      ip_address GetIP.local
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       action :remove
       only_if { new_resource.manage_hostsfile }
     end
-    hostsfile_entry '127.0.1.1' do
+    hostsfile_entry "127.0.1.1_#{new_resource.name}" do
+      ip address '127.0.1.1'
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       only_if { platform_family?('debian') }
       only_if { new_resource.manage_hostsfile }
     end
-    hostsfile_entry '127.0.0.1' do
+    hostsfile_entry "127.0.0.1_#{new_resource.name}" do
+      ip_address '127.0.0.1'
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname, 'localhost.localdomain', 'localhost']
       not_if { platform_family?('debian') }
@@ -133,7 +139,8 @@ action :set do
   end
 
   # add in/ensure this default host for mac_os_x
-  hostsfile_entry '255.255.255.255' do
+  hostsfile_entry "255.255.255.255_#{new_resource.name}" do
+    ip_address '255.255.255.255'
     hostname 'broadcasthost'
     only_if { platform_family?('mac_os_x') }
     only_if { new_resource.manage_hostsfile }
@@ -158,7 +165,8 @@ action :set do
 
   # add the ipv6 hosts to /etc/hosts
   ipv6_hosts.each do |host|
-    hostsfile_entry host[:ip] do
+    hostsfile_entry "#{host[:ip]}_#{new_resource.name}" do
+      ip_address host[:ip]
       hostname host[:name]
       aliases host[:aliases] if host[:aliases]
       priority 5
@@ -168,7 +176,8 @@ action :set do
 
   # additional static hosts
   new_resource.static_hosts.each do |ip, host|
-    hostsfile_entry ip do
+    hostsfile_entry "#{ip}_#{new_resource.name}" do
+      ip_address ip
       hostname host
       priority 6
       only_if { new_resource.manage_hostsfile }
