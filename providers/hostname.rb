@@ -95,7 +95,7 @@ action :set do
 
   primary_if = node['network']['interfaces'][node['system']['primary_interface']]
   primary_addrs = primary_if['addresses']
-  primary_addrs_ipv4 = primary_addrs.select{ |addr, attrs| attrs['family']=='inet'}
+  primary_addrs_ipv4 = primary_addrs.select { |_addr, attrs| attrs['family'] == 'inet' }
   primary_ip = primary_addrs_ipv4.keys.first
   ::Chef::Log.debug "primary_ip is: #{primary_ip}"
 
