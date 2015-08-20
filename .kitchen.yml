@@ -14,15 +14,45 @@ provisioner:
 
 platforms:
   - name: debian-8.1
+    attributes:
+      system:
+        primary_interface: eth1
   - name: debian-7.8
+    attributes:
+      system:
+        primary_interface: eth1
   - name: ubuntu-14.04
+    attributes:
+      system:
+        primary_interface: eth1
   - name: ubuntu-12.04
+    attributes:
+      system:
+        primary_interface: eth1
   - name: centos-7.1
+    attributes:
+      system:
+        primary_interface: enp0s8
   - name: centos-6.6
+    attributes:
+      system:
+        primary_interface: eth1
   - name: fedora-21
+    attributes:
+      system:
+        primary_interface: enp0s8
   - name: fedora-20
+    attributes:
+      system:
+        primary_interface: enp0s8
   - name: freebsd-10.1
+    attributes:
+      system:
+        primary_interface: em1
   - name: freebsd-9.3
+    attributes:
+      system:
+        primary_interface: em1
 
 suites:
   - name: default
@@ -33,6 +63,9 @@ suites:
      - recipe[system::uninstall_packages]
      - recipe[system::profile]
      - recipe[system::environment]
+    driver:
+      network:
+      - ["private_network", {ip: "172.16.172.16"}]
     attributes:
       system:
         short_hostname: test

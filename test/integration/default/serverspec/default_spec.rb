@@ -69,6 +69,7 @@ describe file('/etc/hosts') do
   it { should contain('localdomain').after('127.0.0.1') }
   it { should contain('chef.io').after('184.106.28.82') }
   it { should contain('supermarket.io').after('95.211.29.66') }
+  it { should contain('test.kitchen').after('172.16.172.16') }
 end
 
 # el6 and older
