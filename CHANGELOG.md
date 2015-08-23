@@ -126,3 +126,7 @@ This file is used to list changes made in each version of the system cookbook.
 - Use ohai to determine network IP (pr #26)
 - Allow specification primary network interface for hostsfile generation (pr #26)
 - Improve/fix templating for system profile (/etc/profile)
+
+0.9.1
+-----
+- Fix missing end statement in templates/arch/profile.erb
