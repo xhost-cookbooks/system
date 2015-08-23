@@ -214,6 +214,10 @@ system_profile '/etc/profile' do
 end
 ```
 
+### Publish to Chef Supermarket
+
+    $ cd .. && knife cookbook site share system "Operating Systems & Virtualization" -o . -k ~/.chef/xhost.pem
+
 
 License and Authors
 -------------------
