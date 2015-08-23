@@ -19,10 +19,9 @@
 
 # represents Chef
 class Chef
-  # include the HostInfo and GetIP libraries
+  # include the HostInfo library
   class Recipe
     include HostInfo
-    include GetIP
   end
 end
 
@@ -94,6 +93,12 @@ action :set do
     end
   end
 
+  primary_if = node['network']['interfaces'][node['system']['primary_interface']]
+  primary_addrs = primary_if['addresses']
+  primary_addrs_ipv4 = primary_addrs.select { |_addr, attrs| attrs['family'] == 'inet' }
+  primary_ip = primary_addrs_ipv4.keys.first
+  ::Chef::Log.debug "primary_ip is: #{primary_ip}"
+
   # http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution
   if node['system']['permanent_ip']
     # remove 127.0.0.1 from /etc/hosts when using permanent IP
@@ -108,15 +113,15 @@ action :set do
       aliases ['localhost']
       only_if { new_resource.manage_hostsfile }
     end
-    hostsfile_entry "#{GetIP.local}_#{new_resource.name}" do
-      ip_address GetIP.local
+    hostsfile_entry "#{primary_ip}_#{new_resource.name}" do
+      ip_address primary_ip
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       only_if { new_resource.manage_hostsfile }
     end
   else
-    hostsfile_entry "#{GetIP.local}_#{new_resource.name}" do
-      ip_address GetIP.local
+    hostsfile_entry "#{primary_ip}_#{new_resource.name}" do
+      ip_address primary_ip
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       action :remove

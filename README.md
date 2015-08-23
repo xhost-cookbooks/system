@@ -68,6 +68,7 @@ See `attributes/default.rb` for default values.
 - `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase (also supports remote package URLs)
 - `node['system']['manage_hostsfile'] - Whether or not to manage `/etc/hostsfile` (in any way).
 - `node['system']['permanent_ip']` - whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution)
+- `node['system']['primary_interface']` - Specify primary network interface, used by hostname to set the correct address in hostsfile. default is node['network']['default_interface']
 - `node['system']['profile']` - system-wide profile to apply (usually for `/etc/profile`); typically add your arbitrary shell scripts to `node['system']['profile']['append_scripts']` and these will be appended to the system profile; add extra `PATH`s to `node['system']['profile']['path']`
 
 
