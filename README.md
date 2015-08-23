@@ -61,14 +61,14 @@ See `attributes/default.rb` for default values.
 - `node['system']['domain_name']` - the domain name to set on the node, default `localdomain`
 - `node['system']['netbios_name']` - the NetBIOS name to set on the node, default is `node['system']['short_hostname']` upper-cased (OS X only)
 - `node['system']['workgroup']` - the NetBIOS workgroup name to set on the node, default is `WORKGROUP` (OS X only)
-- `node['system']['static_hosts']` - a hash of static hosts to add to /etc/hosts
+- `node['system']['static_hosts']` - a hash of static hosts to add to `/etc/hosts`
 - `node['system']['upgrade_packages']` - whether to upgrade the system's packages, default `true`
 - `node['system']['enable_cron']` - whether to include the cron recipe, default `true`
 - `node['system']['packages']['install']` - an array of packages to install (also supports remote package URLs)
 - `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase (also supports remote package URLs)
-- `node['system']['manage_hostsfile'] - Whether or not to manage `/etc/hostsfile` (in any way).
+- `node['system']['manage_hostsfile']` - whether or not to manage `/etc/hostsfile` (in any way)
 - `node['system']['permanent_ip']` - whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution)
-- `node['system']['primary_interface']` - Specify primary network interface, used by hostname to set the correct address in hostsfile. default is node['network']['default_interface']
+- `node['system']['primary_interface']` - Specify primary network interface, used by hostname to set the correct address in hostsfile, default is `node['network']['default_interface']`
 - `node['system']['profile']` - system-wide profile to apply (usually for `/etc/profile`); typically add your arbitrary shell scripts to `node['system']['profile']['append_scripts']` and these will be appended to the system profile; add extra `PATH`s to `node['system']['profile']['path']`
 
 
