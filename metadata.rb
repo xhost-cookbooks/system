@@ -176,3 +176,9 @@ attribute 'system/static_hosts',
           required: 'optional',
           type: 'hash',
           recipes: ['system::hostname', 'system::default']
+
+attribute 'system/primary_interface',
+          display_name: 'Primary Network Interface',
+          desription: "Specify primary network interface, used by hostname to set the correct address in hostsfile. default is node['network']['default_interface'].",
+          required: 'optional',
+          recipes: ['system::hostname', 'system::default']
