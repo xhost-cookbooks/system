@@ -117,3 +117,12 @@ This file is used to list changes made in each version of the system cookbook.
 - Support for using the name_attribute of the hostname resource for fqdn
 - Fix for issue #22 (timezone set idempotency)
 - Various minor fixes
+
+0.9.0
+-----
+- Manage /etc/environment by recipe or system_environment LWRP
+- Support optional management of /etc/hosts (e.g. do not add hostname to this file)
+- Support optional inclusion of the cron recipe
+- Use ohai to determine network IP (pr #26)
+- Allow specification primary network interface for hostsfile generation (pr #26)
+- Improve/fix templating for system profile (/etc/profile)
