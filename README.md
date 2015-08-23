@@ -216,7 +216,8 @@ end
 
 ### Publish to Chef Supermarket
 
-    $ cd .. && knife cookbook site share system "Operating Systems & Virtualization" -o . -k ~/.chef/xhost.pem
+    $ cd ..
+    $ knife cookbook site share system "Operating Systems & Virtualization" -o . -u xhost -k ~/.chef/xhost.pem
 
 
 License and Authors
