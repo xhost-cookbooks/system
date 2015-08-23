@@ -12,6 +12,7 @@ umask 022
 PATH="<%= "#{@profile[:path].join ':'}:" %>/usr/local/sbin:/usr/local/bin:/usr/bin"
 <%   else %>
 PATH=<%= "#{@profile[:path].join ':'}" %>
+<%   end %>
 <% else %>
 PATH="/usr/local/sbin:/usr/local/bin:/usr/bin"
 <% end %>
