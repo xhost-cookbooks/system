@@ -131,21 +131,26 @@ attribute 'system/upgrade_packages',
           display_name: 'Upgrade Packages',
           description: "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
           required: 'optional',
-          choice: %w(true false),
+          type: 'boolean',
+          choice: [true, false],
+          default: true,
           recipes: ['system::upgrade_packages']
 
 attribute 'system/manage_hostsfile',
           display_name: 'Manage Hostsfile',
           description: 'Whether or not to manage /etc/hostsfile (in any way).',
           required: 'optional',
-          choice: %w(true false),
+          type: 'boolean',
+          choice: [true, false],
+          default: true,
           recipes: ['system::hostname', 'system::default']
 
 attribute 'system/enable_cron',
           display_name: 'Enable cron recipe',
           description: 'Whether or not the system::timezone recipe will include the cron recipe.',
           required: 'optional',
-          choice: %w(true false),
+          type: 'boolean',
+          choice: [true, false],
           default: true,
           recipes: ['system::timezone']
 
@@ -167,7 +172,9 @@ attribute 'system/permanent_ip',
           display_name: 'Permanent IP Address',
           description: 'Whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution).',
           required: 'optional',
-          choice: %w(true false),
+          type: 'boolean',
+          choice: [true, false],
+          default: true,
           recipes: ['system::hostname', 'system::default']
 
 attribute 'system/static_hosts',
