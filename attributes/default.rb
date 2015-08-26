@@ -47,5 +47,17 @@ default['system']['profile']['path_append'] = true
 default['system']['profile']['append_scripts'] = []
 
 # RightScale doesn't support boolean attributes in metadata
+node.override['system']['manage_hostsfile'] = false if node['system']['manage_hostsfile'] == 'false'
+node.override['system']['manage_hostsfile'] = true if node['system']['manage_hostsfile'] == 'true'
+
+node.override['system']['upgrade_packages'] = false if node['system']['upgrade_packages'] == 'false'
+node.override['system']['upgrade_packages'] = true if node['system']['upgrade_packages'] == 'true'
+
 node.override['system']['permanent_ip'] = false if node['system']['permanent_ip'] == 'false'
 node.override['system']['permanent_ip'] = true if node['system']['permanent_ip'] == 'true'
+
+node.override['system']['enable_cron'] = false if node['system']['enable_cron'] == 'false'
+node.override['system']['enable_cron'] = true if node['system']['enable_cron'] == 'true'
+
+node.override['system']['profile']['path_append'] = false if node['system']['profile']['path_append'] == 'false'
+node.override['system']['profile']['path_append'] = true if node['system']['profile']['path_append'] == 'true'
