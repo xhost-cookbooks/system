@@ -63,6 +63,7 @@ See `attributes/default.rb` for default values.
 - `node['system']['workgroup']` - the NetBIOS workgroup name to set on the node, default is `WORKGROUP` (OS X only)
 - `node['system']['static_hosts']` - a hash of static hosts to add to `/etc/hosts`
 - `node['system']['upgrade_packages']` - whether to upgrade the system's packages, default `true`
+- `node['system']['upgrade_packages_at_compile']` - whether upgrade of the system's packages in Chef's compilation phase, default `true`
 - `node['system']['enable_cron']` - whether to include the cron recipe, default `true`
 - `node['system']['packages']['install']` - an array of packages to install (also supports remote package URLs)
 - `node['system']['packages']['install_compile_time']` - an array of packages to install in Chef's compilation phase (also supports remote package URLs)
