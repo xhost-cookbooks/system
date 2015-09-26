@@ -129,7 +129,16 @@ attribute 'system/workgroup',
 
 attribute 'system/upgrade_packages',
           display_name: 'Upgrade Packages',
-          description: "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
+          description: "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages.",
+          required: 'optional',
+          type: 'boolean',
+          choice: [true, false],
+          default: true,
+          recipes: ['system::upgrade_packages']
+
+attribute 'system/upgrade_packages_at_compile',
+          display_name: 'Upgrade Packages at compile time',
+          description: "Whether or not the system::upgrade_packages recipe will update the system's installed packages at compile time.",
           required: 'optional',
           type: 'boolean',
           choice: [true, false],

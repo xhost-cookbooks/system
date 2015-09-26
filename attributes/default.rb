@@ -32,6 +32,7 @@ default['system']['workgroup'] = 'WORKGROUP'
 default['system']['static_hosts'] = {}
 default['system']['manage_hostsfile'] = true
 default['system']['upgrade_packages'] = true
+default['system']['upgrade_packages_at_compile'] = true
 default['system']['permanent_ip'] = true
 default['system']['primary_interface'] = node['network']['default_interface']
 default['system']['enable_cron'] = true
