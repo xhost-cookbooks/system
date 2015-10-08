@@ -35,7 +35,7 @@ Get it now from your (local) [supermarket](https://supermarket.chef.io/cookbooks
 
 Requirements
 ------------
-- Chef >= 11
+- Chef >= 11.12.0
 - Ruby >= 1.9
 
 ### Platforms Supported
