@@ -209,7 +209,11 @@ action :set do
         status: false,
         reload: true
       }
-      service_provider = ::Chef::Provider::Service::Upstart
+      if ::Chef::VersionConstraint.new('>= 15.04').include?(node['platform_version'])
+        service_provider = ::Chef::Provider::Service::Systemd
+      elsif ::Chef::VersionConstraint.new('>= 12.04').include?(node['platform_version'])
+        service_provider = ::Chef::Provider::Service::Upstart
+      end
     end
 
     service service_name do
