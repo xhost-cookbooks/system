@@ -29,6 +29,10 @@ platforms:
     attributes:
       system:
         primary_interface: eth1
+  - name: ubuntu-15.04
+    attributes:
+      system:
+        primary_interface: eth1
   - name: centos-7.1
     attributes:
       system:

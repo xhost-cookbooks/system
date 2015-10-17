@@ -210,11 +210,15 @@ action :set do
         reload: true
       }
       service_provider = ::Chef::Provider::Service::Upstart
+
+      # Ubuntu moved to systemd
+      service_provider = ::Chef::Provider::Service::Systemd if node['platform_version'] >= '15.04'
     end
 
     service service_name do
       supports service_supports
       provider service_provider
+      not_if { service_provider == ::Chef::Provider::Service::Systemd }
       action :nothing
     end
   end
