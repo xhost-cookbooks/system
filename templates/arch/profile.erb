@@ -9,9 +9,9 @@ umask 022
 # Set our default path
 <% unless @profile[:path].empty? %>
 <%   if @profile[:path_append] %>
-PATH="<%= "#{@profile[:path].join ':'}:" %>/usr/local/sbin:/usr/local/bin:/usr/bin"
+PATH="<%= @profile[:path].join ':' %>:/usr/local/sbin:/usr/local/bin:/usr/bin"
 <%   else %>
-PATH=<%= "#{@profile[:path].join ':'}" %>
+PATH=<%= @profile[:path].join ':' %>
 <%   end %>
 <% else %>
 PATH="/usr/local/sbin:/usr/local/bin:/usr/bin"
