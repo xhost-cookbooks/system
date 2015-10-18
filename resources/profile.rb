@@ -23,7 +23,7 @@ default_action :configure
 # typically '/etc/profile'
 attribute :filename,
           name_attribute: true,
-          kind_of: String,
+          kind_of: String
 
 attribute :template,
           kind_of: Hash,

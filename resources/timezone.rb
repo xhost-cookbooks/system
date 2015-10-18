@@ -20,7 +20,7 @@
 # use 'Etc/UTC' for UTC/GMT
 attribute :timezone,
           kind_of: String,
-          name_attribute: true,
+          name_attribute: true
 
 actions :set
 
