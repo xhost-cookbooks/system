@@ -11,6 +11,14 @@ provisioner:
   name: chef_zero
 
 platforms:
+# not supported :(
+# https://github.com/chef/omnitruck/issues/77
+#  - name: archlinux
+#    driver:
+#      box: 'terrywang/archlinux'
+#    attributes:
+#      system:
+#        primary_interface: enp0s8
   - name: debian-8.1
     attributes:
       system:
@@ -55,7 +63,7 @@ platforms:
         ssh:
           shell: '/bin/sh'
         network:
-          - ["private_network", {ip: "123.456.789.0"}]
+          - ["private_network", {ip: "172.16.172.16"}]
   - name: freebsd-9.3
     attributes:
       system:
@@ -64,7 +72,7 @@ platforms:
         ssh:
           shell: '/bin/sh'
         network:
-          - ["private_network", {ip: "123.456.789.0"}]
+          - ["private_network", {ip: "172.16.172.16"}]
 suites:
   - name: default
     run_list:
