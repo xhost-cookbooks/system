@@ -1,12 +1,10 @@
 ---
 driver:
   name: vagrant
-  ssh:
-    shell: '"/bin/sh"'
 
 driver_config:
   require_chef_omnibus: latest
-  # require_chef_omnibus: 12.4.1
+  # require_chef_omnibus: 12.5.1
   # require_chef_omnibus: 11.18.14
 
 provisioner:
@@ -53,11 +51,20 @@ platforms:
     attributes:
       system:
         primary_interface: em1
+    driver_config:
+        ssh:
+          shell: '/bin/sh'
+        network:
+          - ["private_network", {ip: "123.456.789.0"}]
   - name: freebsd-9.3
     attributes:
       system:
         primary_interface: em1
-
+    driver_config:
+        ssh:
+          shell: '/bin/sh'
+        network:
+          - ["private_network", {ip: "123.456.789.0"}]
 suites:
   - name: default
     run_list:
