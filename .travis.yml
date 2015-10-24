@@ -8,7 +8,7 @@ rvm:
   - 2.1.6
   - 2.0.0-p481
 
-bundler_args: --without development test kitchen_docker kitchen_cloud guard integration integration_cloud
+bundler_args: --without development test kitchen_common kitchen_docker kitchen_vagrant kitchen_cloud guard integration integration_cloud
 
 before_install:
   - "echo 'gem: --no-document' > ~/.gemrc"
