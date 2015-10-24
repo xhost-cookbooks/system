@@ -1,0 +1,96 @@
+---
+driver:
+  name: docker
+
+driver_config:
+  require_chef_omnibus: latest
+  # require_chef_omnibus: 12.5.1
+  # require_chef_omnibus: 11.18.14
+
+provisioner:
+  name: chef_zero
+
+platforms:
+# not supported :(
+# https://github.com/chef/omnitruck/issues/77
+#  - name: archlinux
+#    driver:
+#      box: 'terrywang/archlinux'
+#    attributes:
+#      system:
+#        primary_interface: enp0s8
+  - name: debian-8.1
+    attributes:
+      system:
+        primary_interface: eth1
+  - name: debian-7.8
+    attributes:
+      system:
+        primary_interface: eth1
+  - name: ubuntu-14.04
+    attributes:
+      system:
+        primary_interface: eth1
+  - name: ubuntu-12.04
+    attributes:
+      system:
+        primary_interface: eth1
+  - name: ubuntu-15.04
+    attributes:
+      system:
+        primary_interface: eth1
+  - name: centos-7.1
+    attributes:
+      system:
+        primary_interface: enp0s8
+  - name: centos-6.6
+    attributes:
+      system:
+        primary_interface: eth1
+  - name: fedora-21
+    attributes:
+      system:
+        primary_interface: enp0s8
+  - name: fedora-20
+    attributes:
+      system:
+        primary_interface: enp0s8
+suites:
+  - name: default
+    run_list:
+     - recipe[system::timezone]
+     - recipe[system::install_packages]
+     - recipe[system::uninstall_packages]
+     - recipe[system::profile]
+     - recipe[system::environment]
+    driver:
+      network:
+      - ["private_network", {ip: "172.16.172.16"}]
+    attributes:
+      system:
+        short_hostname: test
+        domain_name: kitchen
+        environment:
+          extra:
+           DINNER: Pizza
+           DESERT: Ice cream
+        timezone: Australia/Sydney
+        static_hosts:
+          95.211.29.66: supermarket.io
+          184.106.28.82: chef.io
+        packages:
+          install:
+           - "curl"
+           - "wget"
+          install_compile_time:
+           - "sudo"
+          uninstall:
+           - "gcc"
+        profile:
+          append_scripts:
+           - "export CHEF_IS_AWESOME=1"
+           - "echo helloworld > /dev/null"
+          path_append: true
+          path:
+            - "/opt/local/bin"
+            - "/opt/local/food/bin"
