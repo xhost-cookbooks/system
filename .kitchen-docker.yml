@@ -2,6 +2,9 @@
 driver:
   name: docker
 
+# before running test kitchen:
+# export KITCHEN_YAML=.kitchen-docker.yml
+
 driver_config:
   require_chef_omnibus: latest
   # require_chef_omnibus: 12.5.1
