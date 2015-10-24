@@ -94,3 +94,19 @@ Vagrantfile
 # Travis #
 ##########
 .travis.yml
+
+# Docker #
+##########
+Dockerfile
+Dockerfile.mutable
+
+# archives #
+*.tar.giz
+*.zip
+*.xz
+
+# misc #
+.bundle
+.chef
+.kitchen
+Makefile
