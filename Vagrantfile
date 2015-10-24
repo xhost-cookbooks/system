@@ -10,7 +10,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = File.expand_path('~/.berkshelf/cookbooks')
-    chef.log_level = :debug
+    # chef.log_level = :debug
     chef.json = {
       'system' => {
         'short_hostname' => 'system',
