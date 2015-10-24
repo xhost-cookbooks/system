@@ -83,4 +83,19 @@ action :set do
     to "/usr/share/zoneinfo/#{zone_file}"
     notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x' && !node['system']['enable_cron']
     notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
-    not_if "bash -c 'type -P timedatectl'
+    not_if "bash -c 'type -P timedatectl'"
+  end
+
+  ruby_block 'verify newly-linked timezone' do
+    block do
+      tz_info = ::Time.now.strftime('%z %Z')
+      tz_info << "#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')})"
+      ::Chef::Log.debug("tz-info (after set): #{tz_info}")
+    end
+    action :nothing
+    only_if { ::File.symlink?('/etc/localtime') }
+    only_if { zone_change }
+  end
+
+  new_resource.updated_by_last_action(true) if zone_change
+end
