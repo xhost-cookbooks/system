@@ -72,22 +72,15 @@ action :set do
   # this can be removed once freebsd support is in the cron cookbook
   service 'cron' if platform?('freebsd') && node['system']['enable_cron']
 
+  execute "timedatectl set-timezone #{zone_file}" do
+    notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x' && !node['system']['enable_cron']
+    notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
+    only_if "bash -c 'type -P timedatectl'"
+    not_if { Mixlib::ShellOut.new('timedatectl').run_command.stdout.include?(zone_file) }
+  end
+
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
     notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x' && !node['system']['enable_cron']
     notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
-  end
-
-  ruby_block 'verify newly-linked timezone' do
-    block do
-      tz_info = ::Time.now.strftime('%z %Z')
-      tz_info << "#{::File.readlink('/etc/localtime').gsub(/^/, ' (').gsub(/$/, ')')})"
-      ::Chef::Log.debug("tz-info (after set): #{tz_info}")
-    end
-    action :nothing
-    only_if { ::File.symlink?('/etc/localtime') }
-    only_if { zone_change }
-  end
-
-  new_resource.updated_by_last_action(true) if zone_change
-end
+    not_if "bash -c 'type -P timedatectl'
