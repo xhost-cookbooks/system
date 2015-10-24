@@ -1,6 +1,10 @@
 ---
+
+# before running test kitchen:
+# export KITCHEN_YAML=.kitchen-docker.yml
+
 driver:
-  name: vagrant
+  name: docker
 
 driver_config:
   require_chef_omnibus: latest
@@ -76,7 +80,6 @@ platforms:
 suites:
   - name: default
     run_list:
-     - recipe[system::default]
      - recipe[system::timezone]
      - recipe[system::install_packages]
      - recipe[system::uninstall_packages]
