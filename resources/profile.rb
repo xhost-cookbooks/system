@@ -34,8 +34,12 @@ attribute :path,
           default: []
 
 attribute :path_append,
-          kind_of: [TrueClass, FalseClass],
-          default: true
+          kind_of: Array,
+          default: []
+
+attribute :path_prepend,
+          kind_of: Array,
+          default: []
 
 attribute :append_scripts,
           kind_of: Array,

@@ -20,12 +20,6 @@
 # Allow terminal messages
 # mesg y
 
-<% if @profile[:path] %>
-<%   if @profile[:path_append] %>
-PATH=$PATH:<%= @profile[:path].join ':' %>
-<%   else %>
-PATH=<%= @profile[:path].join ':'  %>
-<%   end %>
-<% end %>
+PATH=<%= @profile[:path].join ':' %>
 
 <%= @profile[:append_scripts].join "\n" %>

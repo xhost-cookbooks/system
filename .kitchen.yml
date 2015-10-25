@@ -109,7 +109,7 @@ suites:
           append_scripts:
            - "export CHEF_IS_AWESOME=1"
            - "echo helloworld > /dev/null"
-          path_append: true
-          path:
-            - "/opt/local/bin"
+          path_prepend:
             - "/opt/local/food/bin"
+          path_append:
+            - "/opt/local/bin"
