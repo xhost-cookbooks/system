@@ -133,7 +133,7 @@ attribute 'system/upgrade_packages',
           description: "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages.",
           required: 'optional',
           type: 'string',
-          choice: ['true', 'false'],
+          choice: %w(true false),
           default: 'true',
           recipes: ['system::upgrade_packages']
 
