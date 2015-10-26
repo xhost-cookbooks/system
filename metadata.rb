@@ -11,6 +11,7 @@ version          '0.9.1'
 recipe           'system::default',             "Sets the system's hostname and timezone, updates the system's installed packages."
 recipe           'system::timezone',            "Sets the system's' timezone."
 recipe           'system::hostname',            "Sets the system's hostname."
+recipe           'system::profile',             "Manage the system's profile such as search path and scripts (/etc/profile)."
 recipe           'system::upgrade_packages',    "Upgrades the system's installed packages."
 recipe           'system::update_package_list', "Updates the system's list of packages in the package manager's cache."
 recipe           'system::install_packages',    "Installs packages to the system with it's native package manager."
