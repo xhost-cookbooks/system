@@ -78,10 +78,6 @@ done
 unset i
 unset -f pathmunge
 
-<% unless @profile[:path_append] %>
-<%   if @profile[:path] %>
-PATH=<%= "#{@profile[:path].join ':'}:" unless @profile[:path].empty? %>
-<%   end %>
-<% end %>
+PATH=<%= @profile[:path].join ':' %>
 
 <%= @profile[:append_scripts].join "\n" %>

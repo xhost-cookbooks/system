@@ -20,10 +20,10 @@
 actions [:configure]
 default_action :configure
 
+# typically '/etc/environment'
 attribute :filename,
           name_attribute: true,
-          kind_of: String,
-          default: '/etc/environment'
+          kind_of: String
 
 attribute :extra,
           kind_of: Hash,

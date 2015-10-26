@@ -4,8 +4,8 @@ DEPENDENCIES
     metadata: true
 
 GRAPH
-  apt (2.7.0)
-  cron (1.6.1)
+  apt (2.8.2)
+  cron (1.7.0)
   hostsfile (2.4.5)
   system (0.9.1)
     apt (>= 0.0.0)

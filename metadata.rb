@@ -129,7 +129,16 @@ attribute 'system/workgroup',
 
 attribute 'system/upgrade_packages',
           display_name: 'Upgrade Packages',
-          description: "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages (in compile time).",
+          description: "Whether or not the system::upgrade_packages recipe will physically update the system's installed packages.",
+          required: 'optional',
+          type: 'boolean',
+          choice: [true, false],
+          default: true,
+          recipes: ['system::upgrade_packages']
+
+attribute 'system/upgrade_packages_at_compile',
+          display_name: 'Upgrade Packages at compile time',
+          description: "Whether or not the system::upgrade_packages recipe will update the system's installed packages at compile time.",
           required: 'optional',
           choice: %w(true false),
           default: 'true',
@@ -175,13 +184,41 @@ attribute 'system/permanent_ip',
 
 attribute 'system/static_hosts',
           display_name: 'Static Hosts',
-          desription: 'A hash of static hosts to add to /etc/hosts.',
+          description: 'A hash of static hosts to add to /etc/hosts.',
           required: 'optional',
           type: 'hash',
           recipes: ['system::hostname', 'system::default']
 
 attribute 'system/primary_interface',
           display_name: 'Primary Network Interface',
-          desription: "Specify primary network interface, used by hostname to set the correct address in hostsfile. default is node['network']['default_interface'].",
+          description: "Specify primary network interface, used by hostname to set the correct address in hostsfile. default is node['network']['default_interface'].",
           required: 'optional',
           recipes: ['system::hostname', 'system::default']
+
+attribute 'system/profile/path',
+          display_name: 'System Profile Path',
+          description: 'Overrides the default path for the system.',
+          required: 'optional',
+          type: 'array',
+          recipes: ['system::profile']
+
+attribute 'system/profile/path_append',
+          display_name: 'System Profile Path Append',
+          description: 'Append more paths to the base path.',
+          required: 'optional',
+          type: 'array',
+          recipes: ['system::profile']
+
+attribute 'system/profile/path_prepend',
+          display_name: 'System Profile Path Prepend',
+          description: 'Prepends more paths to the base path.',
+          required: 'optional',
+          type: 'array',
+          recipes: ['system::profile']
+
+attribute 'system/profile/append_scripts',
+          display_name: 'System Profile Path Append',
+          description: 'An array of shell scripts to be appended to the system profile (include raw scripts without shebangs).',
+          required: 'optional',
+          type: 'array',
+          recipes: ['system::profile']

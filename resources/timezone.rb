@@ -17,10 +17,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# use 'Etc/UTC' for UTC/GMT
 attribute :timezone,
           kind_of: String,
-          name_attribute: true,
-          default: 'Etc/UTC'
+          name_attribute: true
 
 actions :set
 

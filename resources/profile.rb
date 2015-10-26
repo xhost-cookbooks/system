@@ -20,10 +20,10 @@
 actions [:configure]
 default_action :configure
 
+# typically '/etc/profile'
 attribute :filename,
           name_attribute: true,
-          kind_of: String,
-          default: '/etc/profile'
+          kind_of: String
 
 attribute :template,
           kind_of: Hash,
@@ -34,8 +34,12 @@ attribute :path,
           default: []
 
 attribute :path_append,
-          kind_of: [TrueClass, FalseClass],
-          default: true
+          kind_of: Array,
+          default: []
+
+attribute :path_prepend,
+          kind_of: Array,
+          default: []
 
 attribute :append_scripts,
           kind_of: Array,

@@ -32,6 +32,7 @@ default['system']['workgroup'] = 'WORKGROUP'
 default['system']['static_hosts'] = {}
 default['system']['manage_hostsfile'] = true
 default['system']['upgrade_packages'] = true
+default['system']['upgrade_packages_at_compile'] = true
 default['system']['permanent_ip'] = true
 default['system']['primary_interface'] = node['network']['default_interface']
 default['system']['enable_cron'] = true
@@ -42,9 +43,6 @@ default['system']['packages']['uninstall'] = []
 default['system']['packages']['uninstall_compile_time'] = []
 
 default['system']['environment']['extra'] = {}
-default['system']['profile']['path'] = []
-default['system']['profile']['path_append'] = true
-default['system']['profile']['append_scripts'] = []
 
 # RightScale doesn't support boolean attributes in metadata
 node.override['system']['manage_hostsfile'] = false if node['system']['manage_hostsfile'] == 'false'
@@ -58,6 +56,3 @@ node.override['system']['permanent_ip'] = true if node['system']['permanent_ip']
 
 node.override['system']['enable_cron'] = false if node['system']['enable_cron'] == 'false'
 node.override['system']['enable_cron'] = true if node['system']['enable_cron'] == 'true'
-
-node.override['system']['profile']['path_append'] = false if node['system']['profile']['path_append'] == 'false'
-node.override['system']['profile']['path_append'] = true if node['system']['profile']['path_append'] == 'true'

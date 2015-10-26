@@ -36,10 +36,11 @@ upgrade_cmd = value_for_platform(
 
 e = execute 'upgrade system packages' do
   command upgrade_cmd
-  action :nothing
+  action(node['system']['upgrade_packages_at_compile'] ? :nothing : :run)
+  only_if { node['system']['upgrade_packages'] }
 end
 
-if node['system']['upgrade_packages']
+if node['system']['upgrade_packages_at_compile']
   # supports type string if defined through metadata
-  e.run_action(:run) unless node['system']['upgrade_packages'] == 'false'
+  e.run_action(:run)
 end

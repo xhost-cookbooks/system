@@ -1,6 +1,9 @@
 ---
 driver:
-  name: vagrant
+  name: docker
+
+# before running test kitchen:
+# export KITCHEN_YAML=.kitchen-docker.yml
 
 driver_config:
   require_chef_omnibus: latest
@@ -55,28 +58,9 @@ platforms:
     attributes:
       system:
         primary_interface: enp0s8
-  - name: freebsd-10.1
-    attributes:
-      system:
-        primary_interface: em1
-    driver_config:
-        ssh:
-          shell: '/bin/sh'
-        network:
-          - ["private_network", {ip: "172.16.172.16"}]
-  - name: freebsd-9.3
-    attributes:
-      system:
-        primary_interface: em1
-    driver_config:
-        ssh:
-          shell: '/bin/sh'
-        network:
-          - ["private_network", {ip: "172.16.172.16"}]
 suites:
   - name: default
     run_list:
-     - recipe[system::default]
      - recipe[system::timezone]
      - recipe[system::install_packages]
      - recipe[system::uninstall_packages]
@@ -109,7 +93,7 @@ suites:
           append_scripts:
            - "export CHEF_IS_AWESOME=1"
            - "echo helloworld > /dev/null"
-          path_prepend:
-            - "/opt/local/food/bin"
-          path_append:
+          path_append: true
+          path:
             - "/opt/local/bin"
+            - "/opt/local/food/bin"
