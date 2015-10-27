@@ -141,3 +141,8 @@ This file is used to list changes made in each version of the system cookbook.
 - Add a Dockerfile
 - timedatectl for supported systems (issue #32)
 - Support path_append and path_prepend (issue #27)
+
+0.10.1
+------
+- Fix missing underscore in ip_address attribute for 127.0.1.1 hostsfile entry
+- Fix logic on if the cron service should be notified or used within timezone provider resources
