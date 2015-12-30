@@ -70,6 +70,7 @@ See `attributes/default.rb` for default values.
 - `node['system']['manage_hostsfile']` - whether or not to manage `/etc/hostsfile` (in any way)
 - `node['system']['permanent_ip']` - whether the system has a permenent IP address (http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution)
 - `node['system']['primary_interface']` - Specify primary network interface, used by hostname to set the correct address in hostsfile, default is `node['network']['default_interface']`
+- `node['system']['delay_network_restart']` - whether to trigger restart event as delayed. false causes an immediate restart instead. default `true`
 
 Attributes (all arrays) to manipulate the system-wide profile (usually for `/etc/profile`):
 
