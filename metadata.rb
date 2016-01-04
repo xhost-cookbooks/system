@@ -202,7 +202,7 @@ attribute 'system/primary_interface',
 
 attribute 'system/delay_network_restart',
           display_name: 'Delay Network Restart',
-          description: "Whether or not the system hostnamem provider will trigger a network restart as delayed vs. immediate.",
+          description: 'Whether or not the system hostnamem provider will trigger a network restart as delayed vs. immediate.',
           required: 'optional',
           type: 'boolean',
           choice: [true, false],
