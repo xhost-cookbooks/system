@@ -73,7 +73,9 @@ action :set do
   service 'cron' if platform?('freebsd') && node['system']['enable_cron']
 
   execute "timedatectl set-timezone #{zone_file}" do
-    notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x' && !node['system']['enable_cron']
+    unless !node['system']['enable_cron'] || node['platform'] == 'mac_os_x'
+      notifies :restart, 'service[cron]', :immediately
+    end
     notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
     only_if "bash -c 'type -P timedatectl'"
     not_if { Mixlib::ShellOut.new('timedatectl').run_command.stdout.include?(zone_file) }
@@ -81,7 +83,9 @@ action :set do
 
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
-    notifies :restart, 'service[cron]', :immediately unless node['platform'] == 'mac_os_x' && !node['system']['enable_cron']
+    unless !node['system']['enable_cron'] || node['platform'] == 'mac_os_x'
+      notifies :restart, 'service[cron]', :immediately
+    end
     notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
     not_if "bash -c 'type -P timedatectl'"
   end

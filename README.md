@@ -14,7 +14,7 @@ Build Status
 |           |    Travis CI    |
 |-----------|-----------------|
 | **Master** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
-| **Latest Release** ([**0.9.1**](https://github.com/xhost-cookbooks/system/releases/tag/v0.9.1)) |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.9.1)](https://travis-ci.org/xhost-cookbooks/system/builds/65745148)|
+| **Latest Release** ([**0.10.1**](https://github.com/xhost-cookbooks/system/releases/tag/v0.10.1)) |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.10.1)](https://travis-ci.org/xhost-cookbooks/system/builds/87650360)|
 
 Overview
 --------
@@ -116,7 +116,7 @@ end
 
 #####`system::profile`
 Manages `/etc/profile` with optional shell scripts to append from `node['system']['profile']['append_scripts']`,
-add extra `PATH`s to `node['system']['profile']['path']`.
+configure `PATH` requirements per attributes documented above.
 
 #####`system::install_packages`
 Installs a list of system packages as specified in the `node['system']['packages']['install']` attribute.

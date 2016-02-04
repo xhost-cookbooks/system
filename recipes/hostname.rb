@@ -24,7 +24,7 @@ system_hostname node['system']['short_hostname'] do
   netbios_name      node['system']['netbios_name']
   workgroup         node['system']['workgroup']
   manage_hostsfile  node['system']['manage_hostsfile']
-  not_if            { node['virtualization']['system'] == 'docker' }
+  not_if            { node['virtualization'] && node['virtualization']['system'] && node['virtualization']['system'] == 'docker' }
 
   # https://github.com/chef/ohai/pull/569 not yet in most used chef versions
   not_if            'ls /.dockerinit'

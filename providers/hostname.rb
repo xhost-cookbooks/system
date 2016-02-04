@@ -128,7 +128,7 @@ action :set do
       only_if { new_resource.manage_hostsfile }
     end
     hostsfile_entry "127.0.1.1_#{new_resource.name}" do
-      ip address '127.0.1.1'
+      ip_address '127.0.1.1'
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
       only_if { platform_family?('debian') }

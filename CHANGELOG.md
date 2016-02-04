@@ -130,3 +130,19 @@ This file is used to list changes made in each version of the system cookbook.
 0.9.1
 -----
 - Fix missing end statement in templates/arch/profile.erb
+
+0.10.0
+------
+- Make it possible to control which phase package upgrades occur (issue #28)
+- More lazy string from bool support for attributes in RightScale
+- Support for Ubuntu 15.04 (issue #30 and #31)
+- Chef 13 forward compliance (Do not specify both default and name_property together on property filename of resource)
+- Better docker support and with test-kitchen (.kitchen-docker.yml)
+- Add a Dockerfile
+- timedatectl for supported systems (issue #32)
+- Support path_append and path_prepend (issue #27)
+
+0.10.1
+------
+- Fix missing underscore in ip_address attribute for 127.0.1.1 hostsfile entry
+- Fix logic on if the cron service should be notified or used within timezone provider resources

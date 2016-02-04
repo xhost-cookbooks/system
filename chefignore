@@ -110,3 +110,5 @@ Dockerfile.mutable
 .chef
 .kitchen
 Makefile
+vendor
+.vendor
