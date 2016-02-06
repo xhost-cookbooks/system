@@ -61,7 +61,7 @@ platforms:
         primary_interface: em1
     driver_config:
         ssh:
-          shell: '/bin/sh'
+          shell: "'/bin/sh'"
         network:
           - ["private_network", {ip: "172.16.172.16"}]
   - name: freebsd-9.3
@@ -70,7 +70,7 @@ platforms:
         primary_interface: em1
     driver_config:
         ssh:
-          shell: '/bin/sh'
+          shell: "'/bin/sh'"
         network:
           - ["private_network", {ip: "172.16.172.16"}]
 suites:

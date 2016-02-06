@@ -200,6 +200,15 @@ attribute 'system/primary_interface',
           required: 'optional',
           recipes: ['system::hostname', 'system::default']
 
+attribute 'system/delay_network_restart',
+          display_name: 'Delay Network Restart',
+          description: 'Whether or not the system hostnamem provider will trigger a network restart as delayed vs. immediate.',
+          required: 'optional',
+          type: 'boolean',
+          choice: [true, false],
+          default: true,
+          recipes: ['system::hostname', 'system::default']
+
 attribute 'system/profile/path',
           display_name: 'System Profile Path',
           description: 'Overrides the default path for the system.',
