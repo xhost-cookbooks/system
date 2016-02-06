@@ -35,6 +35,7 @@ default['system']['upgrade_packages'] = true
 default['system']['upgrade_packages_at_compile'] = true
 default['system']['permanent_ip'] = true
 default['system']['primary_interface'] = node['network']['default_interface'] if node['network']
+default['system']['delay_network_restart'] = true
 default['system']['enable_cron'] = true
 default['system']['packages']['install'] = []
 default['system']['packages']['install_compile_time'] = []
