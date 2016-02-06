@@ -113,19 +113,25 @@ action :set do
       aliases ['localhost']
       only_if { new_resource.manage_hostsfile }
     end
-    hostsfile_entry "#{primary_ip}_#{new_resource.name}" do
-      ip_address primary_ip
-      hostname lazy { fqdn }
-      aliases [new_resource.short_hostname]
-      only_if { new_resource.manage_hostsfile }
+    # condition used due to https://github.com/xhost-cookbooks/system/issues/35
+    if primary_ip
+      hostsfile_entry "#{primary_ip}_#{new_resource.name}" do
+        ip_address primary_ip
+        hostname lazy { fqdn }
+        aliases [new_resource.short_hostname]
+        only_if { new_resource.manage_hostsfile }
+      end
     end
   else
-    hostsfile_entry "#{primary_ip}_#{new_resource.name}" do
-      ip_address primary_ip
-      hostname lazy { fqdn }
-      aliases [new_resource.short_hostname]
-      action :remove
-      only_if { new_resource.manage_hostsfile }
+    # condition used due to https://github.com/xhost-cookbooks/system/issues/35
+    if primary_ip
+      hostsfile_entry "#{primary_ip}_#{new_resource.name}" do
+        ip_address primary_ip
+        hostname lazy { fqdn }
+        aliases [new_resource.short_hostname]
+        action :remove
+        only_if { new_resource.manage_hostsfile }
+      end
     end
     hostsfile_entry "127.0.1.1_#{new_resource.name}" do
       ip_address '127.0.1.1'
