@@ -253,7 +253,7 @@ action :set do
     only_if { platform_family?('rhel') }
     only_if { node['platform_version'] < '7.0' }
     not_if { ::File.readlines('/etc/sysconfig/network').grep(/HOSTNAME=#{fqdn}/).any? }
-    notifies :restart, 'service[network]', :delayed
+    notifies :restart, 'service[network]', node['system']['delay_network_restart'] ? :delayed : :immediately
   end
 
   ruby_block 'show hostnamectl' do
@@ -331,4 +331,3 @@ action :set do
 
   new_resource.updated_by_last_action(true)
 end # close action :set
-                                                         
