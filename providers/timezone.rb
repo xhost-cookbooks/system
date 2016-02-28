@@ -20,6 +20,8 @@
 # SYSTEMSETUP(8) could be used on mac_os_x, however from oberservation
 # linking /etc/localtime in the same manner as linux is adequate
 
+use_inline_resources
+
 action :set do
   # support user specifying a space instead of underscore in zone file path
   zone_file = new_resource.timezone.sub(' ', '_')
