@@ -23,6 +23,12 @@
 use_inline_resources
 
 action :set do
+  # http://jtimberman.housepub.org/blog/2015/01/17/quick-tip-define-resources-to-notifiy-in-lwrps/
+  # https://github.com/chef-cookbooks/cron/blob/master/recipes/default.rb#L24
+  service 'cron' do
+    service_name node['cron']['service_name'] unless node['cron']['service_name'].nil?
+  end
+
   # support user specifying a space instead of underscore in zone file path
   zone_file = new_resource.timezone.sub(' ', '_')
 
