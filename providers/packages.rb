@@ -56,16 +56,14 @@ action :install do
           provider URLPackage.provider(pkg_file)
         end
       end
-    else
+    elsif new_resource.phase == :compile
       # install the packages in compile time or normally
-      if new_resource.phase == :compile
-        p = package package do
-          action :nothing
-        end
-        p.run_action(:install)
-      else
-        package package
+      p = package package do
+        action :nothing
       end
+      p.run_action(:install)
+    else
+      package package
     end
   end
   new_resource.updated_by_last_action(true)
