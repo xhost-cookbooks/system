@@ -33,9 +33,9 @@ else
   end
 
   describe command('ls -l /etc/localtime') do
-    its(:stdout) {
+    its(:stdout) do
       should contain('/usr/share/zoneinfo/Australia/Sydney').after('->')
-    }
+    end
   end
 end
 
