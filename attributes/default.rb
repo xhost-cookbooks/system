@@ -20,11 +20,11 @@
 default['system']['timezone'] = 'Etc/UTC'
 
 # just in case the node/image fails to have a proper hostname
-if node['hostname']
-  default['system']['short_hostname'] = node['hostname']
-else
-  default['system']['short_hostname'] = 'localhost'
-end
+default['system']['short_hostname'] = if node['hostname']
+                                        node['hostname']
+                                      else
+                                        'localhost'
+                                      end
 
 default['system']['domain_name'] = 'localdomain'
 default['system']['netbios_name'] = node['system']['short_hostname'].upcase
