@@ -12,8 +12,13 @@ unless os[:family] == ('freebsd' || 'darwin')
   end
 end
 
+describe file('/etc/localtime') do
+  it { should be_owned_by 'root' }
+end
+
+# timezone checks
 # /etc/timezone (debian family only)
-if os[:family] == ('debian' || 'ubuntu')
+if os[:family] == 'debian' || os[:family] == 'ubuntu'
   describe file('/etc/timezone') do
     it { should be_file }
     it { should be_owned_by 'root' }
@@ -22,11 +27,16 @@ if os[:family] == ('debian' || 'ubuntu')
   describe file('/etc/timezone') do
     its(:content) { should contain 'Australia/Sydney' }
   end
-end
+else
+  describe file('/etc/localtime') do
+    it { should be_symlink }
+  end
 
-# TODO: /etc/localtime conditional tests
-describe file('/etc/localtime') do
-  it { should be_owned_by 'root' }
+  describe command('ls -l /etc/localtime') do
+    its(:stdout) {
+      should contain('/usr/share/zoneinfo/Australia/Sydney').after('->')
+    }
+  end
 end
 
 # serverspec ping doesn't seem to work in freebsd
