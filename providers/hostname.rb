@@ -35,16 +35,15 @@ action :set do
   # logically build the fqdn depending on how the user specified
   short_hostname = new_resource.hostname.split('.').first
   short_hostname = new_resource.short_hostname if new_resource.short_hostname
-  if new_resource.domain_name
-    domain_name = new_resource.domain_name
-  else
-    if new_resource.hostname.split('.').count >= 2
-      domain_name = new_resource.hostname.split('.')[1..-1].join('.')
-    else
-      # fallback domain name to 'localdomain' to complete a valid FQDN
-      domain_name = node['system']['domain_name']
-    end
-  end
+  domain_name    = if new_resource.domain_name
+                     new_resource.domain_name
+                   elsif new_resource.hostname.split('.').count >= 2
+                     new_resource.hostname.split('.')[1..-1].join('.')
+                   else
+                     # fallback domain name to 'localdomain'
+                     # to complete a valid FQDN
+                     node['system']['domain_name']
+                   end
 
   # piece together the fqdn
   fqdn = "#{short_hostname}.#{domain_name}".downcase
