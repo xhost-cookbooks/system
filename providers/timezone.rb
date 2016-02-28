@@ -27,7 +27,7 @@ action :set do
   zone_file = new_resource.timezone.sub(' ', '_')
 
   # the zone file needs to exist in the system share to succeed
-  fail "#{zone_file} is not a valid timezone!" unless ::File.file?("/usr/share/zoneinfo/#{zone_file}")
+  raise "#{zone_file} is not a valid timezone!" unless ::File.file?("/usr/share/zoneinfo/#{zone_file}")
 
   # initially assume a zone change
   zone_change = true
