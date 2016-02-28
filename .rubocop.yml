@@ -13,5 +13,5 @@ MethodLength:
 TrivialAccessors:
   ExactNameMatch: true
 
-SingleSpaceBeforeFirstArg:
+SpaceBeforeFirstArg:
   Enabled: false
