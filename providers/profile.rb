@@ -23,8 +23,8 @@ action :configure do
   template new_resource.filename do
     variables profile: {
       path: new_resource.path_prepend + \
-        new_resource.path + \
-        new_resource.path_append,
+            new_resource.path + \
+            new_resource.path_append,
       append_scripts: new_resource.append_scripts
     }
 
