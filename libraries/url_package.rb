@@ -23,17 +23,16 @@ module URLPackage
     # return suitable package provider based on file extension
     case filename.split('.').last.downcase
     when 'deb'
-      pkg_prov = Chef::Provider::Package::Dpkg
+      Chef::Provider::Package::Dpkg
     when 'rpm'
-      pkg_prov = Chef::Provider::Package::Rpm
+      Chef::Provider::Package::Rpm
     when 'gem'
-      pkg_prov = Chef::Provider::Package::Rubygems
+      Chef::Provider::Package::Rubygems
     when 'xz'
-      pkg_prov = Chef::Provider::Package::Pacman
+      Chef::Provider::Package::Pacman
     else
-      pkg_prov = Chef::Provider::Package
+      Chef::Provider::Package
     end
-    pkg_prov
   end
 
   def self.filename(url)
