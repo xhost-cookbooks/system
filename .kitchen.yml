@@ -43,7 +43,7 @@ platforms:
     attributes:
       system:
         primary_interface: enp0s8
-  - name: centos-6.6
+  - name: centos-6.7
     attributes:
       system:
         primary_interface: eth1
