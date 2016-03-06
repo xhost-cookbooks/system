@@ -2,13 +2,52 @@
 
 require_relative 'spec_helper'
 
-# /etc/hostname
+# http://linux.die.net/man/1/hostname
 
+# hostname -s command should return the short hostname
+describe command('hostname -s') do
+  its(:stdout) do
+    should contain('test')
+  end
+end
+
+# nsswitch on redhat-based expects the FQDN to be physically resolvable by
+# DNS which is possible with a 'fake' FQDN
+unless os[:family] == 'redhat'
+  # hostname command should return FQDN (our test sets a domain)
+  describe command('hostname') do
+    its(:stdout) do
+      should contain('test.kitchen')
+    end
+  end
+  # hostname -f command should return the FQDN
+  describe command('hostname -f') do
+    its(:stdout) do
+      should contain('test.kitchen')
+    end
+  end
+  # hostname -d command should return the domain name (linux only)
+  unless os[:family] == ('freebsd' || 'darwin')
+    describe command('hostname -d') do
+      its(:stdout) do
+        should contain('kitchen')
+      end
+    end
+  end
+end
+
+# /etc/hostname
 # no /etc/hostname used on bsd systems
 unless os[:family] == ('freebsd' || 'darwin')
   describe file('/etc/hostname') do
+    it { should exist }
     it { should be_file }
     it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+    it { should be_mode 644 }
+    it { should be_readable.by('owner') }
+    it { should be_readable.by('group') }
+    it { should be_readable.by('others') }
   end
 end
 
@@ -40,12 +79,14 @@ else
 end
 
 # serverspec ping doesn't seem to work in freebsd
-unless os[:family] == ('freebsd' || 'darwin')
+unless os[:family] == 'freebsd' || os[:family] == 'darwin'
   describe host('localhost') do
     it { should be_resolvable.by('localhost') }
     it { should be_reachable }
   end
-
+end
+# redhat-based expects DNS resolution via nsswitch
+unless os[:family] == 'redhat'
   describe host('test.kitchen') do
     it { should be_resolvable.by('hosts') }
     it { should be_reachable }
@@ -79,7 +120,9 @@ describe file('/etc/hosts') do
   it { should contain('localdomain').after('127.0.0.1') }
   it { should contain('chef.io').after('184.106.28.82') }
   it { should contain('supermarket.io').after('95.211.29.66') }
-  it { should contain('test.kitchen').after('172.16.172.16') }
+  unless os[:family] == 'redhat'
+    it { should contain('test.kitchen').after('172.16.172.16') }
+  end
 end
 
 # el6 and older

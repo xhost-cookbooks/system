@@ -3,7 +3,7 @@
 # Cookbook Name:: system
 # Provider:: hostname
 #
-# Copyright 2012-2015, Chris Fordham
+# Copyright 2012-2016, Chris Fordham
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -302,7 +302,7 @@ action :set do
   file '/etc/hostname' do
     owner 'root'
     group 'root'
-    mode 0755
+    mode 0644
     # https://www.freedesktop.org/software/systemd/man/hostname.html
     # do not include any comment lines to be on the safe side,
     # /etc/init.d/hostname.sh on debian does not ignore them

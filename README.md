@@ -233,7 +233,7 @@ License and Authors
 - Author: Chris Fordham (<chris@fordham-nagy.id.au>)
 
 ```text
-Copyright 2011-2015, Chris Fordham
+Copyright 2011-2016, Chris Fordham
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

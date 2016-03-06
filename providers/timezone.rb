@@ -3,7 +3,7 @@
 # Cookbook Name:: system
 # Provider:: timezone
 #
-# Copyright 2012-2014, Chris Fordham
+# Copyright 2012-2016, Chris Fordham
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -67,21 +67,21 @@ action :set do
     end
   end
 
-  # this can be removed once arch linux support is in the cron cookbook
-  # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
-  if platform?('arch') && node['system']['enable_cron']
-    package 'cronie'
+  # ensure the cron package is installed and cron is in the resource collection
+  # https://github.com/chef-cookbooks/cron/blob/master/recipes/default.rb
+  if node['system']['enable_cron'] && node['platform'] != 'mac_os_x'
+    node['cron']['package_name'].each do |pkg|
+      package pkg
+    end
 
     service 'cron' do
-      service_name 'cronie'
+      service_name node['cron']['service_name'] unless node['cron']['service_name'].nil?
+      action [:enable, :start]
     end
   end
 
-  # this can be removed once freebsd support is in the cron cookbook
-  service 'cron' if platform?('freebsd') && node['system']['enable_cron']
-
   execute "timedatectl set-timezone #{zone_file}" do
-    unless !node['system']['enable_cron'] || node['platform'] == 'mac_os_x'
+    if node['system']['enable_cron'] && node['platform'] != 'mac_os_x'
       notifies :restart, 'service[cron]', :immediately
     end
     notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
@@ -91,7 +91,7 @@ action :set do
 
   link '/etc/localtime' do
     to "/usr/share/zoneinfo/#{zone_file}"
-    unless !node['system']['enable_cron'] || node['platform'] == 'mac_os_x'
+    if node['system']['enable_cron'] && node['platform'] != 'mac_os_x'
       notifies :restart, 'service[cron]', :immediately
     end
     notifies :create, 'ruby_block[verify newly-linked timezone]', :delayed
