@@ -3,7 +3,7 @@
 # Cookbook Name:: system
 # Recipe:: profile
 #
-# Copyright 2015, Chris Fordham
+# Copyright 2015-2016, Chris Fordham
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
