@@ -302,7 +302,7 @@ action :set do
   file '/etc/hostname' do
     owner 'root'
     group 'root'
-    mode 0755
+    mode 0644
     # https://www.freedesktop.org/software/systemd/man/hostname.html
     # do not include any comment lines to be on the safe side,
     # /etc/init.d/hostname.sh on debian does not ignore them
