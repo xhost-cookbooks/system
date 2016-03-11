@@ -27,7 +27,9 @@ action :configure do
             new_resource.path_append,
       append_scripts: new_resource.append_scripts
     }
-
+    # Specify that the templates are from the system
+    # cookbook
+    cookbook 'system'
     if new_resource.template
       new_resource.template.each do |attr, value|
         send attr, value
