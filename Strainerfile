@@ -1,4 +1,6 @@
 # Strainerfile
+# This file is deprecated, but kept for completeness-sake.
+
 knife test: bundle exec knife cookbook test $COOKBOOK
 rubocop:    bundle exec rubocop $COOKBOOK
 foodcritic: bundle exec foodcritic -f any $SANDBOX/$COOKBOOK
