@@ -25,7 +25,7 @@ when 'arch'
                                           '/usr/bin']
   # /usr/share/base-files/profile postinst installs to
   # /etc/profile from the `base-files` package
-when 'debian'
+when 'debian', 'raspbian'
   default['system']['profile']['path'] = ['/usr/local/bin',
                                           '/usr/bin',
                                           '/bin',
