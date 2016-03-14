@@ -308,7 +308,7 @@ action :set do
     # /etc/init.d/hostname.sh on debian does not ignore them
     content "#{short_hostname}\n"
     action :create
-    notifies :start, resources("service[#{service_name}]"), :immediately if platform?('debian') or platform?('raspbian')
+    notifies :start, resources("service[#{service_name}]"), :immediately if platform?('debian', 'raspbian')
     notifies :restart, resources("service[#{service_name}]"), :immediately if platform?('ubuntu')
     notifies :create, 'ruby_block[update network sysconfig]', :immediately
     notifies :run, 'execute[run domainname]', :immediately
