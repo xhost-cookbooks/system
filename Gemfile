@@ -44,6 +44,8 @@ group :kitchen_cloud do
 end
 
 group :guard do
+  # to support down to ruby 2.1
+  gem 'listen', '= 3.0.7'
   gem 'guard'
   # use below for gems like guard-foodcritic which
   # don't yet support guard 3 :(
