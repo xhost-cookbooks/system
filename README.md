@@ -1,7 +1,7 @@
 system Cookbook
 ===============
 
-[![Cookbook Version](https://img.shields.io/badge/cookbook-v0.10.1-blue.svg)](https://supermarket.chef.io/cookbooks/system)
+[![Cookbook Version](https://img.shields.io/badge/cookbook-v0.11.0-blue.svg)](https://supermarket.chef.io/cookbooks/system)
 [![Dependency Status](https://gemnasium.com/xhost-cookbooks/system.svg)](https://gemnasium.com/xhost-cookbooks/system)
 [![Code Climate](https://codeclimate.com/github/xhost-cookbooks/system.png)](https://codeclimate.com/github/xhost-cookbooks/system)
 [![Test Coverage](https://codeclimate.com/github/xhost-cookbooks/system/badges/coverage.svg)](https://codeclimate.com/github/xhost-cookbooks/system)

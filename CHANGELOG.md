@@ -146,3 +146,18 @@ This file is used to list changes made in each version of the system cookbook.
 ------
 - Fix missing underscore in ip_address attribute for 127.0.1.1 hostsfile entry
 - Fix logic on if the cron service should be notified or used within timezone provider resources
+
+0.11.0
+------
+- Fix cookbook templates attempting to use incorrect cookbook templates (pr #40)
+- Raspbian platform support (pr #41)
+- Add ChefSpec matchers (pr #42)
+- Refresh TESTING.md (issue #39)
+- /etc/hostname should be short hostname and mode 0644 (issue #37)
+- Do not include any comment lines in /etc/hostname out of safeness
+- Remove temporary archlinux code for cron (timezone provider)
+- Only set hostsfile entry if private IP is set (issue #35)
+- Network restart control feature (pr #36)
+- Make attribute de-reference safe for failing attributes when undefined (pr #34)
+- Test Kitchen path fix for docker (issue #33)
+- Various test related improvements, bumps, fixes
