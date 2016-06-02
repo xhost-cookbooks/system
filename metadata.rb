@@ -1,12 +1,15 @@
 # encoding: UTF-8
 
 name             'system'
+version          '0.11.0'
 maintainer       'Xhost Australia'
 maintainer_email 'cookbooks@xhost.com.au'
 license          'Apache 2.0'
 description      'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.11.0'
+source_url       'https://github.com/xhost-cookbooks/system'
+issues_url       'https://github.com/xhost-cookbooks/system/issues'
+# chef_version     '>= 11.12.0'
 
 recipe           'system::default',             "Sets the system's hostname and timezone, updates the system's installed packages."
 recipe           'system::timezone',            "Sets the system's' timezone."
