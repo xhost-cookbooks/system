@@ -28,25 +28,34 @@ class Chef
 end
 
 action :set do
-  # first, ensure lower case for each piece
-  new_resource.short_hostname.downcase! if new_resource.short_hostname
-  new_resource.domain_name.downcase! if new_resource.domain_name
+  # user can specify short_hostname and domain_name or simply
+  # derive it from the name of the resource
 
-  # logically build the fqdn depending on how the user specified
-  short_hostname = new_resource.hostname.split('.').first
-  short_hostname = new_resource.short_hostname if new_resource.short_hostname
-  domain_name    = if new_resource.domain_name
-                     new_resource.domain_name
-                   elsif new_resource.hostname.split('.').count >= 2
-                     new_resource.hostname.split('.')[1..-1].join('.')
+  short_hostname = if new_resource.short_hostname
+                     new_resource.short_hostname
                    else
-                     # fallback domain name to 'localdomain'
-                     # to complete a valid FQDN
-                     node['system']['domain_name']
+                     # as the resource must have a name, there will always
+                     # be one result from the split
+                     new_resource.hostname.split('.').first
                    end
 
-  # piece together the fqdn
-  fqdn = "#{short_hostname}.#{domain_name}".downcase
+  domain_name = if new_resource.domain_name
+                  new_resource.domain_name
+                elsif new_resource.hostname.split('.').count >= 2
+                  new_resource.hostname.split('.')[1..-1].join('.')
+                else
+                  # fallback domain name to 'localdomain'
+                  # to complete a valid FQDN
+                  node['system']['domain_name']
+                end
+
+  # finally, raise if we don't have a valid hostname
+  # http://en.wikipedia.org/wiki/Hostname
+  raise "#{short_hostname} is not a valid hostname!" unless \
+    short_hostname =~ /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/
+
+  # reconstruct the fqdn
+  fqdn = "#{short_hostname}.#{domain_name}"
   ::Chef::Log.debug "FQDN determined to be: #{fqdn}"
 
   # https://tickets.opscode.com/browse/OHAI-389
