@@ -23,10 +23,18 @@
 use_inline_resources
 
 action :set do
+  # ensure the cron package is installed and cron is in the resource collection
   # http://jtimberman.housepub.org/blog/2015/01/17/quick-tip-define-resources-to-notifiy-in-lwrps/
-  # https://github.com/chef-cookbooks/cron/blob/master/recipes/default.rb#L24
-  service 'cron' do
-    service_name node['cron']['service_name'] unless node['cron']['service_name'].nil?
+  # https://github.com/chef-cookbooks/cron/blob/master/recipes/default.rb#L20-L27
+  if node['system']['enable_cron'] && node['platform'] != 'mac_os_x'
+    node['cron']['package_name'].each do |pkg|
+      package pkg
+    end
+
+    service 'cron' do
+      service_name node['cron']['service_name'] unless node['cron']['service_name'].nil?
+      action [:enable, :start]
+    end
   end
 
   # support user specifying a space instead of underscore in zone file path
@@ -64,19 +72,6 @@ action :set do
       group 'root'
       content "#{zone_file}\n"
       notifies :run, 'bash[dpkg-reconfigure tzdata]'
-    end
-  end
-
-  # ensure the cron package is installed and cron is in the resource collection
-  # https://github.com/chef-cookbooks/cron/blob/master/recipes/default.rb
-  if node['system']['enable_cron'] && node['platform'] != 'mac_os_x'
-    node['cron']['package_name'].each do |pkg|
-      package pkg
-    end
-
-    service 'cron' do
-      service_name node['cron']['service_name'] unless node['cron']['service_name'].nil?
-      action [:enable, :start]
     end
   end
 
