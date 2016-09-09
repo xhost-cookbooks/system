@@ -121,6 +121,7 @@ action :set do
       ip_address '127.0.0.1'
       hostname 'localhost.localdomain'
       aliases ['localhost']
+      action :append
       only_if { new_resource.manage_hostsfile }
     end
     # condition used due to https://github.com/xhost-cookbooks/system/issues/35
@@ -129,6 +130,7 @@ action :set do
         ip_address primary_ip
         hostname lazy { fqdn }
         aliases [new_resource.short_hostname]
+        action :append
         only_if { new_resource.manage_hostsfile }
       end
     end
@@ -147,6 +149,7 @@ action :set do
       ip_address '127.0.1.1'
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
+      action :append
       only_if { platform_family?('debian') }
       only_if { new_resource.manage_hostsfile }
     end
@@ -154,6 +157,7 @@ action :set do
       ip_address '127.0.0.1'
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname, 'localhost.localdomain', 'localhost']
+      action :append
       not_if { platform_family?('debian') }
       only_if { new_resource.manage_hostsfile }
     end
