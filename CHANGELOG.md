@@ -161,3 +161,14 @@ This file is used to list changes made in each version of the system cookbook.
 - Make attribute de-reference safe for failing attributes when undefined (pr #34)
 - Test Kitchen path fix for docker (issue #33)
 - Various test related improvements, bumps, fixes
+
+0.11.1
+------
+
+Fix release to address issue #47 where hostname does not persist after reboot.
+
+- always set HOSTNAME in /etc/sysconfig/network if the config file exists
+- do not run domainname if the domainname is already as desired
+- configure preserve_hostname with cloud-init if cloud-init is installed
+- update hostname with nmcli if installed
+- restart systemd-hostnamed if enabled
