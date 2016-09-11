@@ -4,10 +4,12 @@ DEPENDENCIES
     metadata: true
 
 GRAPH
-  apt (2.8.2)
-  cron (1.7.0)
+  apt (4.0.2)
+    compat_resource (>= 12.10)
+  compat_resource (12.14.2)
+  cron (1.7.6)
   hostsfile (2.4.5)
-  system (0.11.0)
+  system (0.11.1)
     apt (>= 0.0.0)
     cron (>= 0.0.0)
     hostsfile (>= 0.0.0)
