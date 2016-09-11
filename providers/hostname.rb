@@ -258,10 +258,10 @@ action :set do
     block do
       fe = ::Chef::Util::FileEdit.new('/etc/sysconfig/network')
       fe.search_file_replace_line(/HOSTNAME\=/, "HOSTNAME=#{fqdn}")
+      fe.insert_line_if_no_match(/HOSTNAME\=/, "HOSTNAME=#{fqdn}")
       fe.write_file
     end
-    only_if { platform_family?('rhel') }
-    only_if { node['platform_version'] < '7.0' }
+    only_if { ::File.exist?('/etc/sysconfig/network') }
     not_if { ::File.readlines('/etc/sysconfig/network').grep(/HOSTNAME=#{fqdn}/).any? }
     notifies :restart, 'service[network]', node['system']['delay_network_restart'] ? :delayed : :immediately
   end
@@ -288,6 +288,28 @@ action :set do
   execute 'run domainname' do
     command "domainname #{new_resource.domain_name}"
     only_if "bash -c 'type -P domainname'"
+    not_if { Mixlib::ShellOut.new('domainname').run_command.stdout.strip == new_resource.domain_name }
+    action :nothing
+  end
+
+  # for systems with cloud-init, ensure preserve hostname
+  # https://aws.amazon.com/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/
+  file '/etc/cloud/cloud.cfg.d/01_preserve_hostname.cfg' do
+    content "preserve_hostname: true\n"
+    only_if { ::File.exist?('/etc/cloud/cloud.cfg.d') }
+  end
+
+  # for systems with nmcli (NetworkManager)
+  execute 'update hostname via nmcli' do
+    command "nmcli general hostname #{short_hostname}"
+    not_if { Mixlib::ShellOut.new('hostname -s').run_command.stdout.strip == short_hostname }
+    only_if "bash -c 'type -P nmcli'"
+  end
+
+  # for systemd systems with systemd-hostnamed unit
+  service 'systemd-hostnamed' do
+    provider ::Chef::Provider::Service::Systemd
+    only_if 'systemctl is-enabled systemd-hostnamed'
     action :nothing
   end
 
@@ -319,6 +341,7 @@ action :set do
     action :create
     notifies :start, resources("service[#{service_name}]"), :immediately if platform?('debian', 'raspbian')
     notifies :restart, resources("service[#{service_name}]"), :immediately if platform?('ubuntu')
+    notifies :restart, resources('service[systemd-hostnamed]'), :delayed
     notifies :create, 'ruby_block[update network sysconfig]', :immediately
     notifies :run, 'execute[run domainname]', :immediately
     notifies :run, 'execute[run hostname]', :immediately
