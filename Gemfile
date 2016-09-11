@@ -8,6 +8,14 @@ source 'https://rubygems.org'
 
 chef_version = ENV.key?('CHEF_VERSION') ? ENV['CHEF_VERSION'] : nil
 
+# buff-extensions >= 2 requires ruby ~2.2
+# https://rubygems.org/gems/buff-extensions/versions/2.0.0
+gem 'buff-extensions', '< 1.0.0'
+
+# activesupport >= 5 requires ruby ~2.2
+# https://rubygems.org/gems/buff-extensions/versions/2.0.0
+gem 'activesupport', '< 5.0.0'
+
 group :development do
   gem 'rake'
   gem 'rb-fsevent'
