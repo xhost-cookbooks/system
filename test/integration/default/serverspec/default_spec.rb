@@ -11,15 +11,8 @@ describe command('hostname -s') do
   end
 end
 
-# nsswitch on redhat-based expects the FQDN to be physically resolvable by
-# DNS which is possible with a 'fake' FQDN
+# nsswitch on redhat-based expects the FQDN to be physically resolvable by DNS
 unless os[:family] == 'redhat'
-  # hostname command should return FQDN (our test sets a domain)
-  describe command('hostname') do
-    its(:stdout) do
-      should contain('test.kitchen')
-    end
-  end
   # hostname -f command should return the FQDN
   describe command('hostname -f') do
     its(:stdout) do
