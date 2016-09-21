@@ -172,3 +172,12 @@ Fix release to address issue #47 where hostname does not persist after reboot.
 - configure preserve_hostname with cloud-init if cloud-init is installed
 - update hostname with nmcli if installed
 - restart systemd-hostnamed if enabled
+
+0.11.2
+------
+
+Fix release to address issue #49 where an only_if attribute causes a fatal error
+
+- check for that systemctl command exists first with type command
+- fix expectation of hostname command returning FQDN in serverspec
+- ubuntu 16.04 now tested with test-kitchen

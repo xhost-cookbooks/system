@@ -9,7 +9,7 @@ GRAPH
   compat_resource (12.14.6)
   cron (2.0.0)
   hostsfile (2.4.5)
-  system (0.11.1)
+  system (0.11.2)
     apt (>= 0.0.0)
     cron (>= 0.0.0)
     hostsfile (>= 0.0.0)
