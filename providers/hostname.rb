@@ -309,7 +309,7 @@ action :set do
   # for systemd systems with systemd-hostnamed unit
   service 'systemd-hostnamed' do
     provider ::Chef::Provider::Service::Systemd
-    only_if 'systemctl is-enabled systemd-hostnamed'
+    only_if "bash -c 'type -P systemctl && systemctl is-enabled systemd-hostnamed'"
     action :nothing
   end
 
