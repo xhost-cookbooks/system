@@ -6,8 +6,8 @@ DEPENDENCIES
 GRAPH
   apt (4.0.2)
     compat_resource (>= 12.10)
-  compat_resource (12.14.2)
-  cron (1.7.6)
+  compat_resource (12.14.6)
+  cron (2.0.0)
   hostsfile (2.4.5)
   system (0.11.1)
     apt (>= 0.0.0)
