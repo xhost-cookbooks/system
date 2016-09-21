@@ -14,7 +14,7 @@ Build Status
 |           |    Travis CI    |
 |-----------|-----------------|
 | **Master** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
-| **Latest Release** ([**0.11.2**](https://github.com/xhost-cookbooks/system/releases/tag/v0.11.2)) |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.11.2)](https://travis-ci.org/xhost-cookbooks/system/builds/159067522)|
+| **Latest Release** ([**0.11.2**](https://github.com/xhost-cookbooks/system/releases/tag/v0.11.2)) |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.11.2)](https://travis-ci.org/xhost-cookbooks/system/builds/161531274)|
 
 Overview
 --------
