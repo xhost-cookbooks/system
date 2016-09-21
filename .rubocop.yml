@@ -16,6 +16,5 @@ TrivialAccessors:
 SpaceBeforeFirstArg:
   Enabled: false
 
-# no longer required
-# NumericLiteralPrefix:
-#  EnforcedOctalStyle: zero_only
+NumericLiteralPrefix:
+  EnforcedOctalStyle: zero_only
