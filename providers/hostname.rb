@@ -121,6 +121,7 @@ action :set do
       ip_address '127.0.0.1'
       hostname 'localhost.localdomain'
       aliases ['localhost']
+      action node['system']['hostsfile_behaviour'].to_sym
       only_if { new_resource.manage_hostsfile }
     end
     # condition used due to https://github.com/xhost-cookbooks/system/issues/35
@@ -129,6 +130,7 @@ action :set do
         ip_address primary_ip
         hostname lazy { fqdn }
         aliases [new_resource.short_hostname]
+        action node['system']['hostsfile_behaviour'].to_sym
         only_if { new_resource.manage_hostsfile }
       end
     end
@@ -147,6 +149,7 @@ action :set do
       ip_address '127.0.1.1'
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname]
+      action node['system']['hostsfile_behaviour'].to_sym
       only_if { platform_family?('debian') }
       only_if { new_resource.manage_hostsfile }
     end
@@ -154,6 +157,7 @@ action :set do
       ip_address '127.0.0.1'
       hostname lazy { fqdn }
       aliases [new_resource.short_hostname, 'localhost.localdomain', 'localhost']
+      action node['system']['hostsfile_behaviour'].to_sym
       not_if { platform_family?('debian') }
       only_if { new_resource.manage_hostsfile }
     end
@@ -163,6 +167,7 @@ action :set do
   hostsfile_entry "255.255.255.255_#{new_resource.name}" do
     ip_address '255.255.255.255'
     hostname 'broadcasthost'
+    action node['system']['hostsfile_behaviour'].to_sym
     only_if { platform_family?('mac_os_x') }
     only_if { new_resource.manage_hostsfile }
   end
@@ -191,6 +196,7 @@ action :set do
       hostname host[:name]
       aliases host[:aliases] if host[:aliases]
       priority 5
+      action node['system']['hostsfile_behaviour'].to_sym
       only_if { new_resource.manage_hostsfile }
     end
   end
@@ -201,6 +207,7 @@ action :set do
       ip_address ip
       hostname host
       priority 6
+      action node['system']['hostsfile_behaviour'].to_sym
       only_if { new_resource.manage_hostsfile }
     end
   end

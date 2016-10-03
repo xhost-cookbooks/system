@@ -87,6 +87,7 @@ suites:
       - ["private_network", {ip: "172.16.172.16"}]
     attributes:
       system:
+        hostsfile_behaviour: create
         short_hostname: test
         domain_name: kitchen
         environment:

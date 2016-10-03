@@ -31,6 +31,7 @@ default['system']['netbios_name'] = node['system']['short_hostname'].upcase
 default['system']['workgroup'] = 'WORKGROUP'
 default['system']['static_hosts'] = {}
 default['system']['manage_hostsfile'] = true
+default['system']['hostsfile_behaviour'] = 'append'
 default['system']['upgrade_packages'] = true
 default['system']['upgrade_packages_at_compile'] = true
 default['system']['permanent_ip'] = true
