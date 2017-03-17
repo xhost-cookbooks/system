@@ -17,7 +17,6 @@ require 'chef/application'
   log_level: ::LOG_LEVEL
 }.freeze
 
-def stub_resources
-end
+def stub_resources; end
 
 at_exit { ChefSpec::Coverage.report! }
