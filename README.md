@@ -83,14 +83,14 @@ Attributes (all arrays) to manipulate the system-wide profile (usually for `/etc
 Usage
 -----
 
-###Recipes
+### Recipes
 
-#####`system::default`
+##### `system::default`
 Includes the `system::update_package_list`, `system::timezone` and `system::hostname` recipes only.
 
 NOTE: if applicable, the system's package manager's package list will be updated, but installed packages won't be upgraded. To upgrade the system's packages, include the `system::upgrade_packages` recipe in your run_list or role.
 
-#####`system::hostname`
+##### `system::hostname`
 When using resources that reference `node['fqdn']` in variables or attribute values, note that you will
 need to lazy load to get the new hostname that is being set.
 
@@ -115,40 +115,40 @@ log 'lazy_log_fqdn' do
 end
 ```
 
-#####`system::profile`
+##### `system::profile`
 Manages `/etc/profile` with optional shell scripts to append from `node['system']['profile']['append_scripts']`,
 configure `PATH` requirements per attributes documented above.
 
-#####`system::install_packages`
+##### `system::install_packages`
 Installs a list of system packages as specified in the `node['system']['packages']['install']` attribute.
 Will also install packages provided at compile time from within `node['system']['packages']['install_compile_time']`.
 
-#####`system::uninstall_packages`
+##### `system::uninstall_packages`
 Uninstalls a list of system packages as specified in the `node['system']['packages']['uninstall']` attribute.
 Will also uninstall packages provided at compile time from within `node['system']['packages']['uninstall_compile_time']`.
 
-#####`system::reboot`
+##### `system::reboot`
 Attempts to gracefully reboot the operating system.
 
-#####`system::shutdown`
+##### `system::shutdown`
 Attempts to gracefully shutdown the operating system.
 
-#####`system::timezone`
+##### `system::timezone`
 Sets the timezone of the system.
 
-#####`system::update_package_list`
+##### `system::update_package_list`
 Updates the local package manager's package list.
 
-#####`system::upgrade_packages`
+##### `system::upgrade_packages`
 Upgrades all installed packages of the local package manager.
 
-###LWRPs
+### LWRPs
 
 The cookbook currently provides 3 Lightweight Resource Providers that can be used in your own recipes
 by depending on this cookbook. Recipes are provided interfacing each of these for convenience but
 you may find them useful in your own cookbook usage.
 
-####`system_hostname`
+#### `system_hostname`
 
 |  Attribute         | Description                                   |  Example           |  Default  |
 |--------------------|-----------------------------------------------|--------------------|-----------|
@@ -156,7 +156,7 @@ you may find them useful in your own cookbook usage.
 |  domain_name       | The domain name for the system                |  `reddwarf.space`  |  nil      |
 |  static_hosts      | An array of static hosts to add to /etc/hosts |  `[{ '95.211.29.66' => 'supermarket.io' }, { '184.106.28.82' => 'chef.io' }]` |  nil      |
 
-#####Examples
+##### Examples
 
 Set the hostname providing the desired FQDN:
 ```
@@ -176,26 +176,26 @@ end
 The `system::hostname` recipe implements it this way as `short_hostname` and `domain_name`
 are the exposed cookbook attributes.
 
-####`system_timezone`
+#### `system_timezone`
 
 |  Attribute         | Description                                   |  Example             |  Default  |
 |--------------------|-----------------------------------------------|----------------------|-----------|
 |  timezone          | The timezone to set the system to             |  `Australia/Sydney`  | `Etc/UTC` |
 
-#####Example
+##### Example
 
 ```
 system_timezone 'Australia/Sydney'
 ```
 
-####`system_packages`
+#### `system_packages`
 
 |  Attribute         | Description                                   |  Example          |  Default    |
 |--------------------|-----------------------------------------------|-------------------|-------------|
 |  packages          | The timezone to set the system to             |  `%w(wget curl)`  | `[]`        |
 |  phase             | The Chef phase to download the packages in    |  `:compile  `     | `:converge` |
 
-#####Example
+##### Example
 
 ```
 system_packages %w(wget curl).join(',') do
@@ -204,7 +204,7 @@ system_packages %w(wget curl).join(',') do
 end
 ```
 
-####`system_profile`
+#### `system_profile`
 
 |  Attribute         | Description                                           |  Example               |  Default        |
 |--------------------|-------------------------------------------------------|------------------------|-----------------|
@@ -213,7 +213,7 @@ end
 |  path              | An environment search path to prepend to the default  |  `/opt/local/bin`      |  `[]`           |
 |  append_scripts    | Arbitrary scripts to append to the profile            |  `['export FOO=bar']`  |  `nil`          |
 
-#####Example
+##### Example
 
 ```
 system_profile '/etc/profile' do
