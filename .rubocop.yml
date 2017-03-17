@@ -1,3 +1,6 @@
+BlockLength:
+  Max: 300
+
 Encoding:
   Enabled: false
 
