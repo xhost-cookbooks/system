@@ -19,11 +19,11 @@ platforms:
 #    attributes:
 #      system:
 #        primary_interface: enp0s8
-  - name: debian-8.2
+  - name: debian-8.6
     attributes:
       system:
         primary_interface: eth1
-  - name: debian-7.9
+  - name: debian-7.11
     attributes:
       system:
         primary_interface: eth1
@@ -43,19 +43,19 @@ platforms:
     attributes:
       system:
         primary_interface: enp0s8
-  - name: centos-6.7
+  - name: centos-6.8
     attributes:
       system:
         primary_interface: eth1
+  - name: fedora-24
+    attributes:
+      system:
+        primary_interface: enp0s8
   - name: fedora-23
     attributes:
       system:
         primary_interface: enp0s8
-  - name: fedora-22
-    attributes:
-      system:
-        primary_interface: enp0s8
-  - name: freebsd-10.2
+  - name: freebsd-10.3
     attributes:
       system:
         primary_interface: em1
