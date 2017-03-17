@@ -24,7 +24,7 @@ recipe           'system::shutdown',            'Attempts to gracefully shutdown
 %w(ubuntu debian centos fedora redhat arch mac_os_x).each { |os| supports os }
 
 depends 'apt'
-depends 'cron'
+depends 'cron', '~> 1.7'
 depends 'hostsfile'
 
 attribute 'system/timezone',
