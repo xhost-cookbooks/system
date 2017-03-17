@@ -17,16 +17,16 @@ gem 'buff-extensions', '< 1.0.0'
 gem 'activesupport', '< 5.0.0'
 
 group :development do
-  gem 'rake'
-  gem 'rb-fsevent'
   gem 'berkshelf'
   gem 'chef', chef_version unless chef_version.nil? # Ruby 1.9.3 support
+  gem 'rake'
+  gem 'rb-fsevent'
 end
 
 group :test do
   gem 'chefspec'
-  gem 'rspec'
   gem 'codeclimate-test-reporter', group: :test, require: nil
+  gem 'rspec'
 end
 
 group :lint do
@@ -52,8 +52,6 @@ group :kitchen_cloud do
 end
 
 group :guard do
-  # to support down to ruby 2.1
-  gem 'listen', '= 3.0.7'
   gem 'guard'
   # use below for gems like guard-foodcritic which
   # don't yet support guard 3 :(
@@ -62,6 +60,8 @@ group :guard do
   gem 'guard-kitchen'
   gem 'guard-rspec'
   gem 'guard-rubocop'
+  # to support down to ruby 2.1
+  gem 'listen', '= 3.0.7'
 end
 
 group :integration do
