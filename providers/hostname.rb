@@ -224,6 +224,9 @@ action :set do
         reload: false
       }
       service_provider = ::Chef::Provider::Service::Init::Debian
+
+      # Debian moved to systemd
+      service_provider = ::Chef::Provider::Service::Systemd if node['platform_version'] >= '8.0'
     when 'ubuntu'
       service_name = 'hostname'
       service_supports = {

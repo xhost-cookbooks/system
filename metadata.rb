@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 name             'system'
-version          '0.11.2'
+version          '0.11.3'
 maintainer       'Xhost Australia'
 maintainer_email 'cookbooks@xhost.com.au'
 license          'Apache 2.0'
