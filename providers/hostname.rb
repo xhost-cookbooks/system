@@ -223,7 +223,13 @@ action :set do
         status: false,
         reload: false
       }
-      service_provider = ::Chef::Provider::Service::Init::Debian
+
+      # Debian moved to systemd
+      service_provider = if node['platform_version'] >= '8.0'
+                           ::Chef::Provider::Service::Systemd
+                         else
+                           ::Chef::Provider::Service::Init::Debian
+                         end
     when 'ubuntu'
       service_name = 'hostname'
       service_supports = {
@@ -232,10 +238,13 @@ action :set do
         status: false,
         reload: true
       }
-      service_provider = ::Chef::Provider::Service::Upstart
 
       # Ubuntu moved to systemd
-      service_provider = ::Chef::Provider::Service::Systemd if node['platform_version'] >= '15.04'
+      service_provider = if node['platform_version'] >= '15.04'
+                           ::Chef::Provider::Service::Systemd
+                         else
+                           ::Chef::Provider::Service::Upstart
+                         end
     end
 
     service service_name do

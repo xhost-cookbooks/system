@@ -181,3 +181,8 @@ Fix release to address issue #49 where an only_if attribute causes a fatal error
 - check for that systemctl command exists first with type command
 - fix expectation of hostname command returning FQDN in serverspec
 - ubuntu 16.04 now tested with test-kitchen
+
+0.11.3
+------
+
+- Add support for Debian > 8 (systemd) in hostname recipe
