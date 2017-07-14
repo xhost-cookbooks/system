@@ -4,7 +4,7 @@ name             'system'
 version          '0.11.3'
 maintainer       'Xhost Australia'
 maintainer_email 'cookbooks@xhost.com.au'
-license          'Apache 2.0'
+license          'Apache-2.0'
 description      'Installs/Configures system elements such as the hostname and timezone.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url       'https://github.com/xhost-cookbooks/system'
