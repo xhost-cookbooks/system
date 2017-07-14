@@ -1,5 +1,5 @@
 # encoding: UTF-8
-#
+
 # Cookbook Name:: system
 # Recipe:: upgrade_packages
 #
