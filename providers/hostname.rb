@@ -221,7 +221,7 @@ action :set do
         start: true,
         restart: false,
         status: false,
-        reload: false
+        reload: false,
       }
 
       # Debian moved to systemd
@@ -236,7 +236,7 @@ action :set do
         start: true,
         restart: true,
         status: false,
-        reload: true
+        reload: true,
       }
 
       # Ubuntu moved to systemd

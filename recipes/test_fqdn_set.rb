@@ -21,7 +21,7 @@ template '/tmp/test_fqdn_set.txt' do
   source 'test_fqdn_set.erb'
   variables lazy {
     {
-      fqdn: node['fqdn']
+      fqdn: node['fqdn'],
     }
   }
 end

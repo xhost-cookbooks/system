@@ -15,8 +15,8 @@ Vagrant.configure('2') do |config|
       'system' => {
         'short_hostname' => 'system',
         'domain_name' => 'localdomain',
-        'timezone' => 'Australia/Sydney'
-      }
+        'timezone' => 'Australia/Sydney',
+      },
     }
 
     chef.run_list = [

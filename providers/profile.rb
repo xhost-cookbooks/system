@@ -25,7 +25,7 @@ action :configure do
       path: new_resource.path_prepend + \
             new_resource.path + \
             new_resource.path_append,
-      append_scripts: new_resource.append_scripts
+      append_scripts: new_resource.append_scripts,
     }
     # Specify that the templates are from the system
     # cookbook

@@ -21,14 +21,14 @@ include_recipe 'system::update_package_list'
 
 upgrade_cmd = value_for_platform(
   %w(ubuntu debian) => {
-    'default' => 'export DEBIAN_FRONTEND=noninteractive; apt-get -y upgrade'
+    'default' => 'export DEBIAN_FRONTEND=noninteractive; apt-get -y upgrade',
   },
   %w(centos redhat scientific fedora amazon) => {
-    'default' => 'yum -y update && yum -y upgrade'
+    'default' => 'yum -y update && yum -y upgrade',
   },
   'suse' => { 'default' => 'zypper --non-interactive update' },
   'arch' => {
-    'default' => 'pacman --sync --refresh --sysupgrade --noprogressbar -q'
+    'default' => 'pacman --sync --refresh --sysupgrade --noprogressbar -q',
   },
   'freebsd' => { 'default' => 'portupgrade -af' },
   'mac_os_x' => { 'default' => 'port upgrade installed' }
