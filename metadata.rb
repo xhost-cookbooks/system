@@ -9,7 +9,7 @@ description      'Installs/Configures system elements such as the hostname and t
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url       'https://github.com/xhost-cookbooks/system'
 issues_url       'https://github.com/xhost-cookbooks/system/issues'
-chef_version      '>= 11.12.0' if respond_to?(:chef_version)
+chef_version     '>= 11.12.0' if respond_to?(:chef_version)
 
 recipe           'system::default',             "Sets the system's hostname and timezone, updates the system's installed packages."
 recipe           'system::timezone',            "Sets the system's' timezone."
