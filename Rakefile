@@ -29,8 +29,8 @@ desc 'Install required Gems and Cookbooks'
 task prepare: ['prepare:bundle', 'prepare:berks']
 
 namespace :style do
-  task :rubocop do
-    sh %(chef exec rubocop)
+  task :cookstyle do
+    sh %(chef exec cookstyle .)
   end
 
   task :foodcritic do
@@ -39,7 +39,7 @@ namespace :style do
 end
 
 desc 'Run all style checks'
-task style: ['style:foodcritic', 'style:rubocop']
+task style: ['style:foodcritic', 'style:cookstyle']
 
 namespace :integration do
   task :kitchen do
@@ -58,7 +58,7 @@ end
 namespace :travis do
   desc 'Run tests on Travis CI'
   task :ci do
-    sh %(bundle exec rubocop)
+    sh %(bundle exec cookstyle .)
     sh %(bundle exec foodcritic .)
   end
 end
