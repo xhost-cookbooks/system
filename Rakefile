@@ -58,8 +58,8 @@ end
 namespace :travis do
   desc 'Run tests on Travis CI'
   task :ci do
-    sh %(bundle exec cookstyle .)
-    sh %(bundle exec foodcritic .)
+    sh %(chef exec cookstyle .)
+    sh %(chef exec foodcritic .)
   end
 end
 
