@@ -179,7 +179,7 @@ action :set do
     { ip: 'fe00::0', name: 'ip6-localnet' },
     { ip: 'ff00::0', name: 'ip6-mcastprefix' },
     { ip: 'ff02::1', name: 'ip6-allnodes' },
-    { ip: 'ff02::2', name: 'ip6-allrouters' }
+    { ip: 'ff02::2', name: 'ip6-allrouters' },
   ]
 
   # we'll keep ipv6 stock for os x
