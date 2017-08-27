@@ -23,9 +23,10 @@ upgrade_cmd = value_for_platform(
   %w(ubuntu debian) => {
     'default' => 'export DEBIAN_FRONTEND=noninteractive; apt-get -y upgrade',
   },
-  %w(centos redhat scientific fedora amazon) => {
+  %w(centos redhat scientific amazon) => {
     'default' => 'yum -y update && yum -y upgrade',
   },
+  'fedora' => { 'default' => 'dnf -y upgrade' },
   'suse' => { 'default' => 'zypper --non-interactive update' },
   'arch' => {
     'default' => 'pacman --sync --refresh --sysupgrade --noprogressbar -q',
