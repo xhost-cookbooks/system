@@ -23,12 +23,14 @@ attribute :timezone,
           name_attribute: true
 
 actions :set
+default_action :set
 
 def initialize(*args)
   super
   @action = :set
 
   # arch can be removed once arch linux support is in the cron cookbook
+  # looks like arch got jib'd again
   # https://github.com/opscode-cookbooks/cron/pull/49 needs merge
   @run_context.include_recipe 'cron' if node['system']['enable_cron'] && !(node['platform'] == 'arch' || node['platform'] == 'mac_os_x' || node['platform'] == 'freebsd')
 end
