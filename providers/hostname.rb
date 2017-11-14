@@ -380,6 +380,4 @@ action :set do
     command "rs_tag --add 'node:hostname=#{fqdn}'"
     only_if "bash -c 'type -P rs_tag'"
   end
-
-  new_resource.updated_by_last_action(true)
 end # close action :set

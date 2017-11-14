@@ -103,6 +103,4 @@ action :set do
     only_if { ::File.symlink?('/etc/localtime') }
     only_if { zone_change }
   end
-
-  new_resource.updated_by_last_action(true) if zone_change
 end

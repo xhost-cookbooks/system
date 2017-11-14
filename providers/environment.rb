@@ -25,6 +25,4 @@ action :configure do
       extra: new_resource.extra
     )
   end
-
-  new_resource.updated_by_last_action(true)
 end

@@ -66,7 +66,6 @@ action :install do
       package package
     end
   end
-  new_resource.updated_by_last_action(true)
 end # close action :install
 
 action :uninstall do
@@ -86,5 +85,4 @@ action :uninstall do
       end
     end
   end
-  new_resource.updated_by_last_action(true)
 end # close action :uninstall
