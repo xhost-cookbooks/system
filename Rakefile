@@ -34,7 +34,10 @@ namespace :style do
   end
 
   task :foodcritic do
-    sh %(chef exec foodcritic .)
+    # FC072: we don't agree with metadata attribute deprecation
+    #        - its useful for integration consumers
+    # FC074: chef regressed or failed to support arch linux in cron cookbook
+    sh %(chef exec foodcritic -t ~FC072 -t ~FC074 .)
   end
 end
 
