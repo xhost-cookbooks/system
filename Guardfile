@@ -24,4 +24,4 @@ group :lint do
   end
 end
 
-scope groups: [:lint, :style]
+scope groups: %i(lint style)
