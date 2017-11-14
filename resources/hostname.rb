@@ -47,8 +47,3 @@ attribute :netbios_name,
 attribute :workgroup,
           kind_of: String,
           default: nil
-
-def initialize(*args)
-  super
-  @action = :set
-end

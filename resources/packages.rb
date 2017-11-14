@@ -27,8 +27,3 @@ attribute :packages,
 attribute :phase,
           kind_of: [String, Symbol],
           default: :converge
-
-def initialize(*args)
-  super
-  @action = :install
-end
