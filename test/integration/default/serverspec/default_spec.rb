@@ -114,7 +114,7 @@ describe file('/etc/hosts') do
   it { should contain('chef.io').after('184.106.28.82') }
   it { should contain('supermarket.io').after('95.211.29.66') }
   unless os[:family] == 'redhat'
-    it { should contain('test.kitchen').after('172.16.172.16') }
+    it { should contain('test.kitchen') }
   end
 end
 
