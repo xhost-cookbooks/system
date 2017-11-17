@@ -34,7 +34,7 @@ attribute :domain_name,
 
 attribute :static_hosts,
           kind_of: Hash,
-          default: nil
+          default: {}
 
 attribute :manage_hostsfile,
           kind_of: [TrueClass, FalseClass],
