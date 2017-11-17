@@ -186,3 +186,12 @@ Fix release to address issue #49 where an only_if attribute causes a fatal error
 ------
 
 - Add support for Debian > 8 (systemd) in hostname recipe
+
+0.12.0
+------
+
+- Use dnf for fedora instead of yum (pr #58)
+- Provide an empty hash for the static_hosts attribute instead of nil (issue #53)
+- Bump dep cookbook versions in Berks lock (issue #55)
+- Numerous cookbook and ruby style/syntax improvements and fixes
+- Use cookstyle instead of rubocop
