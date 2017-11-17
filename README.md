@@ -1,7 +1,7 @@
 system Cookbook
 ===============
 
-[![Cookbook Version](https://img.shields.io/badge/cookbook-v0.11.3-blue.svg)](https://supermarket.chef.io/cookbooks/system)
+[![Cookbook Version](https://img.shields.io/badge/cookbook-v0.12.0-blue.svg)](https://supermarket.chef.io/cookbooks/system)
 [![Dependency Status](https://gemnasium.com/xhost-cookbooks/system.svg)](https://gemnasium.com/xhost-cookbooks/system)
 [![Code Climate](https://codeclimate.com/github/xhost-cookbooks/system.png)](https://codeclimate.com/github/xhost-cookbooks/system)
 [![Test Coverage](https://codeclimate.com/github/xhost-cookbooks/system/badges/coverage.svg)](https://codeclimate.com/github/xhost-cookbooks/system)
@@ -14,7 +14,7 @@ Build Status
 |           |    Travis CI    |
 |-----------|-----------------|
 | **Master** |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=master)](http://travis-ci.org/xhost-cookbooks/system)|
-| **Latest Release** ([**0.11.3**](https://github.com/xhost-cookbooks/system/releases/tag/v0.11.3)) |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.11.3)](https://travis-ci.org/xhost-cookbooks/system/builds/161531274)|
+| **Latest Release** ([**0.12.0**](https://github.com/xhost-cookbooks/system/releases/tag/v0.12.0)) |[![Build status](https://secure.travis-ci.org/xhost-cookbooks/system.png?branch=v0.12.0)](https://travis-ci.org/xhost-cookbooks/system/builds/161531274)|
 
 Overview
 --------
@@ -35,8 +35,10 @@ Get it now from your (local) [supermarket](https://supermarket.chef.io/cookbooks
 
 Requirements
 ------------
-- Chef >= 11.12.0
-- Ruby >= 1.9
+- Chef >= 12.x
+- Ruby >= 2.2.x
+
+Older versions may work, but are not supported. See [Platforms and Supported Versions](https://docs.chef.io/platforms.html#versions).
 
 ### Platforms Supported
 - Debian, Ubuntu
