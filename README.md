@@ -4,7 +4,6 @@ system Cookbook
 [![Cookbook Version](https://img.shields.io/badge/cookbook-v0.12.0-blue.svg)](https://supermarket.chef.io/cookbooks/system)
 [![Dependency Status](https://gemnasium.com/xhost-cookbooks/system.svg)](https://gemnasium.com/xhost-cookbooks/system)
 [![Code Climate](https://codeclimate.com/github/xhost-cookbooks/system.png)](https://codeclimate.com/github/xhost-cookbooks/system)
-[![Test Coverage](https://codeclimate.com/github/xhost-cookbooks/system/badges/coverage.svg)](https://codeclimate.com/github/xhost-cookbooks/system)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Join the chat at https://gitter.im/xhost-cookbooks/system](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xhost-cookbooks/system?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
