@@ -26,8 +26,8 @@ group :test do
 end
 
 group :lint do
-  gem 'foodcritic'
   gem 'cookstyle'
+  gem 'foodcritic'
 end
 
 group :kitchen_common do
