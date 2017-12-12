@@ -27,5 +27,5 @@ system_hostname node['system']['short_hostname'] do
   not_if            { node['virtualization'] && node['virtualization']['system'] && node['virtualization']['system'] == 'docker' }
 
   # https://github.com/chef/ohai/pull/569 not yet in most used chef versions
-  not_if            'ls /.dockerinit'
+  not_if            '[ -e /.dockerinit ]'
 end
