@@ -212,11 +212,11 @@ action :set do
     end
   end
 
-  # (re)start the hostname[.sh] service on debian-based distros
+  # (re)start the hostname service on debian-based distros
   if platform_family?('debian')
     case node['platform']
     when 'debian', 'raspbian'
-      service_name = 'hostname.sh'
+      service_name = 'hostname'
       service_supports = {
         start: true,
         restart: false,
@@ -225,7 +225,7 @@ action :set do
       }
 
       # Debian moved to systemd
-      service_provider = if node['platform_version'] >= '8.0'
+      service_provider = if node['platform_version'].to_i >= 8
                            ::Chef::Provider::Service::Systemd
                          else
                            ::Chef::Provider::Service::Init::Debian
