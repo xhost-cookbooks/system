@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 name             'system'
-version          '0.12.0'
+version          '0.12.1'
 maintainer       'Xhost Australia'
 maintainer_email 'cookbooks@xhost.com.au'
 license          'Apache-2.0'
@@ -24,7 +24,7 @@ recipe           'system::shutdown',            'Attempts to gracefully shutdown
 %w(ubuntu debian centos fedora redhat arch mac_os_x).each { |os| supports os }
 
 depends 'apt'
-depends 'cron'
+depends 'cron', '~> 6.4'
 depends 'hostsfile'
 
 attribute 'system/timezone',

@@ -216,7 +216,12 @@ action :set do
   if platform_family?('debian')
     case node['platform']
     when 'debian', 'raspbian'
-      service_name = 'hostname.sh'
+      case node['platform_version'].to_i
+      when 10, 11
+        service_name = 'hostname'
+      else
+        service_name = 'hostname.sh'
+      end
       service_supports = {
         start: true,
         restart: false,

@@ -195,3 +195,9 @@ Fix release to address issue #49 where an only_if attribute causes a fatal error
 - Bump dep cookbook versions in Berks lock (issue #55)
 - Numerous cookbook and ruby style/syntax improvements and fixes
 - Use cookstyle instead of rubocop
+
+0.12.1
+------
+
+- limit version of cron cookbook to latest compatible version
+- Add support for Debian > 10 in hostname recipe
